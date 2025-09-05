@@ -21,6 +21,7 @@ const ManageCompany = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [keyword, setKeyword] = useState("");
+  const [condition, setCondition] = useState("");
 
   // HIST 저장
   useEffect(() => {
@@ -93,6 +94,17 @@ const ManageCompany = () => {
       <div className="content_body">
         <p className="menu_title">업체 관리</p>
         <div className="search_layout">
+     
+        <select
+          name="condition"
+          className="form-control"
+          value={condition}
+          onChange={(e) => setCondition(e.target.value)}
+        >
+          <option value="">전체</option>
+          <option value="agent_co">업체명</option>
+          <option value="agent_dlgt_id">대표아이디</option>
+        </select>          
           <input
             type="text"
             value={keyword}

@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef } from "react";
-import SendAPI from "./utils/SendAPI";
-import "./styles/common.css"
+import { useEffect, useState } from "react";
+import SendAPI from "../utils/SendAPI";
+import "../styles/login.css"
+import Footer from '../layout/Footer'
+import Logo from "../images/leadcorp_img.svg"
 
 const Login = () => {
 
@@ -83,16 +85,23 @@ const Login = () => {
     return (
         <>
         <div className="login_wrap">
-            <div>
-                사원번호 : <input onChange={(e) => setID(e.target.value)} readOnly={status} className="loginInput"></input>
-                <button className="loginBtn"  onClick={sendSMS}>인증번호 전송</button>
-            </div>
+            <div className="login_box">
+                <div className="login_icon">
+                    <img src={Logo} alt="logo" width={400} height={40}  />
+                </div>
+                <br/>
+                <div>
+                    <b>사원번호 : <input onChange={(e) => setID(e.target.value)} readOnly={status} className="loginInput"></input></b>
+                    <button className="loginBtn"  onClick={sendSMS}><b>인증번호 전송</b></button>
+                </div>
 
-            <div>
-                인증번호 : <input readOnly={!status} onChange={(e) => setPW(e.target.value)} className="loginInput"></input>
-                <button className="loginBtn" onClick={login}>로그인</button>
+                <div>
+                    <b>인증번호 : <input readOnly={!status} onChange={(e) => setPW(e.target.value)} className="loginInput"></input></b>
+                    <button className="loginBtn" onClick={login}><b>로그인</b></button>
+                </div>
             </div>
         </div>
+        <Footer/>
         </>
     )
 }

@@ -2,8 +2,8 @@
     display: flex; gap: 20px;
      /* 메뉴 아이템 간격 */ 
     padding: 10px 20px;
-    background-color: hsl(0, 0%, 11%); 
-    color: white; font-size: 20px;
+    background-color: #333;
+    color: #a3a3a3; font-size: 20px;
     align-items: center; 
     /* 세로 가운데 */
     cursor: pointer; 
