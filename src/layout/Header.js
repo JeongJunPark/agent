@@ -16,7 +16,7 @@ const Header = () => {
     const borrowerPageAuth = ["ROLE_ADMIN", "ROLE_BORROWER"];
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentMenu", ID)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentMenu", ID)
             .then((returnResponse) => {
                 if (returnResponse) {
                     setAuth(returnResponse.auth);
