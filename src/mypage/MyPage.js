@@ -4,22 +4,26 @@ import "../styles/common.css"
 
 const MyPage = () => {
 
-    const [managerVO, setManagerVO] = useState("");
+    const [managerVO, setManagerVO] = useState({});
 
+    // alert(managerVO);
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfo", { ID: sessionStorage.getItem('ID'), menu: "My Page", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfo", {
+            ID: sessionStorage.getItem('ID'),
+            menu: "My page",
+            note: '',
+            IP: sessionStorage.getItem('IP')
+        })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse)
-                    setManagerVO(returnResponse.managerVO)
-                    // setMyPageList(returnResponse.myPageList)
+                    console.log(returnResponse);
+                    setManagerVO(returnResponse);  // ✅ 여기서 상태 갱신
                 }
             })
             .catch((error) => {
-                console.log(error)
-            })
-
-    }, [])
+                console.log(error);
+            });
+    }, []);
 
     return (
         <>
