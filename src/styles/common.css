@@ -461,3 +461,19 @@ select {
 .result_table tbody tr:hover {
     background-color: #f2f2f2;
 }
+
+.login_footer {
+    position: fixed;
+    left: 0;
+    bottom: 0; /* 화면 하단에 딱 붙음 */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    background-color: #fff; /* 필요시 배경 색 추가 */
+    border-top: 0.3px solid #ccc; /* 구분선 */
+    padding: 10px 0;
+    z-index: 1000; /* 다른 요소 위에 나오도록 */
+}

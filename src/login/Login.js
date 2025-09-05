@@ -91,17 +91,16 @@ const Login = () => {
                 </div>
                 <br/>
                 <div>
-                    <b>사원번호 : <input onChange={(e) => setID(e.target.value)} readOnly={status} className="loginInput"></input></b>
+                    <input onChange={(e) => setID(e.target.value)} readOnly={status} className="loginInput" placeholder="사원번호"></input>
                     <button className="loginBtn"  onClick={sendSMS}><b>인증번호 전송</b></button>
                 </div>
 
                 <div>
-                    <b>인증번호 : <input readOnly={!status} onChange={(e) => setPW(e.target.value)} className="loginInput"></input></b>
+                    <input readOnly={!status} onChange={(e) => setPW(e.target.value)} className="loginInput" placeholder="인증번호"></input>
                     <button className="loginBtn" onClick={login}><b>로그인</b></button>
                 </div>
             </div>
         </div>
-        <Footer/>
         </>
     )
 }
