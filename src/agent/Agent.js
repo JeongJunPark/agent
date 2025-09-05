@@ -3,14 +3,13 @@ import moment from "moment";
 import Calendar from 'react-calendar';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
-import "./styles/datepicker.css";
+import "../styles/datepicker.css";
 
-import SendAPI from "./utils/SendAPI";
+import SendAPI from "../utils/SendAPI";
 import * as XLSX from 'xlsx';
-import MyPage from "./MyPage";
 
 // import "./styles/borrower.css"
-import "./styles/common.css"
+import "../styles/common.css"
 // import "./styles/modify.css"
 
 const Agent = () => {
@@ -196,7 +195,6 @@ const Agent = () => {
 
     return (
         <>
-            <MyPage />
             <div className="content_body">
                 <p className="menu_title">에이전트 신청 목록</p>
                 <table className="result_table" border="1">

@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Login from './Login';
-import Borrower from './Borrower';
-import Agent from './Agent'
-import MyPage from "./MyPage"
+import Borrower from './borrower/Borrower';
+import Agent from './agent/Agent'
+import MyPage from "./mypage/MyPage"
+import PersonalInfoModify from "./mypage/PersonalInfoModify"
 
 import ManageCompany from "./company/ManageCompany"
 import RegisterCompany from "./company/RegisterCompany"
@@ -14,6 +15,7 @@ import CompanyMoAccount from "./company/CompanyMoAccount"
 import ManageUser from "./user/ManageUser"
 import RegisterUser from "./user/RegisterUser"
 import ModifyUser from "./user/ModifyUser"
+import UseHistory from "./user/UseHistory"
 
 
 function App() {
@@ -22,7 +24,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/Login" element={<Login />} />
+        
         <Route path="/MyPage" element={<MyPage />} />
+        <Route path="/PersonalInfoModify" element={<PersonalInfoModify />} />
+
         <Route path="/Borrower" element={<Borrower />} />
         <Route path="/Agent" element={<Agent />} />
         <Route path="/ManageCompany" element={<ManageCompany />} />
@@ -32,8 +37,11 @@ function App() {
         <Route path="/CompanyMoAccount" element={<CompanyMoAccount />} />
 
         <Route path="/ManageUser" element={<ManageUser />} />
-        <Route path="/RegisterUser" element={<RegisterUser />} />
         <Route path="/ModifyUser" element={<ModifyUser />} />
+        <Route path="/RegisterUser" element={<RegisterUser />} />
+        <Route path="/UseHistory" element={<UseHistory />} />
+
+
       </Routes>
     </BrowserRouter>
   );

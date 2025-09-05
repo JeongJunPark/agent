@@ -4,11 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import Header from './layout/Header'
+import Footer from './layout/Footer'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
+  <>
+  <Header/>
     <App />
-  // </React.StrictMode>
+  <Footer/>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function

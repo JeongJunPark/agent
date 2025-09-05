@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import SendAPI from "../utils/SendAPI";
-import MyPage from '../MyPage';
 import "../styles/common.css"
 
 const ManageUser = () => {
@@ -85,7 +84,6 @@ const ManageUser = () => {
 
     return (
         <>
-            <MyPage />
             <div className="content_body">
                 <p className="menu_title">사용자 관리</p>
                 <div className="search_layout">

@@ -1,0 +1,45 @@
+.header-container { 
+    display: flex; gap: 20px;
+     /* 메뉴 아이템 간격 */ 
+    padding: 10px 20px;
+    background-color: hsl(0, 0%, 11%); 
+    color: white; font-size: 20px;
+    align-items: center; 
+    /* 세로 가운데 */
+    cursor: pointer; 
+} 
+
+.mypage_header { 
+    position: relative;
+    /* 하위 메뉴를 absolute로 띄우기 위한 기준 */
+    height: 40px;
+    /* 디폴트 높이 */
+    line-height: 40px;
+    padding: 0 16px;
+    background-color: rgba(255,255,255,255.0.2);
+    /* border: 1px solid #ddd; */
+    cursor: pointer;
+    align-items: center;
+}
+
+/* PC용 메뉴 */
+.desktop-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+/* 모바일 화면에서는 desktop-menu 숨기고 햄버거 버튼만 보이게 */
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: inline-block;
+    margin-left: auto;
+    color: white;
+  }
+}

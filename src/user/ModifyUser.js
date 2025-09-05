@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
-import MyPage from "../MyPage";
 import "../styles/common.css"
 
 const ModifyUser = () => {
@@ -105,7 +104,6 @@ const ModifyUser = () => {
 
     return (
         <>
-            <MyPage />
             <div className="content_body">
                 <p className="menu_title">사용자 변경</p>
 
