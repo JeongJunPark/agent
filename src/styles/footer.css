@@ -1,21 +1,20 @@
 .footer-container {
     position: fixed;
     left: 0;
-    bottom: 7%;
+    bottom: 0; /* 화면 하단에 딱 붙음 */
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-weight: bold;
+    background-color: #fff; /* 필요시 배경 색 추가 */
+    border-top: 0.3px solid #ccc; /* 구분선 */
+    padding: 10px 0;
+    z-index: 1000; /* 다른 요소 위에 나오도록 */
 }
 
 footer {
-    position: fixed;
-    width: 100%; /* 푸터의 너비를 조정합니다. */
-    margin: 0 auto; /* 수평 가운데 정렬 */
-}
-
-hr {
-    width: 100%; /* 선의 너비를 푸터의 전체 너비로 설정합니다. */
+    margin: 0;
+    padding: 0;
 }

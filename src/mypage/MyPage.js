@@ -17,7 +17,7 @@ const MyPage = () => {
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse);
-                    setManagerVO(returnResponse);  // ✅ 여기서 상태 갱신
+                    setManagerVO(returnResponse);
                 }
             })
             .catch((error) => {
