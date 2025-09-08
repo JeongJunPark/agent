@@ -8,8 +8,9 @@
     align-items: center;
     text-align: center;
     font-weight: bold;
-    background-color: #fff; /* 필요시 배경 색 추가 */
-    border-top: 0.3px solid #ccc; /* 구분선 */
+    background-color: #333;
+    color: #a3a3a3; font-size: 15px;
+    border-top: 0.01px solid #ccc; /* 구분선 */
     padding: 10px 0;
     z-index: 1000; /* 다른 요소 위에 나오도록 */
 }

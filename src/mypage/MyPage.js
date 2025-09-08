@@ -17,7 +17,7 @@ const MyPage = () => {
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse);
-                    setManagerVO(returnResponse);
+                    setManagerVO(returnResponse.result[0]);
                 }
             })
             .catch((error) => {
@@ -29,10 +29,10 @@ const MyPage = () => {
         <>
             <div className="content_body">
                 <p className="menu_title">My Page</p>
-                <table className="result_table" border="1">
+                <table className="result_table_sm" border="1">
                     <colgroup>
-                        <col width="20%" />
-                        <col width="80%" />
+                        <col width="10%" />
+                        <col width="90%" />
                     </colgroup>
                         <tr>
                             <th>아이디</th>

@@ -69,7 +69,7 @@ const ManageUser = () => {
     }
 
     const deleteAgentUser = (userINDX) => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/deleteAgentUser', { userINDX: userINDX })
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteAgentUser', { userINDX: userINDX })
             .then(returnResponse => {
                 if (returnResponse.result === 'Y') {
                     alert("삭제 되었습니다.")
