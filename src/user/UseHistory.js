@@ -29,31 +29,39 @@ const UseHistory = () => {
     return (
         <>
             <div className="content_body">
-                <p className="menu_title">My Page</p>
+                <p className="menu_title">사용이력 조회</p>
                 <table className="result_table" border="1">
                     <colgroup>
-                        <col width="20%" />
-                        <col width="80%" />
+                        <col width="10%" />
+                        <col width="90%" />
                     </colgroup>
                         <tr>
-                            <th>아이디</th>
+                            <th>순번</th>
                             <td>{managerVO.agent_id }</td>
                         </tr>
                         <tr>
+                            <th>사용일시</th>
+                            <td>{managerVO.agent_id }</td>
+                        </tr>                        <tr>
+                            <th>아이디</th>
+                            <td>{managerVO.agent_id }</td>
+                        </tr>                        <tr>
                             <th>이름</th>
+                            <td>{managerVO.agent_id }</td>
+                        </tr>                        <tr>
+                            <th>소속</th>
+                            <td>{managerVO.agent_dept }</td>
+                        </tr>                        <tr>
+                            <th>접근화면</th>
+                            <td>{managerVO.agent_id }</td>
+                        </tr>
+                        <tr>
+                            <th>접근IP</th>
                             <td>{managerVO.agent_nm }</td>
                         </tr>
                         <tr>
-                            <th>소속</th>
+                            <th>비고</th>
                             <td>{managerVO.agent_co }</td>
-                        </tr>
-                        <tr>
-                            <th>부서</th>
-                            <td>{managerVO.agent_dept }</td>
-                        </tr>
-                        <tr>
-                            <th>연락처</th>
-                            <td>{managerVO.agent_phn }</td>
                         </tr>
                 </table>
             </div>        

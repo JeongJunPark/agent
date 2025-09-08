@@ -502,3 +502,52 @@ select {
     padding: 10px 0;
     z-index: 1000; /* 다른 요소 위에 나오도록 */
 }
+
+.input_class {
+
+}
+
+.modifyBtn {
+  margin-left: 5px;
+  border: 0.5px solid #333 !important;
+  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
+  border-radius: 5px;
+  color: #333 !important;
+  width: 90px;
+  background-color: #f0f0f0 !important;
+  padding: 13px 0;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  margin-left: 5px;
+  border: 0.5px solid #333 !important;
+  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
+  border-radius: 5px;
+  color: #333 !important;
+  width: 90px;
+  background-color: #f0f0f0 !important;
+  padding: 13px 0;
+  cursor: pointer;
+}
+
+.tdInput {
+  transition: 0.5s ease-in-out;
+  border: 1px solid #d9d9d9;
+  padding: 17px;
+  border-radius: 8px;
+  color: #333;
+  font-size: 14px;
+  width:300px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  margin-top: 10px; /* 버튼 위 여백 */
+}
+
+.table-wrapper {
+  position: relative; /* 테이블 기준으로 버튼 위치 잡기 */
+  display: inline-block; 
+}
