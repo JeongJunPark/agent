@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
+import { AiOutlineUser } from "react-icons/ai";
 
 const MyPage = () => {
 
@@ -28,8 +29,9 @@ const MyPage = () => {
     return (
         <>
             <div className="content_body">
-                <p className="menu_title">My Page</p>
-                <table className="result_table_sm" border="1">
+                <div className="table-wrapper">              
+                <p className="menu_title"><AiOutlineUser/> My Page</p>
+                <table className="result_table" border="1">
                     <colgroup>
                         <col width="10%" />
                         <col width="90%" />
@@ -63,7 +65,8 @@ const MyPage = () => {
                             <td>{managerVO.mgr_ip }</td>
                         </tr>
                 </table>
-            </div>
+                </div>
+            </div>  
         </>
     )
 }

@@ -3,6 +3,9 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 
+import { AiOutlineShop } from "react-icons/ai";
+
+
 const ManageCompany = () => {
 
   const location = useLocation()
@@ -25,7 +28,7 @@ const ManageCompany = () => {
 
   // HIST 저장
   useEffect(() => {
-    SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
           console.log(returnResponse)
@@ -39,7 +42,7 @@ const ManageCompany = () => {
 
   useEffect(() => {
     if (data === '') {
-      SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
+      SendAPI('https://dev-home-api.leadcorp.co.kr:8080/agentUserCompany')
         .then(returnResponse => {
           setData(returnResponse.companyData)
         })
@@ -51,7 +54,7 @@ const ManageCompany = () => {
 
 
   const handleSearch = () => {
-    SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
       .then(returnResponse => {
         setData(returnResponse.searchCompanyData)
       })
@@ -70,7 +73,7 @@ const ManageCompany = () => {
   }
 
   const deleteAgentCompancy = (companyINDX) => {
-    SendAPI('https://home-api.leadcorp.co.kr:8080/deleteAgentCompany', { companyINDX : companyINDX })
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteAgentCompany', { companyINDX : companyINDX })
       .then(returnResponse => {
         if (returnResponse.result === 'Y') {
           alert("삭제 되었습니다.")
@@ -92,9 +95,10 @@ const ManageCompany = () => {
   return (
     <>
       <div className="content_body">
-        <p className="menu_title">업체 관리</p>
-        <div className="search_layout">
-     
+        <div className="table-wrapper">
+        <p className="menu_title"><AiOutlineShop/>  업체 관리
+
+        <div className="search_layout">     
         <select
           name="condition"
           className="form-control"
@@ -114,32 +118,33 @@ const ManageCompany = () => {
           />
           <button className="loginBtn" onClick={handleSearch}>검색</button>
         </div>
+        </p>
 
         <div className="manage_result_layout">
           <table className="result_table" border="1">
             <thead>
               <tr>
-                <td>번호</td>
-                <td>업체명</td>
-                <td>업체구분</td>
-                <td>대표아이디</td>
-                <td>대표전화</td>
-                <td>사용여부</td>
-                <td>등록일</td>
-                <td>수정</td>
-                <td>삭제</td>
+                <th>번호</th>
+                <th>업체명</th>
+                <th>업체구분</th>
+                <th>대표아이디</th>
+                <th>대표전화</th>
+                <th>사용여부</th>
+                <th>등록일</th>
+                <th>수정</th>
+                <th>삭제</th>
               </tr>
             </thead>
             <tbody>
               {data.length > 0 && (
                 currentPosts.map((item, index) => (
                   <tr key={item.co_indx}>
-                    <td>{index + 1 + (currentPage - 1) * postsPerPage}</td>
+                    <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
                     <td>{item.agent_co}</td>
                     <td>{section(item.agent_co_div)}</td>
                     <td>{item.agent_dlgt_id}</td>
                     <td>{item.agent_phn}</td>
-                    <td>{item.mgr_use_yn}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
                     <td>{item.mgr_dt}</td>
                     <td><button className="loginBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
                     <td><button className="loginBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
@@ -147,7 +152,7 @@ const ManageCompany = () => {
                 )))}
             </tbody>
           </table>
-        </div>
+          </div>
 
         <div className="pagenation">
           {Array.from({ length: Math.ceil(data.length / postsPerPage) }, (_, i) => i + 1).map(number => (
@@ -158,7 +163,7 @@ const ManageCompany = () => {
             </span>
           ))}
         </div>
-
+        </div>
       </div>
     </>
   );

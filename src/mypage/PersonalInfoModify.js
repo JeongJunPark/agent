@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
-
+import { AiOutlineUser } from "react-icons/ai";
 const PersonalInfoModify = () => {
 
     const [managerVO, setManagerVO] = useState({});
@@ -71,7 +71,7 @@ const PersonalInfoModify = () => {
         <>
             <div className="content_body">
                 <div className="table-wrapper">
-                <p className="menu_title">개인정보수정</p>
+                <p className="menu_title"><AiOutlineUser/> 개인정보수정</p>
                 <table className="result_table" border="1">
                     <colgroup>
                         <col width="10%" />

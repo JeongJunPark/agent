@@ -414,25 +414,6 @@ select {
   font-size: 20px;
 }
 
-.pagenation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-  margin-top: 60px;
-}
-
-.pagenation a {
-  color: #505054;
-  font-weight: 300;
-  padding: 16px;
-}
-
-.pagenation p.active a {
-  color: #333333;
-  font-weight: 700;
-}
-
 .datepickerButton {
   border : 0px;
   background-color: inherit;
@@ -458,6 +439,7 @@ select {
 
 .result_table th {
     background-color: #f2f2f2;
+    text-align: center;
 }
 
 .result_table tbody tr:nth-child(even) {
@@ -477,6 +459,7 @@ select {
 
 .result_table_sm th {
     background-color: #f2f2f2;
+    text-align: center;
 }
 
 .result_table_sm tbody tr:nth-child(even) {
@@ -509,7 +492,7 @@ select {
 
 .modifyBtn {
   margin-left: 5px;
-  border: 0.5px solid #333 !important;
+  border: 0.5px solid #d9d9d9;
   /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
   border-radius: 5px;
   color: #333 !important;
@@ -548,6 +531,108 @@ select {
 }
 
 .table-wrapper {
-  position: relative; /* 테이블 기준으로 버튼 위치 잡기 */
-  display: inline-block; 
+  max-width: 80%; 
+  margin: 20px auto;   /* 위/아래 40px, 좌우 auto로 가운데 */
+  /* background-color: #d9d9d9;  */
+  padding: 70px 60px;
+  border-radius: 8px;
+  background-color: #FAF9F6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pagenation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;               /* 페이지 번호 간격 */
+  margin-top: 40px;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+}
+
+.pagenation a {
+  display: inline-block;
+  min-width: 36px;
+  padding: 8px 12px;
+  text-align: center;
+  color: #505054;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagenation a:hover {
+  background-color: #f0f0f0;
+  color: #333333;
+  transform: scale(1.05);
+}
+
+.pagenation p.active a {
+  background-color: #333333;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.agent-radio {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  color: #333; /* 기존 tdInput/버튼 텍스트 색과 맞춤 */
+  user-select: none;
+}
+
+.agent-radio input {
+  display: none; /* 기본 라디오 숨김 */
+}
+
+.agent-radio span {
+  position: relative;
+  padding-left: 28px; /* 텍스트와 원 간격 */
+}
+
+/* 라디오 원 */
+.agent-radio span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d9d9d9;
+  border-radius: 50%;
+  background-color: #FAF9F6;
+  transition: all 0.2s ease;
+}
+
+.agent-radio input:checked + span::before {
+  border-color: #333333;
+  background-color: #333333;
+}
+
+.agent-radio span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #FAF9F6;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
+}
+
+.agent-radio input:checked + span::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.agent-radio:hover span::before {
+  border-color: #505054;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }

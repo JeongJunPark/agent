@@ -3,6 +3,8 @@ import { Dropdown, Drawer, Menu, Button } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import SendAPI from "../utils/SendAPI";
 
+import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineDollarCircle, AiOutlineSolution } from "react-icons/ai";
+
 import "../styles/common.css"
 import "../styles/header.css"
 
@@ -71,26 +73,26 @@ const Header = () => {
         {/* Desktop 메뉴 */}
         <div className="desktop-menu">
           <Dropdown menu={{ items: myPageItems }} trigger={["click"]} placement="bottomLeft">
-            <div className="mypage_header">My Page</div>
+            <div className="mypage_header"><AiOutlineUser/> My Page</div>
           </Dropdown>
 
           <Dropdown menu={{ items: companyMenuItems }} trigger={["click"]} placement="bottomLeft">
-            <div className="mypage_header">업체 관리</div>
+            <div className="mypage_header"><AiOutlineShop/> 업체 관리</div>
           </Dropdown>
 
           <Dropdown menu={{ items: userMenuItems }} trigger={["click"]} placement="bottomLeft">
-            <div className="mypage_header">사용자 관리</div>
+            <div className="mypage_header"><AiOutlineTeam/> 사용자 관리</div>
           </Dropdown>
 
           {authList && authList.some((value) => agentPageAuth.includes(value)) && (
             <Dropdown menu={{ items: agentMenuItems }} trigger={["click"]} placement="bottomLeft">
-              <div className="mypage_header">에이전트</div>
+              <div className="mypage_header"><AiOutlineSolution/> 에이전트</div>
             </Dropdown>
           )}
 
           {authList && authList.some((value) => borrowerPageAuth.includes(value)) && (
             <Dropdown menu={{ items: borrowerMenuItems }} trigger={["click"]} placement="bottomLeft">
-              <div className="mypage_header">차입처</div>
+              <div className="mypage_header"><AiOutlineDollarCircle/> 차입처</div>
             </Dropdown>
           )}
         </div>
