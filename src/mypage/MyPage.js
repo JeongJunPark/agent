@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineForm } from "react-icons/ai";
 
 const MyPage = () => {
 
@@ -30,7 +30,7 @@ const MyPage = () => {
         <>
             <div className="content_body">
                 <div className="table-wrapper">              
-                <p className="menu_title"><AiOutlineUser/> My Page</p>
+                <p className="menu_title"><AiOutlineForm/> My Page</p>
                 <table className="result_table" border="1">
                     <colgroup>
                         <col width="10%" />

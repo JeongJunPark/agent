@@ -1,13 +1,4 @@
-.header-container { 
-    display: flex; gap: 20px;
-     /* 메뉴 아이템 간격 */ 
-    padding: 10px 20px;
-    background-color: #333;
-    color: #a3a3a3; font-size: 20px;
-    align-items: center; 
-    /* 세로 가운데 */
-    cursor: pointer; 
-} 
+
 
 .mypage_header { 
     position: relative;
@@ -26,10 +17,45 @@
 .desktop-menu {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
+
+.header-container { 
+    display: flex; 
+    gap: 20px;
+     /* 메뉴 아이템 간격 */ 
+    padding: 10px 20px;
+    background-color: #333;
+    color: #a3a3a3; font-size: 16px;
+    align-items: center; 
+    /* 세로 가운데 */
+    cursor: pointer;
+    justify-content: space-between;
+} 
+
+.menu-left {
+  display: flex;
+  gap: 20px; /* 왼쪽 메뉴 아이템 간격 */
+}
+
+.menu-right {
+  display: flex;
+  align-items: center;
+}
+
 
 .mobile-menu-btn {
   display: none;
+}
+
+/* 오른쪽 끝 메뉴 */
+.user-menu {
+  margin-left: auto; /* 이걸 주면 오른쪽 끝으로 밀림 */
+}
+
+/* 마우스 올렸을 때 */
+.mypage_header:hover {
+  color: whitesmoke; /* 글씨 색도 바꿔주면 보기 좋음 */
 }
 
 /* 모바일 화면에서는 desktop-menu 숨기고 햄버거 버튼만 보이게 */
@@ -43,3 +69,4 @@
     color: white;
   }
 }
+

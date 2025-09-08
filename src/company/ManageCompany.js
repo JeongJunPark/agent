@@ -4,6 +4,7 @@ import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 
 import { AiOutlineShop } from "react-icons/ai";
+import NoDataRow from "../utils/NoDataRow";
 
 
 const ManageCompany = () => {
@@ -136,7 +137,7 @@ const ManageCompany = () => {
               </tr>
             </thead>
             <tbody>
-              {data.length > 0 && (
+              {data.length > 0 ? (
                 currentPosts.map((item, index) => (
                   <tr key={item.co_indx}>
                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
@@ -149,7 +150,9 @@ const ManageCompany = () => {
                     <td><button className="loginBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
                     <td><button className="loginBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
                   </tr>
-                )))}
+                ))) : 
+                   <NoDataRow colSpan={9} height="400px" />
+              }
             </tbody>
           </table>
           </div>

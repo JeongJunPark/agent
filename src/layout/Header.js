@@ -3,10 +3,11 @@ import { Dropdown, Drawer, Menu, Button } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import SendAPI from "../utils/SendAPI";
 
-import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineDollarCircle, AiOutlineSolution } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution } from "react-icons/ai";
 
 import "../styles/common.css"
 import "../styles/header.css"
+import Logo from "../images/leadcorp_img.svg"
 
 const Header = () => {
 
@@ -63,17 +64,26 @@ const Header = () => {
   const agentMenuItems = [{ key: "1", label: <a href="/Agent">에이전트 신청목록</a> }];
   const borrowerMenuItems = [{ key: "1", label: <a href="/Borrower">가상계좌 현황조회</a> }];
 
+
+  const myMenuItems = [
+    { key: '1', label: <a href="/MyPage">내 정보</a> },
+    { key: '2', label: <a href="/PersonalInfoModify">설정</a> },
+    { key: '3', label: <a href="/Logout">로그아웃</a> },
+  ];
+
   return (
     <header>
       <div className="header-container">
         <div className="mypage_header" onClick={() => (window.location.href = "/MyPage")}>
-          LEADCORP
+        <img src={Logo} alt="logo" width={100} height={40}/>
         </div>
 
         {/* Desktop 메뉴 */}
         <div className="desktop-menu">
+          <div className="menu-left">
+          {/* 왼쪽 메뉴들 */}
           <Dropdown menu={{ items: myPageItems }} trigger={["click"]} placement="bottomLeft">
-            <div className="mypage_header"><AiOutlineUser/> My Page</div>
+            <div className="mypage_header"><AiOutlineForm/> My Page</div>
           </Dropdown>
 
           <Dropdown menu={{ items: companyMenuItems }} trigger={["click"]} placement="bottomLeft">
@@ -95,7 +105,15 @@ const Header = () => {
               <div className="mypage_header"><AiOutlineDollarCircle/> 차입처</div>
             </Dropdown>
           )}
+         </div>
         </div>
+        <div className="menu-right">
+          <Dropdown menu={{ items: myMenuItems }} trigger={['click']} placement="bottomRight">
+            <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID}</div>
+          </Dropdown>          
+        </div>
+
+
 
         {/* 모바일 햄버거 버튼 */}
         <Button
@@ -142,6 +160,11 @@ const Header = () => {
                 ))}
               </Menu.SubMenu>
             )}
+              <Menu.SubMenu key="user-right" title={ID}>
+                {myMenuItems.map((item) => (
+                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                ))}
+              </Menu.SubMenu>            
           </Menu>
         </Drawer>
       </div>

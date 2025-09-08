@@ -38,7 +38,7 @@ const RegisterCompany = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체등록", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체등록", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -52,7 +52,7 @@ const RegisterCompany = () => {
 
     useEffect(() => {
         if (postData.ID !== '' && postData.ID !== undefined) {
-            SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentCompany", postData)
+            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/submitAgentCompany", postData)
                 .then((returnResponse) => {
                     console.log(returnResponse)
                     if (returnResponse.result === 'Y') {
