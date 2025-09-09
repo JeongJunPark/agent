@@ -165,7 +165,8 @@ const Borrower = () => {
             SendAPI('https://dev-home-api.leadcorp.co.kr:8080/borrowerResult', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log(returnResponse)
+                        console.log("returnResponse: ------> ", returnResponse);
+                        console.log("summaryData: -----> ", summaryData);
                         setResponse(returnResponse.query);
                         setSummaryData(returnResponse.query2);
                         setData(returnResponse.query);
@@ -365,36 +366,35 @@ const Borrower = () => {
                     <table className="result_table_sub">
                         
                         <tbody>
-<tr>
-    <th>유효채권개수</th>
-    <td><input type="text" className="tdInputReadonly" value={summaryData && summaryData[0].act_vir_act_cn} readOnly></input></td>
-    <th>대출금액</th>
-    <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].ln_am)} readOnly></input></td>
-    <th>유효채권개수</th>
-    <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].ln_bln)} readOnly></input></td>
-</tr>
-<tr>
-    <th>정상채권개수</th>
-    <td><input type="text" className="tdInputReadonly" value={summaryData && summaryData[0].act_vir_act_cn} readOnly></input></td>
-    <th>정상채권금액</th>
-    <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].nrml_bond_am)} readOnly></input></td>
-    <th>연체채권개수</th>
-    <td><input type="text" className="tdInputReadonly" value={summaryData && summaryData[0].arr_bond_cn} readOnly></input></td>
-</tr>
-<tr>
-    <th>연체채권금액</th>
-    <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].act_vir_act_cn)} readOnly></input></td>
-    <th>채권양수인</th>
-    <td><input type="text" className="tdInput"></input></td>
-    <th>채권양도일자</th>
-    <td><input type="text" className="tdInput"></input></td>
-</tr>
+                        <tr>
+                            <th>유효채권개수</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <th>대출금액</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].ln_am)} readOnly></input></td>
+                            <th>유효채권개수</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].ln_bln)} readOnly></input></td>
+                        </tr>
+                        <tr>
+                            <th>정상채권개수</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <th>정상채권금액</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].nrml_bond_am)} readOnly></input></td>
+                            <th>연체채권개수</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].arr_bond_cn)} readOnly></input></td>
+                        </tr>
+                        <tr>
+                            <th>연체채권금액</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <th>채권양수인</th>
+                            <td><input type="text" className="tdInput"></input></td>
+                            <th>채권양도일자</th>
+                            <td><input type="text" className="tdInput"></input></td>
+                        </tr>
                         </tbody>
                     </table>
 
                     <div className="pagenation">
                     {pageGroupStart > 1 && <a onClick={handlePrevGroup}><AiOutlineBackward/></a>}
-
                     {Array.from(
                         { length: Math.min(10, totalPages - pageGroupStart + 1) },
                         (_, i) => pageGroupStart + i
@@ -403,7 +403,6 @@ const Borrower = () => {
                         <a onClick={() => paginate(number)}>{number}</a>
                         </p>
                     ))}
-
                     {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
                     </div>                     
                 </div>

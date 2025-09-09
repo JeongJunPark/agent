@@ -11,6 +11,7 @@ const Login = () => {
     const [ID, setID] = useState("")
     const [PW, setPW] = useState("")
     const [IP, setIP] = useState("");
+    const [Name, setName] = useState("");
 
     useEffect(() => {
         SendAPI('https://geolocation-db.com/json/')
@@ -28,6 +29,7 @@ const Login = () => {
         .then((returnResponse) => {
             if (returnResponse) {
                 console.log(returnResponse)
+                console.log("test --> : ", returnResponse.result);
                 if (returnResponse.result) {
                     alert("인증번호를 입력하세요.")
                     setStatus(true)
@@ -37,7 +39,9 @@ const Login = () => {
                         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
                             .then((returnResponse) => {
                                 if (returnResponse) {
-                                    console.log(returnResponse)
+                                    console.log("returnResponse ----> ", returnResponse);
+                                    setName(returnResponse.agent_nm);
+                                    alert("kk");
                                 }
                             })
                             .catch((error) => {
@@ -64,10 +68,12 @@ const Login = () => {
                     SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN", note : '', IP : sessionStorage.getItem('IP')})
                         .then((returnResponse) => {
                             if (returnResponse) {
-                                console.log(returnResponse)
+                                console.log("returnResponse:  ===> ", returnResponse);
                                 if (returnResponse.result) {
                                     sessionStorage.setItem('ID', ID); // 사용자 ID session 저장
                                     sessionStorage.setItem('validToken', 'valid');
+                                    sessionStorage.setItem('Name', Name);
+                                    console.log("sessionStorage ==== > : ", sessionStorage);
                                     window.location.href = "/MyPage"
                                 }   
                             }
