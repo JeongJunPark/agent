@@ -168,8 +168,8 @@ const ManageCompany = () => {
                     <td>{item.agent_phn}</td>
                     <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
                     <td>{item.mgr_dt}</td>
-                    <td><button className="loginBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
-                    <td><button className="loginBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
+                    <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
+                    <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
                   </tr>
                 ))) : 
                    <NoDataRow colSpan={9} height="400px" />

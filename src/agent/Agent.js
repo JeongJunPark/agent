@@ -276,11 +276,9 @@ const Agent = () => {
                                 disabledKeyboardNavigation
 								locale="ko"
                             />
-                            </div>
                             &nbsp;
                             ~
                             &nbsp;
-                            <div>
                             <DatePicker
                                 renderCustomHeader={renderCustomHeader}
                                 id="datepicker2"
@@ -304,7 +302,8 @@ const Agent = () => {
                     ) : (
                         <span>Total : 0건</span>
                     )}
-                </div>                
+                </div>     
+                           
                 <div className="manage_result_layout">                    
                     <table border="1" id="tableData" className="result_table">
                         <thead>

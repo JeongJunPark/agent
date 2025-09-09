@@ -413,6 +413,37 @@ select {
 }
 
 /* table 관련 */
+.result_table_sub {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.result_table_sub th, .result_table_sub td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.result_table_sub th {
+    width: 20%;
+    background-color: #f2f2f2;
+    text-align: center;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;    
+}
+.result_table_sub td {
+    width: 80%;
+}
+
+.result_table_sub tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.result_table_sub tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
 .result_table {
     width: 100%;
     border-collapse: collapse;
@@ -435,6 +466,8 @@ select {
 .result_table th {
     background-color: #f2f2f2;
     text-align: center;
+      overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .result_table tbody tr:nth-child(even) {
@@ -544,6 +577,17 @@ select {
   width:300px;
 }
 
+.tdInputReadonly {
+  transition: 0.5s ease-in-out;
+  border: 1px solid #d9d9d9;
+  background-color: #d8d8d8;
+  padding: 17px;
+  border-radius: 8px;
+  color: #333;
+  font-size: 14px;
+  width:300px;
+}
+
 .button-container {
   display: flex;
   justify-content: flex-end; /* 오른쪽 정렬 */
@@ -552,7 +596,7 @@ select {
 
 .table-wrapper {
   max-width: 80%;
-  overflow-x: auto; 
+  overflow-x: auto !important; 
   margin: 20px auto;   /* 위/아래 40px, 좌우 auto로 가운데 */
   /* background-color: #d9d9d9;  */
   padding: 70px 60px;
