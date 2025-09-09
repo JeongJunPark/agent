@@ -5,7 +5,8 @@ import "../styles/common.css"
 
 import { AiOutlineShop } from "react-icons/ai";
 import NoDataRow from "../utils/NoDataRow";
-
+import { AiOutlineBackward } from "react-icons/ai";
+import { AiOutlineForward } from "react-icons/ai";
 
 const ManageCompany = () => {
 
@@ -15,15 +16,28 @@ const ManageCompany = () => {
   const [data, setData] = useState("")
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-
+  const [pageGroupStart, setPageGroupStart] = useState(1); // 10개 단위 시작 페이
+  const totalPages = Math.ceil(data.length / postsPerPage)
   // 현재 페이지에 해당하는 데이터 계산
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
-
+  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
   // 페이지 번호 클릭 처리
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  // 이전 10페이지
+  const handlePrevGroup = () => {
+  const newStart = Math.max(pageGroupStart - 10, 1);
+  setPageGroupStart(newStart);
+  setCurrentPage(newStart);
+  }
+  // 다음 10페이지
+  const handleNextGroup = () => {
+  const newStart = pageGroupStart + 10;
+  if (newStart <= totalPages) {
+      setPageGroupStart(newStart);
+      setCurrentPage(newStart);
+  }
+  };
   const [keyword, setKeyword] = useState("");
   const [condition, setCondition] = useState("");
 
@@ -121,6 +135,13 @@ const ManageCompany = () => {
         </div>
         </p>
 
+        <div className="pagination-info">
+          {data.length > 0 ? (
+            <span>Total : {data.length}건 [{currentPage}/{totalPages}] 페이지</span>
+          ) : (
+            <span>Total : 0건</span>
+          )}
+        </div>
         <div className="manage_result_layout">
           <table className="result_table" border="1">
             <thead>
@@ -155,17 +176,24 @@ const ManageCompany = () => {
               }
             </tbody>
           </table>
-          </div>
+          <div className="pagenation">
+          {pageGroupStart > 1 && <a onClick={handlePrevGroup}><AiOutlineBackward/></a>}
 
-        <div className="pagenation">
-          {Array.from({ length: Math.ceil(data.length / postsPerPage) }, (_, i) => i + 1).map(number => (
-            <span key={number}>
-              <p className={number === currentPage ? "active" : null}>
-                <a onClick={() => paginate(number)}>{number}</a>
+          {Array.from(
+              { length: Math.min(10, totalPages - pageGroupStart + 1) },
+              (_, i) => pageGroupStart + i
+          ).map((number) => (
+              <p key={number} className={number === currentPage ? "active" : null}>
+              <a onClick={() => paginate(number)}>{number}</a>
               </p>
-            </span>
           ))}
-        </div>
+
+          {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
+          </div>      
+          <div className='right-button-container'>
+          <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>          
+          </div>
+          </div>
         </div>
       </div>
     </>

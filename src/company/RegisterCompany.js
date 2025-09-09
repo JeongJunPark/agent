@@ -98,13 +98,14 @@ const RegisterCompany = () => {
                     <tr>
                         <th className="table_td_title">사용 여부</th>
                         <td className="table_td_value">
-                            <label className="agent-radio">
+                            <label>
                                 <input type="radio" value="Y" checked={coUse === 'Y'} onChange={(e) => setCoUse(e.target.value)} />
-                            <span>Y</span>
+                                <span>Y</span>
                             </label>
-                            <label className="agent-radio">
-                               <input type="radio" value="N" checked={coUse === 'N'} onChange={(e) => setCoUse(e.target.value)} />
-                            <span>N</span>
+
+                            <label>
+                                <input type="radio" value="N" checked={coUse === 'N'} onChange={(e) => setCoUse(e.target.value)} />
+                                <span>N</span>
                             </label>                        
                         </td>
                     </tr>

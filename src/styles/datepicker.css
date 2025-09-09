@@ -136,3 +136,16 @@ input#datepicker2 {
   font-size: 8px;
   padding-top: 40px;
 }
+
+.react-datepicker_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 32px; /* 헤더 높이 고정 */
+  padding-bottom: 0; /* hover 시 padding 변화 방지 */
+}
+
+.datepicker-wrapper input {
+  position: relative;
+}

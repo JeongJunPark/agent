@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Dropdown, Drawer, Menu, Button } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import SendAPI from "../utils/SendAPI";
+import { useLocation } from "react-router-dom";
 
 import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution } from "react-icons/ai";
 
@@ -17,6 +18,13 @@ const Header = () => {
 
     const agentPageAuth = ["ROLE_ADMIN", "ROLE_AGENT_ADMIN", "ROLE_AGENT_USER"];
     const borrowerPageAuth = ["ROLE_ADMIN", "ROLE_BORROWER"];
+
+    const location = useLocation();
+
+    const isActive = (paths) => {
+      // paths: 최상위 메뉴 관련 path 배열
+      return paths.some(path => location.pathname.startsWith(path));
+    }
 
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentMenu", ID)
@@ -81,32 +89,42 @@ const Header = () => {
         {/* Desktop 메뉴 */}
         <div className="desktop-menu">
           <div className="menu-left">
-          {/* 왼쪽 메뉴들 */}
           <Dropdown menu={{ items: myPageItems }} trigger={["click"]} placement="bottomLeft">
-            <div className="mypage_header"><AiOutlineForm/> My Page</div>
+            <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
+              <AiOutlineForm/> My Page
+            </div>
           </Dropdown>
 
           <Dropdown menu={{ items: companyMenuItems }} trigger={["click"]} placement="bottomLeft">
-            <div className="mypage_header"><AiOutlineShop/> 업체 관리</div>
+            <div className={`mypage_header ${isActive(['/ManageCompany', '/RegisterCompany', '/ModifyCompany']) ? 'active' : ''}`}>
+              <AiOutlineShop/> 업체 관리
+            </div>
           </Dropdown>
 
           <Dropdown menu={{ items: userMenuItems }} trigger={["click"]} placement="bottomLeft">
-            <div className="mypage_header"><AiOutlineTeam/> 사용자 관리</div>
+            <div className={`mypage_header ${isActive(['/ManageUser', '/RegisterUser', '/ModifyUser', '/UseHistory']) ? 'active' : ''}`}>
+              <AiOutlineTeam/> 사용자 관리
+            </div>
           </Dropdown>
 
           {authList && authList.some((value) => agentPageAuth.includes(value)) && (
             <Dropdown menu={{ items: agentMenuItems }} trigger={["click"]} placement="bottomLeft">
-              <div className="mypage_header"><AiOutlineSolution/> 에이전트</div>
+              <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
+                <AiOutlineSolution/> 에이전트
+              </div>
             </Dropdown>
           )}
 
           {authList && authList.some((value) => borrowerPageAuth.includes(value)) && (
             <Dropdown menu={{ items: borrowerMenuItems }} trigger={["click"]} placement="bottomLeft">
-              <div className="mypage_header"><AiOutlineDollarCircle/> 차입처</div>
+              <div className={`mypage_header ${isActive(['/Borrower']) ? 'active' : ''}`}>
+                <AiOutlineDollarCircle/> 차입처
+              </div>
             </Dropdown>
           )}
-         </div>
         </div>
+
+      </div>
         <div className="menu-right">
           <Dropdown menu={{ items: myMenuItems }} trigger={['click']} placement="bottomRight">
             <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID}</div>

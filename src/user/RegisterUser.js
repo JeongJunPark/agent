@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
-
+import { AiOutlineTeam } from "react-icons/ai";
 const RegisterUser = () => {
 
     const location = useLocation()
@@ -87,18 +87,19 @@ const RegisterUser = () => {
     return (
         <>
             <div className="content_body">
-                <p className="menu_title">사용자 등록</p>
+                <div className="table-wrapper">                
+                <p className="menu_title"><AiOutlineTeam/> 사용자 등록</p>
                 <table className="result_table" border="1">
                     <tr>
-                        <td className="table_td_title">아이디</td>
+                        <th className="table_td_title">아이디</th>
                         <td className="table_td_value"><input className="searchInput" placeholder="아이디" value={userID} onChange={(e) => setUserID(e.target.value)} /></td>
                     </tr>
                     <tr>
-                        <td className="table_td_title">이름</td>
+                        <th className="table_td_title">이름</th>
                         <td className="table_td_value"><input className="searchInput" placeholder="이름" value={userName} onChange={(e) => setUserName(e.target.value)} /></td>
                     </tr>
                     <tr>
-                        <td className="table_td_title">소속</td>
+                        <th className="table_td_title">소속</th>
                         <td className="table_td_value">
                             <select className="searchInput" onChange={(e) => setCo(e.target.value)} value={co}>
                             <option value="">구분</option>
@@ -109,31 +110,56 @@ const RegisterUser = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td className="table_td_title">부서</td>
+                        <th className="table_td_title">부서</th>
                         <td className="table_td_value"><input className="searchInput" placeholder="부서" value={mgr} onChange={(e) => setMgr(e.target.value)} /></td>
                     </tr>
                     <tr>
-                        <td className="table_td_title">연락처</td>
+                        <th className="table_td_title">연락처</th>
                         <td className="table_td_value"><input className="searchInput" placeholder="연락처" value={phone} onChange={(e) => setPhone(e.target.value)} /></td>
                     </tr>
                     <tr>
-                        <td className="table_td_title">권한</td>
-                        <td className="table_td_value">에이전트 관리자 <input type="radio" value="1" checked={auth === '1'} onChange={(e) => setAuth(e.target.value)} />
-                            에이전트 사용자 <input type="radio" value="2" checked={auth === '2'} onChange={(e) => setAuth(e.target.value)} />
-                            관리자 <input type="radio" value="3" checked={auth === '3'} onChange={(e) => setAuth(e.target.value)} />
-                            차입처 <input type="radio" value="4" checked={auth === '4'} onChange={(e) => setAuth(e.target.value)} />
+                        <th className="table_td_title">권한</th>
+                        <td className="table_td_value">
+                            <label>
+                                <input type="radio" value="1" checked={auth === '1'} onChange={(e) => setAuth(e.target.value)} />
+                                <span>에이전트 관리자</span>
+                            </label>
+                            
+                            <label>
+                            <input type="radio" value="2" checked={auth === '2'} onChange={(e) => setAuth(e.target.value)} />
+                                <span>에이전트 사용자</span>
+                            </label>
+
+                            <label>
+                                <input type="radio" value="3" checked={auth === '3'} onChange={(e) => setAuth(e.target.value)} />
+                                <span>관리자</span>
+                            </label>
+
+                            <label>     
+                                <input type="radio" value="4" checked={auth === '4'} onChange={(e) => setAuth(e.target.value)} />
+                                <span>차입처</span>
+                            </label>
                         </td>
                     </tr>
                     <tr>
-                        <td className="table_td_title">사용 여부</td>
-                        <td className="table_td_value">Y <input type="radio" value="Y" checked={use === 'Y'} onChange={(e) => setUse(e.target.value)} />
-                            N <input type="radio" value="N" checked={use === 'N'} onChange={(e) => setUse(e.target.value)} />
+                        <th className="table_td_title">사용 여부</th>
+                        <td className="table_td_value">
+                            <label>
+                                <input type="radio" value="Y" checked={use === 'Y'} onChange={(e) => setUse(e.target.value)} />
+                                <span>Y</span>
+                            </label>
+
+                            <label>
+                                <input type="radio" value="N" checked={use === 'N'} onChange={(e) => setUse(e.target.value)} />
+                                <span>N</span>
+                            </label>                        
                         </td>
                     </tr>
                 </table>
                 <div className="button_layout">
                     <button className="loginBtn" type="submit" onClick={registerAgentUser}>등록</button>
                     <button className="loginBtn" type="submit" onClick={() => navigate("/ManageUser")}>목록</button>
+                </div>
                 </div>
             </div>
         </>

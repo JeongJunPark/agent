@@ -16,48 +16,135 @@ import ManageUser from "./user/ManageUser"
 import RegisterUser from "./user/RegisterUser"
 import ModifyUser from "./user/ModifyUser"
 import UseHistory from "./user/UseHistory"
-import { Outlet } from "react-router-dom";
 
-import Header from './layout/Header'
-import Footer from './layout/Footer'
 
-function MainLayout() {
-  return (
-    <>
-      <Header />
-      <div className="content-body">
-        <Outlet />
-      </div>
-      <Footer />
-    </>
-  );
-}
+import MainLayout from './layout/MainLayout'
+import RouteGuard from './login/RouteGuard';
+
 
 function App() {
   return (
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/Login" element={<Login />} />
-        
-        <Route element={<MainLayout/>}>
-          <Route path="/MyPage" element={<MyPage />} />
-          <Route path="/PersonalInfoModify" element={<PersonalInfoModify />} />
+    <Routes>
+      {/* 로그인 페이지 */}
+      <Route path="/" element={<Login />} />
+      <Route path="/Login" element={<Login />} />
 
-          <Route path="/Borrower" element={<Borrower />} />
-          <Route path="/Agent" element={<Agent />} />
-          <Route path="/ManageCompany" element={<ManageCompany />} />
-          <Route path="/RegisterCompany" element={<RegisterCompany />} />
-          <Route path="/ModifyCompany" element={<ModifyCompany />} />
-          <Route path="/CompanyIP" element={<CompanyIP />} />
-          <Route path="/CompanyMoAccount" element={<CompanyMoAccount />} />
+      {/* 메인 레이아웃 안에서 페이지 렌더링 */}
+      <Route element={<MainLayout />}>
+        <Route
+          path="/MyPage"
+          element={
+            <RouteGuard>
+              <MyPage />
+            </RouteGuard>
+          }
+        />
 
-          <Route path="/ManageUser" element={<ManageUser />} />
-          <Route path="/ModifyUser" element={<ModifyUser />} />
-          <Route path="/RegisterUser" element={<RegisterUser />} />
-          <Route path="/UseHistory" element={<UseHistory />} />
-        </Route>
+        <Route
+          path="/PersonalInfoModify"
+          element={
+            <RouteGuard>
+              <PersonalInfoModify />
+            </RouteGuard>
+          }
+        />
 
-      </Routes>
+        <Route
+          path="/Borrower"
+          element={
+            <RouteGuard>
+              <Borrower />
+            </RouteGuard>
+          }
+        />
+        <Route
+          path="/Agent"
+          element={
+            <RouteGuard>
+              <Agent />
+            </RouteGuard>
+          }
+        />
+        <Route
+          path="/ManageCompany"
+          element={
+            <RouteGuard>
+              <ManageCompany />
+            </RouteGuard>
+          }
+        />
+        <Route
+          path="/RegisterCompany"
+          element={
+            <RouteGuard>
+              <RegisterCompany />
+            </RouteGuard>
+          }
+        />
+        <Route
+          path="/ModifyCompany"
+          element={
+            <RouteGuard>
+              <ModifyCompany />
+            </RouteGuard>
+          }
+        />
+
+        <Route
+          path="/CompanyIP"
+          element={
+            <RouteGuard>
+              <CompanyIP />
+            </RouteGuard>
+          }
+        />
+
+        <Route
+          path="/CompanyMoAccount"
+          element={
+            <RouteGuard>
+              <CompanyMoAccount />
+            </RouteGuard>
+          }
+        />		
+		
+        <Route
+          path="/ManageUser"
+          element={
+            <RouteGuard>
+              <ManageUser />
+            </RouteGuard>
+          }
+        />		
+
+        <Route
+          path="/ModifyUser"
+          element={
+            <RouteGuard>
+              <ModifyUser />
+            </RouteGuard>
+          }
+        />		
+
+        <Route
+          path="/RegisterUser"
+          element={
+            <RouteGuard>
+              <RegisterUser />
+            </RouteGuard>
+          }
+        />		
+
+        <Route
+          path="/UseHistory"
+          element={
+            <RouteGuard>
+              <UseHistory />
+            </RouteGuard>
+          }
+        />		
+      </Route>
+    </Routes>
   );
 }
 

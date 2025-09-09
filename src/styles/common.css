@@ -407,13 +407,6 @@ select {
   border: 1px solid #d9d9d9;
 }
 
-.agent_result_summary {
-  display: flex;
-  justify-content: center;
-  gap : 20px;
-  font-size: 20px;
-}
-
 .datepickerButton {
   border : 0px;
   background-color: inherit;
@@ -423,12 +416,14 @@ select {
 .result_table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
 /* table 관련 */
 .result_table_sm {
     width: 50%;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
 .result_table th, .result_table td {
@@ -455,6 +450,7 @@ select {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
+    white-space: nowrap;
 }
 
 .result_table_sm th {
@@ -514,6 +510,30 @@ select {
   cursor: pointer;
 }
 
+.searchBtn {
+  margin-left: 5px;
+  border: 0.5px solid #d9d9d9;
+  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
+  border-radius: 5px;
+  color: #333 !important;
+  width: 90px;
+  background-color: #f0f0f0 !important;
+  padding: 13px 0;
+  cursor: pointer;
+}
+
+.excelDownBtn {
+  margin-left: 5px;
+  border: 0.5px solid #d9d9d9;
+  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
+  border-radius: 5px;
+  color: #333 !important;
+  width: 90px;
+  background-color: #f0f0f0 !important;
+  padding: 13px 0;
+  cursor: pointer;
+}
+
 .tdInput {
   transition: 0.5s ease-in-out;
   border: 1px solid #d9d9d9;
@@ -531,7 +551,8 @@ select {
 }
 
 .table-wrapper {
-  max-width: 80%; 
+  max-width: 80%;
+  overflow-x: auto; 
   margin: 20px auto;   /* 위/아래 40px, 좌우 auto로 가운데 */
   /* background-color: #d9d9d9;  */
   padding: 70px 60px;
@@ -575,64 +596,80 @@ select {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-.agent-radio {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 16px;
+.right-button-container {
+  display: flex;
+  justify-content: flex-end; /* 우측 정렬 */
+  margin-top: 16px; /* 위쪽 여백 (선택) */
+}
+
+/* 기본 라디오 버튼 숨기지 않고, 색상만 커스텀 */
+input[type="radio"] {
+  accent-color: #333333; /* ✅ 라디오 선택 색상 변경 */
   cursor: pointer;
+}
+
+/* hover 효과 */
+input[type="radio"]:hover {
+  accent-color: #505054;
+}
+
+/* 라벨 텍스트 스타일 */
+label {
   font-weight: 500;
   font-size: 14px;
-  color: #333; /* 기존 tdInput/버튼 텍스트 색과 맞춤 */
-  user-select: none;
+  color: #333;
+  cursor: pointer;
+  margin-right: 16px;
 }
 
-.agent-radio input {
-  display: none; /* 기본 라디오 숨김 */
+.menu_title_container {
+  display: flex;
+  justify-content: space-between; /* 좌측-우측 분리 */
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.agent-radio span {
-  position: relative;
-  padding-left: 28px; /* 텍스트와 원 간격 */
+.menu_title_left {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 아이콘과 텍스트 간격 */
 }
 
-/* 라디오 원 */
-.agent-radio span::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  border: 2px solid #d9d9d9;
-  border-radius: 50%;
-  background-color: #FAF9F6;
-  transition: all 0.2s ease;
+.menu_title_right {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 버튼 간격 */
 }
 
-.agent-radio input:checked + span::before {
-  border-color: #333333;
-  background-color: #333333;
+.agent_result_summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
 }
 
-.agent-radio span::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 40%;
-  width: 10px;
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summary-label {
+  min-width: 100px; /* 라벨 너비 고정 */
+  font-weight: bold;
+  font-size: 14px;
+  text-align: right; /* 오른쪽 끝에 맞춤 */
+}
+
+.summary-bar {
   height: 10px;
-  border-radius: 50%;
-  background-color: #FAF9F6;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.2s ease;
+  border-radius: 5px;
+  /* transition: width 0.3s ease; */
 }
 
-.agent-radio input:checked + span::after {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.agent-radio:hover span::before {
-  border-color: #505054;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+.pagination-info {
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #666;
 }

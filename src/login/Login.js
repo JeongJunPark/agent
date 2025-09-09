@@ -67,6 +67,7 @@ const Login = () => {
                                 console.log(returnResponse)
                                 if (returnResponse.result) {
                                     sessionStorage.setItem('ID', ID); // 사용자 ID session 저장
+                                    sessionStorage.setItem('validToken', 'valid');
                                     window.location.href = "/MyPage"
                                 }   
                             }
