@@ -28,37 +28,38 @@ const ModifyUser = () => {
 
     useEffect(() => {
 
+        /*
         // 사용자 세부정보
-        // SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: locationState.userINDX })
-        //     .then((returnResponse) => {
-        //         if (returnResponse) {
-        //             console.log("returnResponse ----> : ", returnResponse)
-        //             setUserID(returnResponse.detailAgentUser[0].agent_id)
-        //             setUserName(returnResponse.detailAgentUser[0].agent_nm)
-        //             setCo(returnResponse.detailAgentUser[0].agent_co)
-        //             setMgr(returnResponse.detailAgentUser[0].agent_dept)
-        //             setPhone(returnResponse.detailAgentUser[0].agent_phn)
-        //             if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_AGENT_USER"') {
-        //                 setAuth("2")
-        //             }
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: locationState.userINDX })
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    console.log("returnResponse ----> : ", returnResponse)
+                    setUserID(returnResponse.detailAgentUser[0].agent_id)
+                    setUserName(returnResponse.detailAgentUser[0].agent_nm)
+                    setCo(returnResponse.detailAgentUser[0].agent_co)
+                    setMgr(returnResponse.detailAgentUser[0].agent_dept)
+                    setPhone(returnResponse.detailAgentUser[0].agent_phn)
+                    if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_AGENT_USER"') {
+                        setAuth("2")
+                    }
 
-        //             if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_AGENT_USER') {
-        //                 setAuth("1")
-        //             } if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_AGENT_ADMIN') {
-        //                 setAuth("2")
-        //             } if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_ADMIN') {
-        //                 setAuth("3")
-        //             } if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_BORROWER') {
-        //                 setAuth("4")
-        //             }
+                    if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_AGENT_USER') {
+                        setAuth("1")
+                    } if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_AGENT_ADMIN') {
+                        setAuth("2")
+                    } if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_ADMIN') {
+                        setAuth("3")
+                    } if (returnResponse.detailAgentUser[0].agent_auth === 'ROLE_MANAGER,ROLE_BORROWER') {
+                        setAuth("4")
+                    }
 
-        //             setUse(returnResponse.detailAgentUser[0].mgr_use_yn)
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
-
+                    setUse(returnResponse.detailAgentUser[0].mgr_use_yn)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        */
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX })
             .then((returnResponse) => {
                 const user = returnResponse.result[0]; // 클릭한 한 행 데이터
@@ -186,8 +187,8 @@ const ModifyUser = () => {
                     </tr>
                 </table>
                 <div className="button_layout">
-                    <button className="loginBtn" type="submit" onClick={modifyAgenUser}>수정</button>
-                    <button className="loginBtn" type="submit" onClick={() => navigate("/ManageUser")}>목록</button>
+                    <button className="modifyBtn" type="submit" onClick={modifyAgenUser}>수정</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate("/ManageUser")}>목록</button>
                 </div>
             </div>
         </>

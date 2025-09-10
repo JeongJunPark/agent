@@ -358,6 +358,16 @@
   width:300px;
 }
 
+.searchInputReadonlu {
+  transition: 0.5s ease-in-out;
+  border: 1px solid #d9d9d9;
+  padding: 17px;
+  border-radius: 8px;
+  color: #a4a4a4;
+  font-size: 14px;
+  width:300px;
+}
+
 .manage_result_layout {
   clear: both;
 }
@@ -555,6 +565,18 @@ select {
   cursor: pointer;
 }
 
+.listBtn {
+  margin-left: 5px;
+  border: 0.5px solid #d9d9d9;
+  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
+  border-radius: 5px;
+  color: #333 !important;
+  width: 90px;
+  background-color: #f0f0f0 !important;
+  padding: 13px 0;
+  cursor: pointer;
+}
+
 .excelDownBtn {
   margin-left: 5px;
   border: 0.5px solid #d9d9d9;
@@ -587,6 +609,8 @@ select {
   font-size: 14px;
   width:300px;
 }
+
+
 
 .button-container {
   display: flex;
