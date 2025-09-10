@@ -8,27 +8,6 @@ const PersonalInfoModify = () => {
     const [managerVO, setManagerVO] = useState({});
     const navigate = useNavigate();
 
-    // const [coName, setCoName] = useState('');
-    // const [deptName, setDeptName] = useState('');
-    // const [coPhone, setCoPhone] = useState('');
-
-
-    // agent_co
-    // useEffect(() => {
-    //     if (managerVO.agent_co) setCoName(managerVO.agent_co);
-    // }, [managerVO]);
-    
-    // // agent_dept
-    // useEffect(() => {
-    //     if (managerVO.agent_dept) setDeptName(managerVO.agent_dept);
-    // }, [managerVO]);
-
-    // // agent_phn
-    // useEffect(() => {
-    //     if (managerVO.agent_phn) setCoPhone(managerVO.agent_phn);
-    // }, [managerVO]);
-
-    // modify page select
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfo", { ID: sessionStorage.getItem('ID'), menu: "개인정보 수정", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
@@ -44,14 +23,13 @@ const PersonalInfoModify = () => {
     }, [])
 
     // modify action
-
     const modifyPersonalInfo = () => {
         const payload = {            
             agent_id: sessionStorage.getItem('ID'),
             agent_co: managerVO.agent_co || "",
             agent_dept: managerVO.agent_dept || "",
             agent_phn: managerVO.agent_phn || "",
-            mgr_dt: new Date().toISOString()
+            mgr_dt: new Date().toISOString().split("T")[0]
         };
 
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updateManagerInfo", payload)
@@ -66,7 +44,6 @@ const PersonalInfoModify = () => {
             })
     }
 
-
     return (
         <>
             <div className="content_body">
@@ -79,22 +56,15 @@ const PersonalInfoModify = () => {
                     </colgroup>
                         <tr>
                             <th>아이디</th>
-                            <td><input type="text" className="tdInput" value={managerVO.agent_id } readOnly></input></td>
+                            <td>{managerVO.agent_id }</td>
                         </tr>
                         <tr>
                             <th>이름</th>
-                            <td><input type="text" className="tdInput" value={managerVO.agent_nm } readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={managerVO.agent_nm } readOnly></input></td>
                         </tr>
                         <tr>
                         <th>소속</th>
-                        <td>
-                            <input
-                            type="text"
-                            className="tdInput"
-                            value={managerVO.agent_co || ""}
-                            onChange={(e) => setManagerVO({ ...managerVO, agent_co: e.target.value })}
-                            />
-                        </td>
+                            <td><input type="text" className="tdInputReadonly" value={managerVO.agent_co } readOnly></input></td>                        
                         </tr>
                         <tr>
                         <th>부서</th>
