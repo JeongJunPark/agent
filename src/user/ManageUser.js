@@ -119,8 +119,8 @@ const ManageUser = () => {
                     <button className="loginBtn" onClick={handleSearch}>검색</button>
                 </div>
                 </p>
-                <div className="manage_result_layout">
-                    <table className="result_table" border="1">
+                    <div className="grid-wrapper">   
+                    <table className="grid" border="1">
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -159,6 +159,7 @@ const ManageUser = () => {
 
                         </tbody>
                     </table>
+                    </div>
                     <div className="pagenation">
                     {pageGroupStart > 1 && <a onClick={handlePrevGroup}><AiOutlineBackward/></a>}
 
@@ -176,8 +177,7 @@ const ManageUser = () => {
                     <div className='right-button-container'>
                         <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterUser')}>등록</button>          
                     </div>                         
-                </div>
-                </div>    
+                </div>  
             </div>
         </>
     );

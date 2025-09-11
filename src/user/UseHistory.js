@@ -38,8 +38,8 @@ const UseHistory = () => {
 
     return (
         <>
-            <div className="content_body">
-                <div className="table-wrapper">
+            <div className="content_body_nogrid">
+                <div className="table-wrapper-nogrid">   
                 <p className="menu_title">사용이력 조회</p>
                 <table className="result_table" border="1">
                     <colgroup>

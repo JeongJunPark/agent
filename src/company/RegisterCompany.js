@@ -70,8 +70,8 @@ const RegisterCompany = () => {
 
     return (
         <>
-            <div className="content_body">
-                <div className="table-wrapper">    
+            <div className="content_body_nogrid">
+                <div className="table-wrapper-nogrid">   
                 <p className="menu_title"><AiOutlineShop/> 업체 등록</p>
                 <table className="result_table" border="1">
                     <tr>

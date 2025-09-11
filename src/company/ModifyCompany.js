@@ -123,7 +123,7 @@ const ModifyCompany = () => {
                         </tr>
                         <tr>
                             <th>업체 구분</th>
-                            <td className="table_td_value"><select className="searchInput" onChange={(e) => setCoDiv(e.target.value)} value={coDiv}>
+                            <td><select className="searchInput" onChange={(e) => setCoDiv(e.target.value)} value={coDiv}>
                                 <option value="">구분</option>
                                 <option value="01">본사</option>
                                 <option value="02">에이전트</option>
@@ -132,15 +132,15 @@ const ModifyCompany = () => {
                         </tr>
                         <tr>
                             <th>대표 아이디</th>
-                            <td className="table_td_value"><input className="searchInput" value={coManagerID} onChange={(e) => setCoManagerID(e.target.value)} /></td>
+                            <td><input className="searchInput" value={coManagerID} onChange={(e) => setCoManagerID(e.target.value)} /></td>
                         </tr>
                         <tr>
                             <th>대표 연락처</th>
-                            <td className="table_td_value"><input className="searchInput" value={coPhone} onChange={(e) => setCoPhone(e.target.value)} /></td>
+                            <td><input className="searchInput" value={coPhone} onChange={(e) => setCoPhone(e.target.value)} /></td>
                         </tr>
                         <tr>
                             <th>사용 여부</th>
-                            <td className="table_td_value">Y <input type="radio" value="Y" checked={coUse === 'Y'} onChange={(e) => setCoUse(e.target.value)} />
+                            <td>Y <input type="radio" value="Y" checked={coUse === 'Y'} onChange={(e) => setCoUse(e.target.value)} />
                                 N <input type="radio" value="N" checked={coUse === 'N'} onChange={(e) => setCoUse(e.target.value)} />
                             </td>
                         </tr>

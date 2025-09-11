@@ -96,12 +96,14 @@ font-size: 1em;
 font-weight: 600;
 }
 
+/* Sun */
 .react-datepicker__day-name:first-child {
-color: #ababab;
+color: rgba(223, 21, 21, 0.733);
 }
 
+/* Sat */
 .react-datepicker__day-name:last-child {
-color: #ababab;
+color: rgba(38, 65, 241, 0.733);
 }
 
 /* 날짜 셀 */
@@ -124,6 +126,7 @@ justify-content: center;
 
 .react-datepicker__day:hover {
 border-radius: 50%;
+color: #0069a6;
 }
 
 .react-datepicker__day--selected {
@@ -148,14 +151,15 @@ display: none;
 
 .react-datepicker {
 border: none;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+box-shadow: 0 4px 12px #333;
 border-radius: 8px;
 }
 
 .react-datepicker__day--today::after {
-content: "오늘";
+content: "today";
 position: absolute;
-font-size: 8px;
+font-size: 10px;
+font-weight: bold;
 padding-top: 40px;
 }
 

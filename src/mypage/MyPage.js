@@ -28,8 +28,8 @@ const MyPage = () => {
 
     return (
         <>
-            <div className="content_body">
-                <div className="table-wrapper">              
+            <div className="content_body_nogrid">
+                <div className="table-wrapper-nogrid">              
                 <p className="menu_title"><AiOutlineForm/> My Page</p>
                 <table className="result_table" border="1">
                     <colgroup>

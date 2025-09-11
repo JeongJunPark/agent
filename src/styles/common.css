@@ -333,11 +333,6 @@
   font-weight: 500;
 }
 
-.content_body {
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
 .menu_title {
   font-weight : 900;
   font-size : 30px;
@@ -355,17 +350,17 @@
   border-radius: 8px;
   color: black;
   font-size: 14px;
-  width:300px;
+  width:250px;
 }
 
-.searchInputReadonlu {
+.searchInputReadonly {
   transition: 0.5s ease-in-out;
   border: 1px solid #d9d9d9;
   padding: 17px;
   border-radius: 8px;
   color: #a4a4a4;
   font-size: 14px;
-  width:300px;
+  width:250px;
 }
 
 /* .manage_result_layout {
@@ -426,68 +421,6 @@ select {
   background-color: inherit;
 }
 
-/* table 관련 */
-.result_table_sub {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-    border-radius: 5px;
-}
-
-.result_table_sub th, .result_table_sub td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.result_table_sub th {
-    width: 20%;
-    background-color: #f2f2f2;
-    text-align: center;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;    
-}
-.result_table_sub td {
-    width: 80%;
-}
-
-.result_table_sub tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.result_table_sub tbody tr:hover {
-    background-color: #f2f2f2;
-}
-
-.result_table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
-    border-radius: 5px;
-}
-
-/* table 관련 */
-.result_table th, .result_table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.result_table th {
-    background-color: #f2f2f2;
-    text-align: center;
-      overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-
-.result_table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.result_table tbody tr:hover {
-    background-color: #f2f2f2;
-}
-
 .login_footer {
     position: fixed;
     left: 0;
@@ -511,7 +444,7 @@ select {
   border-radius: 8px;
   color: #333;
   font-size: 14px;
-  width:300px;
+  width:200px;
 }
 
 .tdInputReadonly {
@@ -522,7 +455,7 @@ select {
   border-radius: 8px;
   color: #333;
   font-size: 14px;
-  width:300px;
+  width:200px;
 }
 
 
@@ -533,12 +466,45 @@ select {
   margin-top: 10px; /* 버튼 위 여백 */
 }
 
+.content_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.content_body_nogrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* 화면이 작을 때는 flex 중앙 정렬 대신 top-align */
+@media (max-height: 700px) {
+  .content_body {
+    align-items: flex-start;  /* 위쪽 정렬 */
+    padding-top: 20px;        /* 상단 여백 최소화 */
+    padding-bottom: 20px;     
+  }
+}
+
 .table-wrapper {
-  max-width: 80%;
-  overflow-x: auto !important; 
-  margin: 20px auto;   /* 위/아래 40px, 좌우 auto로 가운데 */
-  /* background-color: #d9d9d9;  */
-  padding: 70px 60px;
+  width: 100%;
+  max-width: 1500px;
+  overflow-x: auto; 
+  padding: 30px 20px;
+  border-radius: 8px;
+  background-color: #FAF9F6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.table-wrapper-nogrid {
+  width: 100%;
+  max-width: 1500px;
+  overflow-x: auto; 
+  padding: 30px 20px; 
   border-radius: 8px;
   background-color: #FAF9F6;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -640,7 +606,7 @@ label {
 .summary-label {
   min-width: 100px; /* 라벨 너비 고정 */
   font-weight: bold;
-  font-size: 14px;
+  font-size: 17px;
   text-align: right; /* 오른쪽 끝에 맞춤 */
 }
 
@@ -655,4 +621,68 @@ label {
   font-size: 16px;
   font-weight: bold;
   color: #666;
+}
+
+.result_table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    border-radius: 5px;
+}
+
+/* table 관련 */
+.result_table th, .result_table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.result_table th {
+    background-color: #f2f2f2;
+    text-align: center;
+      overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.result_table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.result_table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.grid-wrapper {
+  width: 100%;
+  overflow-x: auto;   /* 가로 스크롤 */
+}
+
+.grid {
+    width: max-content;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border-radius: 5px;
+    min-width: 100%;
+}
+
+.grid th, .grid td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.grid th {
+    background-color: #f2f2f2;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.grid tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.grid tbody tr:hover {
+    background-color: #f2f2f2;
 }

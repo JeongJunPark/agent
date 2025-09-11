@@ -8,9 +8,8 @@ import "../styles/datepicker.css";
 import SendAPI from "../utils/SendAPI";
 import * as XLSX from 'xlsx';
 
-// import "./styles/borrower.css"
+import "../styles/icon.css"
 import "../styles/common.css"
-// import "./styles/modify.css"
 import NoDataRow from "../utils/NoDataRow";
 import { AiOutlineForward,AiOutlineBackward,AiOutlineDollarCircle } from "react-icons/ai";
 import { PiMicrosoftExcelLogoDuotone } from "react-icons/pi";
@@ -21,7 +20,7 @@ const Borrower = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -120,7 +119,7 @@ const Borrower = () => {
     };    
 
     useEffect(() => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -140,10 +139,6 @@ const Borrower = () => {
         }
     }, [selectedBank, moAccount])
 
-    const selectBank = (e) => {
-        setSelectedBank(e.target.value)
-    }
-
     const searchBorrower = () => {
         setPostData({
             startDate: moment(startDate).format("YYYYMMDD"),
@@ -156,20 +151,31 @@ const Borrower = () => {
         })
     }
 
-    const selectMoAccount = (e) => {
-        setSelectedMoAccount(e.target.value)
-    }
-
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://home-api.leadcorp.co.kr:8080/borrowerResult', postData)
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/borrowerResult', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log("returnResponse: ------> ", returnResponse);
+                        console.log(11110);
+                        // console.log("returnResponse1: ------> ", returnResponse.result[0]);
+                        console.log(postData);
+                        console.log(11111);
+                        // console.log("returnResponse2: ------> ", returnResponse.result[0].query);
+                        
+                        console.log(11112);
+                        console.log("returnResponse3: ------> ", JSON.stringify(returnResponse.query));
+                        
+                        console.log(11113);
                         console.log("summaryData: -----> ", summaryData);
+                        
+                        console.log(11114);
                         setResponse(returnResponse.query);
                         setSummaryData(returnResponse.query2);
                         setData(returnResponse.query);
+                        
+                        if (!returnResponse.query || returnResponse.query.length === 0) {
+                            alert("조회 결과가 없습니다.");
+                        }                        
                     }
                 })
                 .catch((error) => {
@@ -188,7 +194,7 @@ const Borrower = () => {
         decreaseMonth,
         increaseMonth,
         prevMonthButtonDisabled,
-        nextMonthButtonDisabled,
+        nextMonthButtonDisabled
     }) => {
         // 월을 두 자리 숫자로 포맷팅 (예: 2 -> 02)
         const month = date.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줌
@@ -219,7 +225,7 @@ const Borrower = () => {
                 </span>                
                 <span className="menu_title_right">
                         <button className="searchBtn" onClick={searchBorrower}>검색</button>
-                        <button className="excelDownBtn" onClick={exportToExcel}><PiMicrosoftExcelLogoDuotone/> 다운로드</button>
+                        <button className="excelDownBtn" onClick={exportToExcel}><PiMicrosoftExcelLogoDuotone className="excelIcon"/> 다운로드</button>
                 </span>
                 </p>
                 <table className="result_table" border="1">
@@ -256,6 +262,7 @@ const Borrower = () => {
                         <th className="table_td_title">관리 지점</th>
                         <td className="table_td_value">
                             <select onChange={(e) => setSelectedManagerBranch(e.target.value)} value={selectedManagerBranch}>
+                                <option value="">전지점</option>
                                 {managerBranch && managerBranch.map((item, index) => (
                                     <option value={item.code}>{item.branch_name}</option>
                                 ))}
@@ -265,7 +272,7 @@ const Borrower = () => {
                     <tr>
                         <th className="table_td_title">은행</th>
                         <td className="table_td_value">
-                            <select onChange={selectBank} value={selectedBank}>
+                            <select onChange={(e) => setSelectedBank(e.target.value)} value={selectedBank}>
                                 {bank && bank.map((item, index) => (
                                     <option value={item.code} >{item.name}</option>
                                 ))}
@@ -273,9 +280,9 @@ const Borrower = () => {
                         </td>
                         <th className="table_td_title">모계좌번호</th>
                         <td className="table_td_value">
-                            <select onChange={selectMoAccount} value={selectedMoAccount}>
+                            <select onChange={(e) => setSelectedMoAccount(e.target.value)} value={selectedMoAccount}>
                                 {selectedBank && matchMoAccount.length > 0 && matchMoAccount.map((item, index) => (
-                                    <option value={item.mo_ssn}>{item.mo_ssn}</option>
+                                    <option value={item.moActNum}>{item.mo_ssn}</option>
                                 ))}
                             </select>
                         </td>
@@ -297,8 +304,8 @@ const Borrower = () => {
                     )}
                 </div>   
 
-                <div className="manage_result_layout">  
-                    <table border="1" id="tableData" className="result_table">
+                    <div className="grid-wrapper">   
+                    <table id="tableData" className="grid">
                         <thead>
                             <tr>
                                 <th>순번</th>
@@ -363,7 +370,8 @@ const Borrower = () => {
                             }
                         </tbody>
                     </table>
-                    <table className="result_table_sub">
+                    </div>
+                    <table className="result_table">
                         
                         <tbody>
                         <tr>
@@ -405,7 +413,6 @@ const Borrower = () => {
                     ))}
                     {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
                     </div>                     
-                </div>
                 </div>
             </div>
         </>

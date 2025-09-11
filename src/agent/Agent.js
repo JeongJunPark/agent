@@ -12,7 +12,8 @@ import SendAPI from "../utils/SendAPI";
 import * as XLSX from 'xlsx';
 import NoDataRow from "../utils/NoDataRow";
 
-import "../styles/common.css"
+import "../styles/common.css";
+import "../styles/icon.css";
 
 import { AiOutlineBackward } from "react-icons/ai";
 import { AiOutlineForward } from "react-icons/ai";
@@ -144,7 +145,7 @@ const Agent = () => {
     // 에이전트 리스트 체크
     useEffect(() => {
         if (status.auth !== '' && status.auth !== undefined) {
-            SendAPI("https://home-api.leadcorp.co.kr:8080/checkAgentList", status)
+            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/checkAgentList", status)
                 .then((returnResponse) => {
                     if (returnResponse) {
                         console.log(returnResponse)
@@ -234,14 +235,14 @@ const Agent = () => {
                     <AiOutlineSolution/> 에이전트 신청 목록
                 </span>
                 <span className="menu_title_right">
+                    <button className="excelDownBtn" onClick={exportToExcel}><PiMicrosoftExcelLogoDuotone className="excelIcon"/> 다운로드</button>
                     <button className="searchBtn" onClick={search}>검색</button>
-                    <button className="excelDownBtn" onClick={exportToExcel}><PiMicrosoftExcelLogoDuotone/> 다운로드</button>
                 </span>
                 </p>
                 <table className="result_table">
                     <tr>
-                        <th className="table_td_title">에이전트</th>
-                        <td className="table_td_value">
+                        <th>에이전트</th>
+                        <td>
                             <select onChange={(e) => setSelectedAgent(e.target.value)}>
                                 <option value="">선택</option>
                                 {agentList && agentList.map((item, index) => (
@@ -249,8 +250,8 @@ const Agent = () => {
                                 ))}
                             </select>
                         </td>
-                        <th className="table_td_title">신청 상태</th>
-                        <td className="table_td_value">
+                        <th>신청 상태</th>
+                        <td>
                             <select onChange={(e) => setSelectedReqSc(e.target.value)} value={selectedReqSc}>
                                 {reqSc && reqSc.map((item, index) => (
                                     <option key={index} value={item.value}>{item.name}</option>
@@ -259,39 +260,39 @@ const Agent = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th className="table_td_title">고객명</th>
-                        <td className="table_td_value">
+                        <th>고객명</th>
+                        <td>
                             <input className="searchInput" onChange={(e) => setName(e.target.value)} />
                         </td>
-                        <th className="table_td_title">신청일</th>
-                        <td className="table_td_value">
+                        <th>신청일</th>
+                        <td>
     
-          <div className="datepicker-wrapper">
-            <DatePicker
-              renderCustomHeader={renderCustomHeader}
-              id="datepicker1"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              maxDate={endDate || new Date()}
-              dateFormat="yyyy-MM-dd"
-              locale="ko"
-              placeholderText="시작일"
-              popperPlacement="bottom-start"
-            />
-            ~
-            <DatePicker
-              renderCustomHeader={renderCustomHeader}
-              id="datepicker2"
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              minDate={startDate}
-              maxDate={new Date()}
-              dateFormat="yyyy-MM-dd"
-              locale="ko"
-              placeholderText="종료일"
-              popperPlacement="bottom-start"
-            />
-          </div>
+                        <div className="datepicker-wrapper">
+                            <DatePicker
+                            renderCustomHeader={renderCustomHeader}
+                            id="datepicker1"
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            maxDate={endDate || new Date()}
+                            dateFormat="yyyy-MM-dd"
+                            locale="ko"
+                            placeholderText="시작일"
+                            popperPlacement="bottom-start"
+                            />
+                            ~
+                            <DatePicker
+                            renderCustomHeader={renderCustomHeader}
+                            id="datepicker2"
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            minDate={startDate}
+                            maxDate={new Date()}
+                            dateFormat="yyyy-MM-dd"
+                            locale="ko"
+                            placeholderText="종료일"
+                            popperPlacement="bottom-start"
+                            />
+                        </div>
                         </td>
                     </tr>
                 </table>
@@ -303,9 +304,10 @@ const Agent = () => {
                     ) : (
                         <span>Total : 0건</span>
                     )}
-                </div>     
-                                           
-                    <table id="tableData" className="result_table">
+                </div>    
+
+                    <div className="grid-wrapper">   
+                    <table id="tableData" className="grid">
                         <thead>
                             <tr>
                                 <th>순번</th>
@@ -354,7 +356,7 @@ const Agent = () => {
                             }
                         </tbody>
                     </table>
-
+                    </div>                    
                     <div className="pagenation">
                     {pageGroupStart > 1 && <a onClick={handlePrevGroup}><AiOutlineBackward/></a>}
 

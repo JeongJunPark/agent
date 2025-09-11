@@ -110,7 +110,7 @@ const ManageCompany = () => {
   return (
     <>
       <div className="content_body">
-        <div className="table-wrapper">
+        <div className="table-wrapper-nogrid">
         <div className="result_header">
         <p className="menu_title"><AiOutlineShop/>  업체 관리
 
@@ -145,7 +145,8 @@ const ManageCompany = () => {
           )}
         </div>
 
-          <table className="result_table">
+          <div className="grid-wrapper"> 
+          <table className="grid">
             <thead>
               <tr>
                 <th>번호</th>
@@ -160,7 +161,7 @@ const ManageCompany = () => {
               </tr>
             </thead>
             <tbody>
-              {data.length > 0 ? (
+              {data && data.length > 0 ? (
                 currentPosts.map((item, index) => (
                   <tr key={item.co_indx}>
                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
@@ -170,15 +171,15 @@ const ManageCompany = () => {
                     <td>{item.agent_phn}</td>
                     <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
                     <td>{item.mgr_dt}</td>
-                    <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
-                    <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
+                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
+                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
                   </tr>
                 ))) : 
                    <NoDataRow colSpan={9} height="400px" />
               }
             </tbody>
           </table>
-
+          </div>
           <div className="pagenation">
           {pageGroupStart > 1 && <a onClick={handlePrevGroup}><AiOutlineBackward/></a>}
 
