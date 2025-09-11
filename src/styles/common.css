@@ -353,7 +353,7 @@
   border: 1px solid #d9d9d9;
   padding: 17px;
   border-radius: 8px;
-  color: #a4a4a4;
+  color: black;
   font-size: 14px;
   width:300px;
 }
@@ -368,9 +368,9 @@
   width:300px;
 }
 
-.manage_result_layout {
+/* .manage_result_layout {
   clear: both;
-}
+} */
 
 .table_td_title {
   width : 100px;
@@ -380,6 +380,10 @@
 
 .table_td_value {
   padding: 10px;
+  width: 250px;
+  white-space: nowrap;
+  overflow: visible; 
+  vertical-align: middle;
 }
 
 .button_layout {
@@ -427,6 +431,7 @@ select {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
+    border-radius: 5px;
 }
 
 .result_table_sub th, .result_table_sub td {
@@ -458,15 +463,10 @@ select {
     width: 100%;
     border-collapse: collapse;
     table-layout: auto;
+    border-radius: 5px;
 }
 
 /* table 관련 */
-.result_table_sm {
-    width: 50%;
-    border-collapse: collapse;
-    table-layout: auto;
-}
-
 .result_table th, .result_table td {
     padding: 10px;
     border: 1px solid #ddd;
@@ -488,27 +488,6 @@ select {
     background-color: #f2f2f2;
 }
 
-/* result_table_sm */
-.result_table_sm th, .result_table_sm td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-    white-space: nowrap;
-}
-
-.result_table_sm th {
-    background-color: #f2f2f2;
-    text-align: center;
-}
-
-.result_table_sm tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.result_table_sm tbody tr:hover {
-    background-color: #f2f2f2;
-}
-
 .login_footer {
     position: fixed;
     left: 0;
@@ -523,70 +502,6 @@ select {
     border-top: 0.3px solid #ccc; /* 구분선 */
     padding: 10px 0;
     z-index: 1000; /* 다른 요소 위에 나오도록 */
-}
-
-.input_class {
-
-}
-
-.modifyBtn {
-  margin-left: 5px;
-  border: 0.5px solid #d9d9d9;
-  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
-  border-radius: 5px;
-  color: #333 !important;
-  width: 90px;
-  background-color: #f0f0f0 !important;
-  padding: 13px 0;
-  cursor: pointer;
-}
-
-.deleteBtn {
-  margin-left: 5px;
-  border: 0.5px solid #333 !important;
-  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
-  border-radius: 5px;
-  color: #333 !important;
-  width: 90px;
-  background-color: #f0f0f0 !important;
-  padding: 13px 0;
-  cursor: pointer;
-}
-
-.searchBtn {
-  margin-left: 5px;
-  border: 0.5px solid #d9d9d9;
-  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
-  border-radius: 5px;
-  color: #333 !important;
-  width: 90px;
-  background-color: #f0f0f0 !important;
-  padding: 13px 0;
-  cursor: pointer;
-}
-
-.listBtn {
-  margin-left: 5px;
-  border: 0.5px solid #d9d9d9;
-  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
-  border-radius: 5px;
-  color: #333 !important;
-  width: 90px;
-  background-color: #f0f0f0 !important;
-  padding: 13px 0;
-  cursor: pointer;
-}
-
-.excelDownBtn {
-  margin-left: 5px;
-  border: 0.5px solid #d9d9d9;
-  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
-  border-radius: 5px;
-  color: #333 !important;
-  width: 90px;
-  background-color: #f0f0f0 !important;
-  padding: 13px 0;
-  cursor: pointer;
 }
 
 .tdInput {

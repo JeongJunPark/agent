@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
-// import "../styles/modify.css"
+import "../styles/button.css"
 
 const CompanyMoAccount = () => {
 

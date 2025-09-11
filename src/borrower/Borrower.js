@@ -14,7 +14,7 @@ import "../styles/common.css"
 import NoDataRow from "../utils/NoDataRow";
 import { AiOutlineForward,AiOutlineBackward,AiOutlineDollarCircle } from "react-icons/ai";
 import { PiMicrosoftExcelLogoDuotone } from "react-icons/pi";
-
+import "../styles/button.css"
 const Borrower = () => {
 
     const [fileName, setFileName] = useState("");
@@ -226,32 +226,32 @@ const Borrower = () => {
                     <tr>
                         <th className="table_td_title">대출일자</th>
                         <td colSpan={3} className="table_td_value">
-                            <div className="datepicker-wrapper"> 
-                            <div>
+                        <div className="datepicker-wrapper">
                             <DatePicker
-                                renderCustomHeader={renderCustomHeader}
-                                id="datepicker1"
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                maxDate={endDate || new Date()}
-                                dateFormat="yyyy-MM-dd"
-                                disabledKeyboardNavigation
+                            renderCustomHeader={renderCustomHeader}
+                            id="datepicker1"
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            maxDate={endDate || new Date()}
+                            dateFormat="yyyy-MM-dd"
+                            locale="ko"
+                            placeholderText="시작일"
+                            popperPlacement="bottom-start"
                             />
-                            &nbsp;
                             ~
-                            &nbsp;
                             <DatePicker
-                                renderCustomHeader={renderCustomHeader}
-                                id="datepicker2"
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date)}
-                                minDate={startDate}
-                                maxDate={new Date()}
-                                dateFormat="yyyy-MM-dd"
-                                disabledKeyboardNavigation
+                            renderCustomHeader={renderCustomHeader}
+                            id="datepicker2"
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            minDate={startDate}
+                            maxDate={new Date()}
+                            dateFormat="yyyy-MM-dd"
+                            locale="ko"
+                            placeholderText="종료일"
+                            popperPlacement="bottom-start"
                             />
-                            </div>
-                            </div>
+                        </div>
                         </td>
                         <th className="table_td_title">관리 지점</th>
                         <td className="table_td_value">

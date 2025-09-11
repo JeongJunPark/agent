@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 import { AiOutlineTeam } from "react-icons/ai";
+import "../styles/button.css"
 const RegisterUser = () => {
 
     const location = useLocation()

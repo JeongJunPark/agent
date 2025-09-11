@@ -7,7 +7,7 @@ import { AiOutlineShop } from "react-icons/ai";
 import NoDataRow from "../utils/NoDataRow";
 import { AiOutlineBackward } from "react-icons/ai";
 import { AiOutlineForward } from "react-icons/ai";
-
+import "../styles/button.css";
 const ManageCompany = () => {
 
   const location = useLocation()
@@ -111,6 +111,7 @@ const ManageCompany = () => {
     <>
       <div className="content_body">
         <div className="table-wrapper">
+        <div className="result_header">
         <p className="menu_title"><AiOutlineShop/>  업체 관리
 
         <div className="search_layout">     
@@ -134,6 +135,7 @@ const ManageCompany = () => {
           <button className="loginBtn" onClick={handleSearch}>검색</button>
         </div>
         </p>
+      </div>
 
         <div className="pagination-info">
           {data.length > 0 ? (
@@ -142,8 +144,8 @@ const ManageCompany = () => {
             <span>Total : 0건</span>
           )}
         </div>
-        <div className="manage_result_layout">
-          <table className="result_table" border="1">
+
+          <table className="result_table">
             <thead>
               <tr>
                 <th>번호</th>
@@ -176,6 +178,7 @@ const ManageCompany = () => {
               }
             </tbody>
           </table>
+
           <div className="pagenation">
           {pageGroupStart > 1 && <a onClick={handlePrevGroup}><AiOutlineBackward/></a>}
 
@@ -189,12 +192,12 @@ const ManageCompany = () => {
           ))}
 
           {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
-          </div>      
+          </div>    
+
           <div className='right-button-container'>
-          <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>          
+            <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>          
           </div>
           </div>
-        </div>
       </div>
     </>
   );

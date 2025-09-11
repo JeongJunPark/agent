@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 import { AiOutlineForm } from "react-icons/ai";
+import "../styles/button.css"
 const PersonalInfoModify = () => {
 
     const [managerVO, setManagerVO] = useState({});

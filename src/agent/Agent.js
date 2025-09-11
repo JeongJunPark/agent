@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import Calendar from 'react-calendar';
-import DatePicker, { registerLocale } from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 import "../styles/datepicker.css";
 
@@ -16,7 +16,7 @@ import "../styles/common.css"
 
 import { AiOutlineBackward } from "react-icons/ai";
 import { AiOutlineForward } from "react-icons/ai";
-
+import "../styles/button.css"
 const Agent = () => {
 
     const today = moment();
@@ -94,8 +94,8 @@ const Agent = () => {
         return changeData
     }
 
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     // 로그인 이후 상태값
     const [status, setStatus] = useState({
@@ -227,7 +227,8 @@ const Agent = () => {
     return (
         <>
             <div className="content_body">
-                <div className="table-wrapper">                    
+                <div className="table-wrapper">
+                <div className="result_header">                                
                 <p className="menu_title_container">
                 <span className="menu_title">
                     <AiOutlineSolution/> 에이전트 신청 목록
@@ -237,7 +238,7 @@ const Agent = () => {
                     <button className="excelDownBtn" onClick={exportToExcel}><PiMicrosoftExcelLogoDuotone/> 다운로드</button>
                 </span>
                 </p>
-                <table className="result_table" border="1">
+                <table className="result_table">
                     <tr>
                         <th className="table_td_title">에이전트</th>
                         <td className="table_td_value">
@@ -264,37 +265,37 @@ const Agent = () => {
                         </td>
                         <th className="table_td_title">신청일</th>
                         <td className="table_td_value">
-                        <div className="datepicker-wrapper">                            
-                            <div>
-                            <DatePicker
-                                renderCustomHeader={renderCustomHeader}
-                                id="datepicker1"
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                maxDate={endDate || new Date()}
-                                dateFormat="yyyy-MM-dd"
-                                disabledKeyboardNavigation
-								locale="ko"
-                            />
-                            &nbsp;
-                            ~
-                            &nbsp;
-                            <DatePicker
-                                renderCustomHeader={renderCustomHeader}
-                                id="datepicker2"
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date)}
-                                minDate={startDate}
-                                maxDate={new Date()}
-                                dateFormat="yyyy-MM-dd"
-                                disabledKeyboardNavigation
-								locale="ko"
-                            />
-                            </div>
-                            </div>
+    
+          <div className="datepicker-wrapper">
+            <DatePicker
+              renderCustomHeader={renderCustomHeader}
+              id="datepicker1"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              maxDate={endDate || new Date()}
+              dateFormat="yyyy-MM-dd"
+              locale="ko"
+              placeholderText="시작일"
+              popperPlacement="bottom-start"
+            />
+            ~
+            <DatePicker
+              renderCustomHeader={renderCustomHeader}
+              id="datepicker2"
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              minDate={startDate}
+              maxDate={new Date()}
+              dateFormat="yyyy-MM-dd"
+              locale="ko"
+              placeholderText="종료일"
+              popperPlacement="bottom-start"
+            />
+          </div>
                         </td>
                     </tr>
                 </table>
+                </div> 
                 <br/>
                 <div className="pagination-info">
                     {data.length > 0 ? (
@@ -303,9 +304,8 @@ const Agent = () => {
                         <span>Total : 0건</span>
                     )}
                 </div>     
-                           
-                <div className="manage_result_layout">                    
-                    <table border="1" id="tableData" className="result_table">
+                                           
+                    <table id="tableData" className="result_table">
                         <thead>
                             <tr>
                                 <th>순번</th>
@@ -369,7 +369,6 @@ const Agent = () => {
 
                     {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
                     </div>                         
-                </div>
 
                 {response && (
                 <div className="agent_result_summary">
@@ -400,6 +399,7 @@ const Agent = () => {
                     })()}
                 </div>                  
                 )}
+                
                 </div>
             </div>
         </>

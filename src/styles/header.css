@@ -31,6 +31,10 @@
     /* 세로 가운데 */
     cursor: pointer;
     justify-content: space-between;
+    flex-wrap: wrap; /* ✅ 줄어들면 자동 줄바꿈 */
+    overflow: hidden;     /* 삐져나오는 부분 숨김 */
+    text-overflow: ellipsis; /* ... 처리 */
+    white-space: nowrap;  /* 줄바꿈 방지 */    
 } 
 
 .menu-left {
@@ -58,11 +62,13 @@
   color: whitesmoke; /* 글씨 색도 바꿔주면 보기 좋음 */
 }
 
-/* 모바일 화면에서는 desktop-menu 숨기고 햄버거 버튼만 보이게 */
+/* 모바일 화면에서는 desktop-menu + user-menu 숨기고 햄버거 버튼만 보이게 */
 @media (max-width: 768px) {
-  .desktop-menu {
+  .desktop-menu,
+  .user-menu {
     display: none;
   }
+
   .mobile-menu-btn {
     display: inline-block;
     margin-left: auto;
@@ -70,10 +76,10 @@
   }
 }
 
+
 .mypage_header.active {
   color: #0069a6;
   font-weight: bold;
   border-radius: 4px;
   font-size: 18x;
-  /* padding: 4px 8px; */
 }

@@ -6,7 +6,7 @@ import NoDataRow from "../utils/NoDataRow";
 import { AiOutlineTeam } from "react-icons/ai";
 import { AiOutlineBackward } from "react-icons/ai";
 import { AiOutlineForward } from "react-icons/ai";
-
+import "../styles/button.css"
 const ManageUser = () => {
 
     const location = useLocation();
@@ -45,7 +45,7 @@ const ManageUser = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -59,7 +59,7 @@ const ManageUser = () => {
 
     useEffect(() => {
         if (data === '') {
-            SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/agentUserCompany')
                 .then(returnResponse => {
                     setData(returnResponse.userData)
                 })
@@ -71,7 +71,7 @@ const ManageUser = () => {
 
 
     const handleSearch = () => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
             .then(returnResponse => {
                 setData(returnResponse.searchUserData)
             })
@@ -172,7 +172,10 @@ const ManageUser = () => {
                     ))}
 
                     {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
-                    </div>           
+                    </div>      
+                    <div className='right-button-container'>
+                        <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterUser')}>등록</button>          
+                    </div>                         
                 </div>
                 </div>    
             </div>

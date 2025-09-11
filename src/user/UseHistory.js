@@ -6,6 +6,16 @@ const UseHistory = () => {
 
     const [managerVO, setManagerVO] = useState({});
 
+    const tableRows = [
+        { label: "순번", value: managerVO.agent_id },
+        { label: "사용일시", value: managerVO.used_date },
+        { label: "아이디", value: managerVO.agent_id },
+        { label: "이름", value: managerVO.agent_nm },
+        { label: "소속", value: managerVO.agent_dept },
+        { label: "접근화면", value: managerVO.access_menu },
+        { label: "접근IP", value: managerVO.agent_ip },
+        { label: "비고", value: managerVO.agent_co },
+    ];
     // alert(managerVO);
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/", {
@@ -29,41 +39,23 @@ const UseHistory = () => {
     return (
         <>
             <div className="content_body">
+                <div className="table-wrapper">
                 <p className="menu_title">사용이력 조회</p>
                 <table className="result_table" border="1">
                     <colgroup>
                         <col width="10%" />
                         <col width="90%" />
                     </colgroup>
-                        <tr>
-                            <th>순번</th>
-                            <td>{managerVO.agent_id }</td>
+                    <tbody>
+                        {tableRows.map((row, index) => (
+                        <tr key={index}>
+                            <th>{row.label}</th>
+                            <td>{row.value}</td>
                         </tr>
-                        <tr>
-                            <th>사용일시</th>
-                            <td>{managerVO.agent_id }</td>
-                        </tr>                        <tr>
-                            <th>아이디</th>
-                            <td>{managerVO.agent_id }</td>
-                        </tr>                        <tr>
-                            <th>이름</th>
-                            <td>{managerVO.agent_id }</td>
-                        </tr>                        <tr>
-                            <th>소속</th>
-                            <td>{managerVO.agent_dept }</td>
-                        </tr>                        <tr>
-                            <th>접근화면</th>
-                            <td>{managerVO.agent_id }</td>
-                        </tr>
-                        <tr>
-                            <th>접근IP</th>
-                            <td>{managerVO.agent_nm }</td>
-                        </tr>
-                        <tr>
-                            <th>비고</th>
-                            <td>{managerVO.agent_co }</td>
-                        </tr>
+                        ))}
+                    </tbody>
                 </table>
+                </div>
             </div>        
         </>
     );
