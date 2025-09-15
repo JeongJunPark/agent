@@ -105,8 +105,7 @@ const ManageUser = () => {
 
     return (
         <>
-            <div className="content_body">
-                <div className="table-wrapper">                
+            <div className="content_body">             
                 <p className="menu_title"><AiOutlineTeam/> 사용자 관리
                 <div className="search_layout">
                     <input
@@ -177,7 +176,6 @@ const ManageUser = () => {
                     <div className='right-button-container'>
                         <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterUser')}>등록</button>          
                     </div>                         
-                </div>  
             </div>
         </>
     );

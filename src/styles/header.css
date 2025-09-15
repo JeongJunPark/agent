@@ -62,6 +62,13 @@
   color: whitesmoke; /* 글씨 색도 바꿔주면 보기 좋음 */
 }
 
+.mypage_header.active {
+  color: #0069a6;
+  font-weight: bold;
+  border-radius: 4px;
+  font-size: 18x;
+}
+
 /* 모바일 화면에서는 desktop-menu + user-menu 숨기고 햄버거 버튼만 보이게 */
 @media (max-width: 768px) {
   .desktop-menu,
@@ -74,12 +81,4 @@
     margin-left: auto;
     color: white;
   }
-}
-
-
-.mypage_header.active {
-  color: #0069a6;
-  font-weight: bold;
-  border-radius: 4px;
-  font-size: 18x;
 }

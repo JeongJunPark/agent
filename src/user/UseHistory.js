@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
+import { AiOutlineTeam } from "react-icons/ai";
 
 const UseHistory = () => {
 
@@ -39,8 +40,7 @@ const UseHistory = () => {
     return (
         <>
             <div className="content_body_nogrid">
-                <div className="table-wrapper-nogrid">   
-                <p className="menu_title">사용이력 조회</p>
+                <p className="menu_title"><AiOutlineTeam/> 사용이력 조회</p>
                 <table className="result_table" border="1">
                     <colgroup>
                         <col width="10%" />
@@ -55,7 +55,6 @@ const UseHistory = () => {
                         ))}
                     </tbody>
                 </table>
-                </div>
             </div>        
         </>
     );

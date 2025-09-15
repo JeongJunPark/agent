@@ -218,7 +218,6 @@ const Borrower = () => {
     return (
         <>
             <div className="content_body">
-                <div className="table-wrapper">
                 <p className="menu_title_container">                      
                 <span className="menu_title">
                     <AiOutlineDollarCircle/> 차입처
@@ -230,8 +229,8 @@ const Borrower = () => {
                 </p>
                 <table className="result_table" border="1">
                     <tr>
-                        <th className="table_td_title">대출일자</th>
-                        <td colSpan={3} className="table_td_value">
+                        <th>대출일자</th>
+                        <td colSpan={3}>
                         <div className="datepicker-wrapper">
                             <DatePicker
                             renderCustomHeader={renderCustomHeader}
@@ -259,8 +258,8 @@ const Borrower = () => {
                             />
                         </div>
                         </td>
-                        <th className="table_td_title">관리 지점</th>
-                        <td className="table_td_value">
+                        <th>관리 지점</th>
+                        <td>
                             <select onChange={(e) => setSelectedManagerBranch(e.target.value)} value={selectedManagerBranch}>
                                 <option value="">전지점</option>
                                 {managerBranch && managerBranch.map((item, index) => (
@@ -270,24 +269,24 @@ const Borrower = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th className="table_td_title">은행</th>
-                        <td className="table_td_value">
+                        <th>은행</th>
+                        <td>
                             <select onChange={(e) => setSelectedBank(e.target.value)} value={selectedBank}>
                                 {bank && bank.map((item, index) => (
                                     <option value={item.code} >{item.name}</option>
                                 ))}
                             </select>
                         </td>
-                        <th className="table_td_title">모계좌번호</th>
-                        <td className="table_td_value">
+                        <th>모계좌번호</th>
+                        <td>
                             <select onChange={(e) => setSelectedMoAccount(e.target.value)} value={selectedMoAccount}>
                                 {selectedBank && matchMoAccount.length > 0 && matchMoAccount.map((item, index) => (
                                     <option value={item.moActNum}>{item.mo_ssn}</option>
                                 ))}
                             </select>
                         </td>
-                        <th className="table_td_title">구분</th>
-                        <td className="table_td_value">
+                        <th>구분</th>
+                        <td>
                             <select onChange={(e) => setSelectedSect(e.target.value)} value={selectedSect}>
                                 <option value="0">완제 제외</option>
                                 <option value="1">완제 포함</option>
@@ -413,7 +412,6 @@ const Borrower = () => {
                     ))}
                     {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
                     </div>                     
-                </div>
             </div>
         </>
     )

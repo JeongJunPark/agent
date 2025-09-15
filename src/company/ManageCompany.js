@@ -110,7 +110,6 @@ const ManageCompany = () => {
   return (
     <>
       <div className="content_body">
-        <div className="table-wrapper-nogrid">
         <div className="result_header">
         <p className="menu_title"><AiOutlineShop/>  업체 관리
 
@@ -196,9 +195,9 @@ const ManageCompany = () => {
           </div>    
 
           <div className='right-button-container'>
-            <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>          
+            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>          
           </div>
-          </div>
+
       </div>
     </>
   );

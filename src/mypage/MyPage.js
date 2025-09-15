@@ -29,12 +29,11 @@ const MyPage = () => {
     return (
         <>
             <div className="content_body_nogrid">
-                <div className="table-wrapper-nogrid">              
                 <p className="menu_title"><AiOutlineForm/> My Page</p>
                 <table className="result_table" border="1">
                     <colgroup>
-                        <col width="10%" />
-                        <col width="90%" />
+                        <col width="15%" />
+                        <col width="85%" />
                     </colgroup>
                         <tr>
                             <th>아이디</th>
@@ -65,8 +64,7 @@ const MyPage = () => {
                             <td>{managerVO.mgr_ip }</td>
                         </tr>
                 </table>
-                </div>
-            </div>  
+            </div>
         </>
     )
 }

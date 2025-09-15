@@ -333,10 +333,27 @@
   font-weight: 500;
 }
 
-.menu_title {
-  font-weight : 900;
-  font-size : 30px;
+.menu_title { font-weight : 900; font-size : 30px; }
+
+.menu_title_container {
+  display: flex;
+  justify-content: space-between; /* 좌측-우측 분리 */
+  align-items: center;
+  margin-bottom: 16px;
 }
+
+.menu_title_left {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 아이콘과 텍스트 간격 */
+}
+
+.menu_title_right {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 버튼 간격 */
+}
+
 
 .search_layout {
   float: right;
@@ -350,7 +367,7 @@
   border-radius: 8px;
   color: black;
   font-size: 14px;
-  width:250px;
+  width:200px;
 }
 
 .searchInputReadonly {
@@ -360,25 +377,7 @@
   border-radius: 8px;
   color: #a4a4a4;
   font-size: 14px;
-  width:250px;
-}
-
-/* .manage_result_layout {
-  clear: both;
-} */
-
-.table_td_title {
-  width : 100px;
-  text-align: center;
-  font-weight : 800;
-}
-
-.table_td_value {
-  padding: 10px;
-  width: 250px;
-  white-space: nowrap;
-  overflow: visible; 
-  vertical-align: middle;
+  width:200px;
 }
 
 .button_layout {
@@ -389,31 +388,12 @@
   gap: 5px;
 }
 
-.mainTable {
-  width: 100%;
-  border-collapse: collapse;
-  margin-left: 30px;
-  margin-right: 30px;
-  overflow-x: auto;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.mainTable td {
-  padding: 10px;
-}
-
-.borrower_result_layout {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
 select {
   padding: 17px;
   border-radius: 8px !important;
   font-size: 14px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #d9d9d9; 
+  width:250px;
 }
 
 .datepickerButton {
@@ -467,21 +447,35 @@ select {
 }
 
 .content_body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   min-height: 100vh;
-  padding: 20px;
+  padding: 30px 20px;
+  background-color: #FAF9F6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .content_body_nogrid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+  width: 100%; /* 화면 가로 80% */
+  max-width: 60%; /* 최대 가로 제한 */
+  min-height: 70vh; /* 화면 높이의 60% */
+  padding: 30px 20px;
+  background-color: #FAF9F6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  box-sizing: border-box;
+
+  /* 화면 가운데 정렬 */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 8px;
+  z-index: 1000; /* 다른 요소 위로 */
 }
 
-/* 화면이 작을 때는 flex 중앙 정렬 대신 top-align */
 @media (max-height: 700px) {
   .content_body {
     align-items: flex-start;  /* 위쪽 정렬 */
@@ -495,16 +489,6 @@ select {
   max-width: 1500px;
   overflow-x: auto; 
   padding: 30px 20px;
-  border-radius: 8px;
-  background-color: #FAF9F6;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.table-wrapper-nogrid {
-  width: 100%;
-  max-width: 1500px;
-  overflow-x: auto; 
-  padding: 30px 20px; 
   border-radius: 8px;
   background-color: #FAF9F6;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -571,25 +555,6 @@ label {
   margin-right: 16px;
 }
 
-.menu_title_container {
-  display: flex;
-  justify-content: space-between; /* 좌측-우측 분리 */
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.menu_title_left {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* 아이콘과 텍스트 간격 */
-}
-
-.menu_title_right {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* 버튼 간격 */
-}
-
 .agent_result_summary {
   display: flex;
   flex-direction: column;
@@ -654,14 +619,16 @@ label {
 
 .grid-wrapper {
   width: 100%;
-  overflow-x: auto;   /* 가로 스크롤 */
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ececec;
 }
 
 .grid {
     width: max-content;
-    border-collapse: collapse;
+    border-collapse: separate;
     table-layout: fixed;
-    border-radius: 5px;
     min-width: 100%;
 }
 
@@ -670,6 +637,7 @@ label {
     border: 1px solid #ddd;
     text-align: left;
     white-space: nowrap;
+    border-radius: 5px;
 }
 
 .grid th {

@@ -3,12 +3,13 @@ import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 import "../styles/button.css"
+import { AiOutlineShop } from "react-icons/ai";
 
 const CompanyMoAccount = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "모계좌관리", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "모계좌관리", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -41,7 +42,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 리스트
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/moAccountCompany", { companyINDX : locationState.companyINDX } )
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/moAccountCompany", { companyINDX : locationState.companyINDX } )
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -56,7 +57,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 사용 여부 변경
     const changeUse = (number, useValue) => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/changeUseMoAccount", { ID: sessionStorage.getItem('ID'), moAccount: number, useValue: useValue })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/changeUseMoAccount", { ID: sessionStorage.getItem('ID'), moAccount: number, useValue: useValue })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     window.location.reload();
@@ -70,7 +71,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 삭제
     const deleteMoAccount = (number) => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/deleteMoAccount", { moAccount: number })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/deleteMoAccount", { moAccount: number })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     window.location.reload();
@@ -84,7 +85,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 등록
     const submitIP = () => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/submitMoAccount", { companyINDX : locationState.companyINDX, bankCd: selectedBank, moAccount: subittedMoAccount, ID: sessionStorage.getItem('ID') })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/submitMoAccount", { companyINDX : locationState.companyINDX, bankCd: selectedBank, moAccount: subittedMoAccount, ID: sessionStorage.getItem('ID') })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     alert("등록이 완료되었습니다.");
@@ -119,8 +120,9 @@ const CompanyMoAccount = () => {
     return (
         <>
             <div className="content_body">
-                <p className="menu_title">모계좌 관리</p>
-                <table className="result_table" border="1">
+                <p className="menu_title"><AiOutlineShop/> 모계좌 관리</p>
+                <div className="grid-wrapper"> 
+                <table className="grid">
                     <tr>
                         <th>번호</th>
                         <th>은행</th>
@@ -139,17 +141,17 @@ const CompanyMoAccount = () => {
                             <td>{item.mgr_use_yn}</td>
                             <td>{item.mgr_dt}</td>
                             <td>{item.mgr_id}</td>
-                            <td><button className="loginBtn" onClick={() => changeUse(item.mo_act_number, item.mgr_use_yn)}>변경</button></td>
-                            <td><button className="loginBtn" onClick={() => deleteMoAccount(item.mo_act_number)}>삭제</button></td>
+                            <td><button className="generalBtn" onClick={() => changeUse(item.mo_act_number, item.mgr_use_yn)}>변경</button></td>
+                            <td><button className="deleteBtn" onClick={() => deleteMoAccount(item.mo_act_number)}>삭제</button></td>
                         </tr>
 
                     ))}
                 </table>
-
+                </div>
                 <table className="result_table" style={{ marginTop: "10px" }} border="1">
                     <tr>
-                        <td className="table_td_title">은행</td>
-                        <td className="table_td_value">
+                        <td>은행</td>
+                        <td>
                             <select className="searchInput" onChange={(e) => setSelectedBank(e.target.value)}>
                                 <option value="03">기업</option>
                                 <option value="88">신한</option>
@@ -158,14 +160,14 @@ const CompanyMoAccount = () => {
                                 <option value="279">DB금융투자</option>
                             </select>
                         </td>
-                        <td className="table_td_title">모계좌번호</td>
-                        <td className="table_td_value"><input className="searchInput" placeholder="모계좌번호" onChange={(e) => setSubmittedMoAccount(e.target.value)} /></td>
+                        <td>모계좌번호</td>
+                        <td><input className="searchInput" placeholder="모계좌번호" onChange={(e) => setSubmittedMoAccount(e.target.value)} /></td>
                     </tr>
                 </table>
 
                 <div className="button_layout">
-                    <button className="loginBtn" onClick={submitIP}>등록</button>
-                    <button className="loginBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
+                    <button className="registBtn" onClick={submitIP}>등록</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
                 </div>
             </div>
         </>

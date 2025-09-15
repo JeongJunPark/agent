@@ -228,7 +228,6 @@ const Agent = () => {
     return (
         <>
             <div className="content_body">
-                <div className="table-wrapper">
                 <div className="result_header">                                
                 <p className="menu_title_container">
                 <span className="menu_title">
@@ -297,6 +296,7 @@ const Agent = () => {
                     </tr>
                 </table>
                 </div> 
+                
                 <br/>
                 <div className="pagination-info">
                     {data.length > 0 ? (
@@ -401,8 +401,6 @@ const Agent = () => {
                     })()}
                 </div>                  
                 )}
-                
-                </div>
             </div>
         </>
     )

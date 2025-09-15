@@ -108,7 +108,6 @@ const ModifyCompany = () => {
     return (
         <>
             <div className="content_body">
-                <div className="table-wrapper">
                 <p className="menu_title">업체 변경</p>
                 
                 <table className="result_table">
@@ -152,7 +151,6 @@ const ModifyCompany = () => {
                     <button className="generalBtn" type="submit" onClick={() => managerIP(locationState.companyINDX)}>IP 관리</button>
                     <button className="generalBtn" type="submit" onClick={() => managerMoAccount(locationState.companyINDX)}>모 계좌 관리</button>
                     <button className="listBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
-                </div>
                 </div>
             </div>
         </>

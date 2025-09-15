@@ -5,7 +5,7 @@ const NoDataRow = ({ colSpan = 9, height = "400px", message = "데이터가 없�
     <tr style={{ height }}>
       <td
         colSpan={colSpan}
-        style={{ textAlign: "center", padding: "16px", color: "#888", fontSize: "16px" }}
+        style={{ textAlign: "center", padding: "16px", color: "#9c9c9cff", fontSize: "16px" }}
       >
         {message}
       </td>
