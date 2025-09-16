@@ -13,6 +13,8 @@ import Logo from "../images/leadcorp_img.svg"
 const Header = () => {
 
     const [ID, setID] = useState(sessionStorage.getItem('ID'));
+    const [managerVO, setManagerVO] = useState({});
+    const [name, setName] = useState(''); 
     const [auth, setAuth] = useState();
     const [authList, setAuthList] = useState();
 
@@ -51,7 +53,32 @@ const Header = () => {
         }
     }, [auth])
 
-    const [open, setOpen] = useState(false);
+    useEffect(() => {
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfo", {
+            ID: sessionStorage.getItem('ID'),
+            menu: "Header",
+            note: '',
+            IP: sessionStorage.getItem('IP')
+        })
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    console.log(returnResponse);
+                    const manager = returnResponse.result[0]; 
+                    setManagerVO(manager);
+                    setName(manager.agent_nm);
+                    if (!sessionStorage.getItem('agent_dlgt_id')) { // 없으면
+                        sessionStorage.setItem('agent_dlgt_id', manager.agent_dlgt_id);
+                    }
+                  }
+                
+            alert(sessionStorage.getItem('agent_dlgt_id'));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+  const [open, setOpen] = useState(false);
     
   const myPageItems = [
     { key: "1", label: <a href="/MyPage">My Page</a> },
@@ -127,7 +154,7 @@ const Header = () => {
       </div>
         <div className="menu-right">
           <Dropdown menu={{ items: myMenuItems }} trigger={['click', "hover"]} placement="bottomRight">
-            <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID}</div>
+            <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
           </Dropdown>          
         </div>
 

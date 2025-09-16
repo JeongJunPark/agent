@@ -90,11 +90,6 @@ const Agent = () => {
         document.body.removeChild(link);
     };
 
-    const formattedData = (data) => {
-        const changeData = Number(data).toLocaleString()
-        return changeData
-    }
-
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 

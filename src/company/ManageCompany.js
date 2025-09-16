@@ -3,10 +3,9 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 
-import { AiOutlineShop } from "react-icons/ai";
+import { AiOutlineShop, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
 import NoDataRow from "../utils/NoDataRow";
-import { AiOutlineBackward } from "react-icons/ai";
-import { AiOutlineForward } from "react-icons/ai";
+
 import "../styles/button.css";
 const ManageCompany = () => {
 
@@ -114,16 +113,17 @@ const ManageCompany = () => {
         <p className="menu_title"><AiOutlineShop/>  업체 관리
 
         <div className="search_layout">     
-        <select
-          name="condition"
-          className="form-control"
-          value={condition}
-          onChange={(e) => setCondition(e.target.value)}
-        >
-          <option value="">전체</option>
-          <option value="agent_co">업체명</option>
-          <option value="agent_dlgt_id">대표아이디</option>
-        </select>          
+          <select
+            name="condition"
+            className="form-control"
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+          >
+            <option value="">전체</option>
+            <option value="agent_co">업체명</option>
+            <option value="agent_dlgt_id">대표아이디</option>
+          </select>         
+
           <input
             type="text"
             value={keyword}

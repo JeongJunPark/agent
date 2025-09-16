@@ -115,7 +115,7 @@ const ManageUser = () => {
                         placeholder="검색어"
                         className="searchInput"
                     />
-                    <button className="loginBtn" onClick={handleSearch}>검색</button>
+                    <button className="searchBtn" onClick={handleSearch}>검색</button>
                 </div>
                 </p>
                     <div className="grid-wrapper">   
