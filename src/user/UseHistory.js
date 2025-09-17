@@ -88,7 +88,7 @@ const UseHistory = () => {
             startDate: startDate,
             endDate: endDate,
             condition: '',
-            keyword: '',
+            words: '',
             agent_dlgt_id: ''
 
         })
@@ -99,7 +99,7 @@ const UseHistory = () => {
             startDate: moment(startDate).format("YYYYMMDD"),
             endDate: moment(endDate).format("YYYYMMDD"),
             condition: condition === undefined ? '' : condition,
-            keyword: keyword,
+            words: keyword,
             agent_dlgt_id: agentDlgtId
         })
     }
