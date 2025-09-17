@@ -122,9 +122,9 @@ const UseHistory = () => {
             })
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log(returnResponse);
+                        console.log("returnResponse: " + returnResponse);
                         setUserHist(returnResponse.result[0]);
-                        setData(Array.isArray(returnResponse) ? returnResponse : []);
+                        setData(Array.isArray(returnResponse.result) ? returnResponse.result : []);
                     }
                 })
                 .catch((error) => {
@@ -229,7 +229,7 @@ const UseHistory = () => {
                         <tbody>
                             {data && data.length > 0 ? (currentPosts.map((item, index) => (
                                 <tr key={item.co_indx}>
-                                    <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
+                                    <td style={{ textAlign: "center" }}>{item.rownum}</td>
                                     <td>{item.access_time}</td>
                                     <td>{item.agent_id}</td>
                                     <td>{item.agent_nm}</td>
