@@ -537,7 +537,7 @@ select {
 
 /* 기본 라디오 버튼 숨기지 않고, 색상만 커스텀 */
 input[type="radio"] {
-  accent-color: #333333; /* ✅ 라디오 선택 색상 변경 */
+  accent-color: #333333;
   cursor: pointer;
 }
 

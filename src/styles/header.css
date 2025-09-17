@@ -31,7 +31,7 @@
     /* 세로 가운데 */
     cursor: pointer;
     justify-content: space-between;
-    flex-wrap: wrap; /* ✅ 줄어들면 자동 줄바꿈 */
+    flex-wrap: wrap; /* 줄어들면 자동 줄바꿈 */
     overflow: hidden;     /* 삐져나오는 부분 숨김 */
     text-overflow: ellipsis; /* ... 처리 */
     white-space: nowrap;  /* 줄바꿈 방지 */    
