@@ -72,7 +72,6 @@ const Header = () => {
                     }
                   }
                 
-            alert(sessionStorage.getItem('agent_dlgt_id'));
             })
             .catch((error) => {
                 console.log(error);
