@@ -20,7 +20,7 @@ const UseHistory = () => {
         { label: "비고"    }
     ];
 
-    
+    const today = new Date();
     const [data, setData] = useState("")
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
@@ -49,8 +49,8 @@ const UseHistory = () => {
 
     const [keyword, setKeyword] = useState("");
     const [condition, setCondition] = useState("");
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [startDate, setStartDate] = useState(today);
+    const [endDate, setEndDate] = useState(today);
     const [agentDlgtId, getAgentDlgtId] = useState(sessionStorage.getItem('agent_dlgt_id'));
     const [postData, setPostData] = useState({
         startDate: "",
@@ -111,7 +111,9 @@ const UseHistory = () => {
                 menu: "사용이력조회",
                 note: '',
                 IP: sessionStorage.getItem('IP'),
-                agent_dlgt_id: agentDlgtId
+                agent_dlgt_id: agentDlgtId,
+                condition: condition === undefined ? '' : condition,
+                words: keyword              
             })
                 .then((returnResponse) => {
                     if (returnResponse) {

@@ -69,9 +69,7 @@ const Header = () => {
                     if (!sessionStorage.getItem('agent_dlgt_id')) { // 없으면
                         sessionStorage.setItem('agent_dlgt_id', manager.agent_dlgt_id);
                     }
-                  }
-                
-            alert(sessionStorage.getItem('agent_dlgt_id'));
+                  }     
             })
             .catch((error) => {
                 console.log(error);
