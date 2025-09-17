@@ -4,6 +4,7 @@ import "../styles/common.css"
 import { AiOutlineTeam, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
 import NoDataRow from "../utils/NoDataRow";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.module.css";
 import moment from "moment";
 const UseHistory = () => {
 
@@ -21,7 +22,7 @@ const UseHistory = () => {
     ];
 
     const today = new Date();
-    const [data, setData] = useState("")
+    const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const [pageGroupStart, setPageGroupStart] = useState(1); // 10개 단위 시작 페이
@@ -112,14 +113,18 @@ const UseHistory = () => {
                 note: '',
                 IP: sessionStorage.getItem('IP'),
                 agent_dlgt_id: agentDlgtId,
+
+                startDate: moment(startDate).format("YYYYMMDD"),
+                endDate: moment(endDate).format("YYYYMMDD"),
                 condition: condition === undefined ? '' : condition,
-                words: keyword              
+                words: keyword,
+                agent_dlgt_id: agentDlgtId                
             })
                 .then((returnResponse) => {
                     if (returnResponse) {
                         console.log(returnResponse);
-                        setUserHist(returnResponse);
-                        setData(returnResponse);
+                        setUserHist(returnResponse.result[0]);
+                        setData(Array.isArray(returnResponse) ? returnResponse : []);
                     }
                 })
                 .catch((error) => {
@@ -129,6 +134,7 @@ const UseHistory = () => {
         }, [postData]);
 
 
+    console.log("currentPosts: " + currentPosts);
     return (
         <>
             <div className="content_body">
@@ -221,17 +227,16 @@ const UseHistory = () => {
                                               
                         </thead>
                         <tbody>
-                            {currentPosts && currentPosts.length > 0 ? (
-                                currentPosts.map((item, index) => (
+                            {data && data.length > 0 ? (currentPosts.map((item, index) => (
                                 <tr key={item.co_indx}>
                                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                                    <td>item.access_time</td>
-                                    <td>item.agent_id</td>
-                                    <td>item.agent_nm</td>
-                                    <td>item.agent_co</td>
-                                    <td>item.menu_id</td>
-                                    <td>item.ip_number</td>
-                                    <td>item.note</td>                               
+                                    <td>{item.access_time}</td>
+                                    <td>{item.agent_id}</td>
+                                    <td>{item.agent_nm}</td>
+                                    <td>{item.agent_co}</td>
+                                    <td>{item.menu_id}</td>
+                                    <td>{item.ip_number}</td>
+                                    <td>{item.note}</td>                              
                                 </tr>
                                 ))) : 
                                 <NoDataRow colSpan={8} height="400px" />
