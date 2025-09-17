@@ -221,7 +221,7 @@ const UseHistory = () => {
                                               
                         </thead>
                         <tbody>
-                            {data && data.length > 0 ? (
+                            {currentPosts && currentPosts.length > 0 ? (
                                 currentPosts.map((item, index) => (
                                 <tr key={item.co_indx}>
                                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
