@@ -131,7 +131,7 @@ const ManageCompany = () => {
             placeholder="검색어"
             className="searchInput"
           />
-          <button className="searchBtn" onClick={handleSearch}>검색</button>
+          <button className="loginBtn" onClick={handleSearch}>검색</button>
         </div>
         </p>
       </div>
