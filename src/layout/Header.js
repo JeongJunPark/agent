@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Dropdown, Drawer, Menu, Button } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import SendAPI from "../utils/SendAPI";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution } from "react-icons/ai";
 
@@ -101,9 +101,9 @@ const Header = () => {
 
 
   const myMenuItems = [
-    { key: '1', label: <a href="/MyPage">내 정보</a> },
-    { key: '2', label: <a href="/PersonalInfoModify">설정</a> },
-    { key: '3', label: <a href="/Logout">로그아웃</a> },
+    { key: '1', label: <Link to="/MyPage">내 정보</Link> },    
+    { key: '2', label: <Link to="/PersonalInfoModify">설정</Link> },        
+    { key: '3', label: <Link to="/Logout">로그아웃</Link> },    
   ];
 
   return (
