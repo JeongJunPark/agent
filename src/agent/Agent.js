@@ -237,7 +237,6 @@ const Agent = () => {
                         <th>에이전트</th>
                         <td>
                             <select onChange={(e) => setSelectedAgent(e.target.value)}>
-                                <option value="">선택</option>
                                 {agentList && agentList.map((item, index) => (
                                     <option key={index} value={item.ad_medi} >{item.name}</option>
                                 ))}
