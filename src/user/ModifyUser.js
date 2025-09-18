@@ -10,7 +10,6 @@ const ModifyUser = () => {
     const locationState = location.state;
 
     const userINDX = locationState.userINDX;
-    // const userID = useState(locationState.id);
     
     const [userID, setUserID] = useState("");
     const [userName, setUserName] = useState("");
@@ -20,17 +19,6 @@ const ModifyUser = () => {
     const [phone, setPhone] = useState("");
     const [auth, setAuth] = useState("1");
     const [use, setUse] = useState("Y")
-
-    const [managerVO, setManagerVO] = useState({});
-
-    const [modifyData, setModifyData] = useState({
-        userID: '',
-        coName: '',
-        coDiv: '',
-        coManagerID: '',
-        coPhone: '',
-        coUse: ''
-    })
 
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: userINDX })
@@ -47,6 +35,7 @@ const ModifyUser = () => {
             setUserID(user.agent_id);
             setUserName(user.agent_nm);
             setCo(user.agent_co);
+            alert(user.agent_co);
             setMgr(user.agent_dept);
             setPhone(user.agent_phn);
 

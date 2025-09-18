@@ -25,7 +25,7 @@ const Login = () => {
 
     const sendSMS = () => {
         // 초기에 ID 체크 (인증번호 전송)
-        SendAPI("https://home-api.leadcorp.co.kr:8080/checkAgentLoginID", { ID : ID, IP : IP })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/checkAgentLoginID", { ID : ID, IP : IP })
         .then((returnResponse) => {
             if (returnResponse) {
                 console.log(returnResponse)
@@ -36,7 +36,7 @@ const Login = () => {
                 } else {
                     alert(returnResponse.message)
                     if (returnResponse.state !== '') {
-                        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
+                        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
                             .then((returnResponse) => {
                                 if (returnResponse) {
                                     console.log("returnResponse ----> ", returnResponse);
@@ -61,12 +61,12 @@ const Login = () => {
 
     const login = () => {
         // ID + PW 체크
-        SendAPI("https://home-api.leadcorp.co.kr:8080/checkAgentLogin", { ID : ID, PW : PW })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/checkAgentLogin", { ID : ID, PW : PW })
         .then((returnResponse) => {
             if (returnResponse) {
                 console.log(returnResponse)
                 if (returnResponse.result) {
-                    SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN", note : '', IP : sessionStorage.getItem('IP')})
+                    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN", note : '', IP : sessionStorage.getItem('IP')})
                         .then((returnResponse) => {
                             if (returnResponse) {
                                 console.log("returnResponse:  ===> ", returnResponse);
