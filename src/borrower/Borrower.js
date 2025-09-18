@@ -6,6 +6,8 @@ import "react-datepicker/dist/react-datepicker.module.css";
 import "../styles/datepicker.css";
 
 import SendAPI from "../utils/SendAPI";
+import NumberFormatter from "../utils/NumberFormatter";
+import RateFormatter from "../utils/RateFormatter";
 import * as XLSX from 'xlsx';
 
 import "../styles/icon.css"
@@ -57,9 +59,9 @@ const Borrower = () => {
         link.click();
         document.body.removeChild(link);
     };
-
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const today = new Date();
+    const [startDate, setStartDate] = useState(today);
+    const [endDate, setEndDate] = useState(today);
 
     // 로그인 이후 상태값
     const [status, setStatus] = useState({
@@ -69,9 +71,8 @@ const Borrower = () => {
 
     // 날짜 초기화
     useEffect(() => {
-        const today = moment();
-
-        const todayDate = today.format("YYYYMMDD");
+        const excelToday = moment();        
+        const todayDate = excelToday.format("YYYYMMDD");
         setFileName("가상계좌 현황" + todayDate + ".xlsx");
     }, [])
 
@@ -82,9 +83,9 @@ const Borrower = () => {
     const [matchMoAccount, setMatchMoAccount] = useState("")
 
     // 선택한 값
-    const [selectedManagerBranch, setSelectedManagerBranch] = useState("0000")
-    const [selectedBank, setSelectedBank] = useState("003")
-    const [selectedMoAccount, setSelectedMoAccount] = useState("22129628304018")
+    const [selectedManagerBranch, setSelectedManagerBranch] = useState('');
+    const [selectedBank, setSelectedBank] = useState('279');
+    const [selectedMoAccount, setSelectedMoAccount] = useState('10161802501');
     const [selectedSect, setSelectedSect] = useState("0");
 
     // 검색 Data
@@ -153,28 +154,28 @@ const Borrower = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/borrowerResult', postData)
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRows', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log(11110);
-                        // console.log("returnResponse1: ------> ", returnResponse.result[0]);
-                        console.log(postData);
-                        console.log(11111);
-                        // console.log("returnResponse2: ------> ", returnResponse.result[0].query);
+                        setResponse(returnResponse.result1);
+                        setData(returnResponse.result1);
                         
-                        console.log(11112);
-                        console.log("returnResponse3: ------> ", JSON.stringify(returnResponse.query));
-                        
-                        console.log(11113);
-                        console.log("summaryData: -----> ", summaryData);
-                        
-                        console.log(11114);
-                        setResponse(returnResponse.query);
-                        setSummaryData(returnResponse.query2);
-                        setData(returnResponse.query);
-                        
-                        if (!returnResponse.query || returnResponse.query.length === 0) {
+                        if (!returnResponse.result1 || returnResponse.result1.length === 0) {
                             alert("조회 결과가 없습니다.");
+                        }                        
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+                 
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
+                .then((returnResponse) => {
+                    if (returnResponse) {                       
+                        setSummaryData(returnResponse.result2);
+                        
+                        if (!returnResponse.result2 || returnResponse.result2.length === 0) {
+                            alert("합산 결과가 없습니다.");
                         }                        
                     }
                 })
@@ -183,11 +184,6 @@ const Borrower = () => {
                 })
         }
     }, [postData])
-
-    const formattedData = (data) => {
-        const changeData = Number(data).toLocaleString()
-        return changeData
-    }
 
     const renderCustomHeader = ({
         date,
@@ -315,6 +311,8 @@ const Borrower = () => {
                                 <th>등록 일자</th>
                                 <th>활동 시작 일자</th>
                                 <th>대출 잔액</th>
+                                <th>대출 금액</th>
+                                <th>상환 금액</th>                                
                                 <th>대출 일자</th>
                                 <th>대출 상품</th>
                                 <th>만기 일자</th>
@@ -331,8 +329,6 @@ const Borrower = () => {
                                 <th>현지점</th>
                                 <th>전자 공인 인증</th>
                                 <th>공인 인증 값</th>
-                                <th>대출 금액</th>
-                                <th>상환 금액</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -345,16 +341,18 @@ const Borrower = () => {
                                     <td>{item.vir_act_no_st_yn_nm}</td>
                                     <td>{item.rgs_de}</td>
                                     <td>{item.actv_de}</td>
-                                    <td>{formattedData(item.ln_bln)}</td>
+                                    <td>{NumberFormatter(item.ln_bln)}</td>
+                                    <td>{NumberFormatter(item.ln_am)}</td>
+                                    <td>{NumberFormatter(item.repay_money)}</td>
                                     <td>{item.ln_new_de}</td>
                                     <td>{item.gds_nm}</td>
                                     <td>{item.ln_xpr_de}</td>
                                     <td>{item.lst_trn_de}</td>
                                     <td>{item.nxt_intr_rcp_de}</td>
-                                    <td>{item.ln_intr}</td>
-                                    <td>{item.prms_dd}</td>
+                                    <td>{RateFormatter(item.ln_intr)}</td>
+                                    <td>{NumberFormatter(item.prms_dd)}</td>
                                     <td>{item.ldg_st_nm}</td>
-                                    <td>{item.arr_dd_cn}</td>
+                                    <td>{NumberFormatter(item.arr_dd_cn)}</td>
                                     <td>{item.addr}</td>
                                     <td>{item.addr2}</td>
                                     <td>{item.zipcode}</td>
@@ -362,9 +360,7 @@ const Borrower = () => {
                                     <td>{item.br_nm}</td>
                                     <td>{item.esign_yn}</td>
                                     <td>{item.esign_auth}</td>
-                                    <td>{item.ln_am}</td>
-                                    <td>{item.repay_money}</td>
-                                </tr>
+                                 </tr>
                             ))): <NoDataRow colSpan={26} height="550px" /> 
                             }
                         </tbody>
@@ -375,23 +371,23 @@ const Borrower = () => {
                         <tbody>
                         <tr>
                             <th>유효채권개수</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].act_vir_act_cn)} readOnly></input></td>
                             <th>대출금액</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].ln_am)} readOnly></input></td>
-                            <th>유효채권개수</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].ln_bln)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].ln_am)} readOnly></input></td>
+                            <th>대출잔액</th>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].ln_bln)} readOnly></input></td>
                         </tr>
                         <tr>
                             <th>정상채권개수</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].act_vir_act_cn)} readOnly></input></td>
                             <th>정상채권금액</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].nrml_bond_am)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].nrml_bond_am)} readOnly></input></td>
                             <th>연체채권개수</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].arr_bond_cn)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].arr_bond_cn)} readOnly></input></td>
                         </tr>
                         <tr>
                             <th>연체채권금액</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && formattedData(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].act_vir_act_cn)} readOnly></input></td>
                             <th>채권양수인</th>
                             <td><input type="text" className="tdInput"></input></td>
                             <th>채권양도일자</th>
