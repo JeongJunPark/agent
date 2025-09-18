@@ -57,9 +57,9 @@ const Borrower = () => {
         link.click();
         document.body.removeChild(link);
     };
-
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const today = new Date();
+    const [startDate, setStartDate] = useState(today);
+    const [endDate, setEndDate] = useState(today);
 
     // 로그인 이후 상태값
     const [status, setStatus] = useState({
@@ -69,9 +69,8 @@ const Borrower = () => {
 
     // 날짜 초기화
     useEffect(() => {
-        const today = moment();
-
-        const todayDate = today.format("YYYYMMDD");
+        const excelToday = moment();        
+        const todayDate = excelToday.format("YYYYMMDD");
         setFileName("가상계좌 현황" + todayDate + ".xlsx");
     }, [])
 
@@ -153,28 +152,28 @@ const Borrower = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/borrowerResult', postData)
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRows', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log(11110);
-                        // console.log("returnResponse1: ------> ", returnResponse.result[0]);
-                        console.log(postData);
-                        console.log(11111);
-                        // console.log("returnResponse2: ------> ", returnResponse.result[0].query);
+                        setResponse(returnResponse.result1);
+                        setData(returnResponse.result1);
                         
-                        console.log(11112);
-                        console.log("returnResponse3: ------> ", JSON.stringify(returnResponse.query));
-                        
-                        console.log(11113);
-                        console.log("summaryData: -----> ", summaryData);
-                        
-                        console.log(11114);
-                        setResponse(returnResponse.query);
-                        setSummaryData(returnResponse.query2);
-                        setData(returnResponse.query);
-                        
-                        if (!returnResponse.query || returnResponse.query.length === 0) {
+                        if (!returnResponse.result1 || returnResponse.result1.length === 0) {
                             alert("조회 결과가 없습니다.");
+                        }                        
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+                 
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
+                .then((returnResponse) => {
+                    if (returnResponse) {                       
+                        setSummaryData(returnResponse.result2);
+                        
+                        if (!returnResponse.result2 || returnResponse.result2.length === 0) {
+                            alert("합산 결과가 없습니다.");
                         }                        
                     }
                 })
