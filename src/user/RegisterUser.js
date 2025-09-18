@@ -45,17 +45,18 @@ const RegisterUser = () => {
     const [use, setUse] = useState("Y")
 
     const registerAgentUser = () => {
-        setPostData({
-            ID: sessionStorage.getItem("ID"),
+        setPostData({         
             userID: userID,
-            userName: userName,
-            co: co,
-            mgr: mgr,
-            phone: phone,
-            auth: auth,
-            use: use,
-        })
+            ID: sessionStorage.getItem("ID"),                           
+            userName: userName,                       
+            co: co,                                   
+            mgr: mgr,                                 
+            phone: phone,                                
+            chg_id: sessionStorage.getItem("ID"),         
+            use: use,                           
+        });
     }
+
 
     useEffect(() => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentUserCoList", { ID: sessionStorage.getItem("ID") })
@@ -163,8 +164,8 @@ const RegisterUser = () => {
                     </tbody>
                 </table>
                 <div className="button_layout">
-                    <button className="loginBtn" type="submit" onClick={registerAgentUser}>등록</button>
-                    <button className="loginBtn" type="submit" onClick={() => navigate("/ManageUser")}>목록</button>
+                    <button className="searchBtn" type="submit" onClick={registerAgentUser}>등록</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate("/ManageUser")}>목록</button>
                 </div>
 
             </div>
