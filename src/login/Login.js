@@ -42,7 +42,6 @@ const Login = () => {
                                     console.log("returnResponse ----> ", returnResponse);
                                     // alert(returnResponse.agent_nm);
                                     setName(returnResponse.agent_nm);
-                                    alert("kk");
                                 }
                             })
                             .catch((error) => {

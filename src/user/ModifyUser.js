@@ -20,6 +20,9 @@ const ModifyUser = () => {
     const [auth, setAuth] = useState("1");
     const [use, setUse] = useState("Y")
 
+    const [agentDlgtId, getAgentDlgtId] = useState(sessionStorage.getItem('agent_dlgt_id'));
+
+    
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: userINDX })
         .then((returnResponse) => {
@@ -35,7 +38,6 @@ const ModifyUser = () => {
             setUserID(user.agent_id);
             setUserName(user.agent_nm);
             setCo(user.agent_co);
-            alert(user.agent_co);
             setMgr(user.agent_dept);
             setPhone(user.agent_phn);
 
@@ -88,7 +90,8 @@ const ModifyUser = () => {
             mgr: mgr,
             phone: phone,
             auth: auth,
-            use: use
+            use: use,
+            agentDlgtId: agentDlgtId
         };
 
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/modifyAgentUser", payload)
@@ -120,7 +123,8 @@ const ModifyUser = () => {
                     </tr>
                     <tr>
                         <th>소속</th>
-                        <td><select className="searchInput" onChange={(e) => setCo(e.target.value)} value={co}>
+                        <td>
+                            <select className="searchInput" value={co} onChange={(e) => setCo(e.target.value)}>
                             <option value="">구분</option>
                             {agentList && agentList.map((item, index) => (
                                 <option key={index} value={item.co_indx}>{item.agent_co}</option>
