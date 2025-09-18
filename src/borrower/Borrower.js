@@ -83,9 +83,9 @@ const Borrower = () => {
     const [matchMoAccount, setMatchMoAccount] = useState("")
 
     // 선택한 값
-    const [selectedManagerBranch, setSelectedManagerBranch] = useState('')
-    const [selectedBank, setSelectedBank] = useState('279')
-    const [selectedMoAccount, setSelectedMoAccount] = useState('')
+    const [selectedManagerBranch, setSelectedManagerBranch] = useState('');
+    const [selectedBank, setSelectedBank] = useState('279');
+    const [selectedMoAccount, setSelectedMoAccount] = useState('10161802501');
     const [selectedSect, setSelectedSect] = useState("0");
 
     // 검색 Data
