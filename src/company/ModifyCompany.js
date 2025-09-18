@@ -119,8 +119,7 @@ const ModifyCompany = () => {
     const validateManagerId = (coManagerID) => {
             SendAPI("https://dev-home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID })
             .then((returnResponse) => {
-                const result = returnResponse.result[0]['1'];
-                if (result === '0') {
+                if (returnResponse.result === 'N') {
                     setCoManagerIDError(coManagerID + ' 은 등록되어 있지 않은 아이디 입니다.');
                 }
             })
