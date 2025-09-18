@@ -120,7 +120,7 @@ const Agent = () => {
     const tmddlsArr = ['대출대상', '대출'];
 
     // 선택한 값
-    const [selectedAgent, setSelectedAgent] = useState()
+    const [selectedAgent, setSelectedAgent] = useState('')
     const [selectedReqSc, setSelectedReqSc] = useState("A")
     const [name, setName] = useState("");
     const [postData, setPostData] = useState({
