@@ -18,6 +18,7 @@ const RegisterUser = () => {
         mgr: '',
         phone: '',
         auth: '',
+        chg_id: '',
         use: '',
     })
 
@@ -51,7 +52,8 @@ const RegisterUser = () => {
             userName: userName,                       
             co: co,                                   
             mgr: mgr,                                 
-            phone: phone,                                
+            phone: phone,       
+            auth: auth,                         
             chg_id: sessionStorage.getItem("ID"),         
             use: use,                           
         });
