@@ -14,6 +14,7 @@ const ModifyCompany = () => {
     const [coName, setCoName] = useState('')
     const [coDiv, setCoDiv] = useState()
     const [coManagerID, setCoManagerID] = useState()
+    const [coManagerIDError, setCoManagerIDError] = useState('');
     const [coPhone, setCoPhone] = useState()
     const [coUse, setCoUse] = useState()
 
@@ -74,6 +75,7 @@ const ModifyCompany = () => {
 
     useEffect(() => {
         if (modifyData.ID !== '' && modifyData.ID !== undefined) {
+            validateManagerId(coManagerID);
             SendAPI("https://dev-home-api.leadcorp.co.kr:8080/modifyAgentCompany", modifyData)
                 .then((returnResponse) => {
                     if (returnResponse.result === 'Y') {
@@ -93,7 +95,6 @@ const ModifyCompany = () => {
                 companyINDX: companyINDX
             }
         })
-
     }
 
     const managerMoAccount = (companyINDX) => {
@@ -102,7 +103,29 @@ const ModifyCompany = () => {
                 companyINDX: companyINDX
             }
         })
+    }
 
+    // 대표 아이디 validation
+    const handleCoManagerIDBlur = async () => {
+        setCoManagerIDError('');
+        if (!coManagerID || coManagerID.trim() === '') {
+          setCoManagerIDError('대표 아이디를 입력하세요.');
+          return;
+        }
+        validateManagerId(coManagerID);
+    };
+
+    // 서버에 존재하는 ID인지 유효성 체크
+    const validateManagerId = (coManagerID) => {
+            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID })
+            .then((returnResponse) => {
+                if (returnResponse.result === 'N') {
+                    setCoManagerIDError(coManagerID + ' 은 등록되어 있지 않은 아이디 입니다.');
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
@@ -131,7 +154,14 @@ const ModifyCompany = () => {
                         </tr>
                         <tr>
                             <th>대표 아이디</th>
-                            <td><input className="searchInput" value={coManagerID} onChange={(e) => setCoManagerID(e.target.value)} /></td>
+                            <td>
+                                <input className="searchInput" value={coManagerID} onChange={(e) => setCoManagerID(e.target.value)} onBlur={handleCoManagerIDBlur} />
+                                {coManagerIDError && (
+                                    <span className="errorText" style={{ color: 'red', marginLeft: 16 }}>
+                                        {coManagerIDError}
+                                    </span>
+                                )}
+                            </td>
                         </tr>
                         <tr>
                             <th>대표 연락처</th>
