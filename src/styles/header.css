@@ -57,16 +57,16 @@
   margin-left: auto; /* 이걸 주면 오른쪽 끝으로 밀림 */
 }
 
-/* 마우스 올렸을 때 */
-.mypage_header:hover {
-  color: whitesmoke; /* 글씨 색도 바꿔주면 보기 좋음 */
-}
-
 .mypage_header.active {
-  color: #0069a6;
+  color: #0069a6 !important;
   font-weight: bold;
   border-radius: 4px;
   font-size: 18x;
+}
+
+/* 마우스 올렸을 때 */
+.mypage_header:hover {
+  color: whitesmoke;
 }
 
 /* 모바일 화면에서는 desktop-menu + user-menu 숨기고 햄버거 버튼만 보이게 */
