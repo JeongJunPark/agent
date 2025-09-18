@@ -13,14 +13,17 @@ const ModifyUser = () => {
     
     const [userID, setUserID] = useState("");
     const [userName, setUserName] = useState("");
-    const [agentList, setAgentList] = useState() // 소속 list
-    const [co, setCo] = useState() // 선택한 소속 값
+    const [agentList, setAgentList] = useState('') // 소속 list
+    // const [co, setCo] = useState();
     const [mgr, setMgr] = useState("")
     const [phone, setPhone] = useState("");
     const [auth, setAuth] = useState("1");
     const [use, setUse] = useState("Y")
 
-    
+    const [selectedDlgtId, setSelectedDlgtId] = useState(""); // agent_dlgt_id
+    const [selectedCoName, setSelectedCoName] = useState(""); // agent_co 이름    
+    const [userData, setUserData] = useState(null); // detailAgentUser API 결과 저장
+
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: userINDX })
         .then((returnResponse) => {
@@ -33,9 +36,10 @@ const ModifyUser = () => {
             }
 
             // 화면에 뿌릴 상태값 세팅
+            setUserData(user);             
             setUserID(user.agent_id);
             setUserName(user.agent_nm);
-            setCo(user.agent_co);
+            // setCo(user.agent_co);
             setMgr(user.agent_dept);
             setPhone(user.agent_phn);
 
@@ -70,7 +74,8 @@ const ModifyUser = () => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentUserCoList", { ID: sessionStorage.getItem("ID") })
             .then((returnResponse) => {
                 console.log(returnResponse)
-                setAgentList(returnResponse.result)
+                setAgentList(returnResponse.result);
+                console.log("dd: ", returnResponse.result);
             })
             .catch((error) => {
                 console.log(error)
@@ -78,18 +83,27 @@ const ModifyUser = () => {
 
     }, [])
 
+        useEffect(() => {
+            if (agentList && agentList.length > 0 && userData) {
+                const selectedItem = agentList.find(item => item.agent_co === userData.agent_co);
+                if (selectedItem) {
+                    setSelectedDlgtId(selectedItem.agent_dlgt_id);
+                    setSelectedCoName(selectedItem.agent_co);
+                }
+            }
+}, [agentList, userData]);
+
     const modifyAgenUser = () => {
         const payload = {
             userINDX: userINDX,
-            ID: userID,
             userID: userID,
+            ID: selectedDlgtId, // agent_dlgt_id
+            co: selectedCoName,          // agent_co 이름
             userName: userName,
-            co: co,
             mgr: mgr,
             phone: phone,
             auth: auth,
-            use: use,
-            agentDlgtId: co
+            use: use
         };
 
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/modifyAgentUser", payload)
@@ -122,10 +136,18 @@ const ModifyUser = () => {
                     <tr>
                         <th>소속</th>
                         <td>
-                            <select className="searchInput" value={co} onChange={(e) => setCo(e.target.value)}>
+                        <select
+                            className="searchInput"
+                            value={selectedDlgtId}
+                            onChange={(e) => {
+                                const selectedItem = agentList.find(item => item.agent_dlgt_id === e.target.value);
+                                setSelectedDlgtId(selectedItem.agent_dlgt_id);
+                                setSelectedCoName(selectedItem.agent_co);
+                            }}
+                        >
                             <option value="">구분</option>
                             {agentList && agentList.map((item, index) => (
-                                <option key={index} value={item.co_indx}>{item.agent_co}</option>
+                                <option key={index} value={item.agent_dlgt_id}>{item.agent_co}</option>
                             ))}
                         </select>
                         </td>
