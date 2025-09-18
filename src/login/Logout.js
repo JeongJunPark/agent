@@ -1,15 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
+import SendAPI from "../utils/SendAPI";
+import "../styles/login.css"
+import Footer from '../layout/Footer'
 
 const Logout = () => {
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        sessionStorage.clear();
-        navigate("/Login");
-    }, [navigate]);
-
-    return null;   
 }
 
 export default Logout;
