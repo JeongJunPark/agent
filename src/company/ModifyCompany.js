@@ -122,6 +122,7 @@ const ModifyCompany = () => {
                 if (returnResponse.result === 'N') {
                     setCoManagerIDError(coManagerID + ' 은 등록되어 있지 않은 아이디 입니다.');
                 }
+                
             })
             .catch((error) => {
                 console.log(error)
