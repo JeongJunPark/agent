@@ -1,206 +1,190 @@
-import { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
+import "../styles/button.css"
 
-import { AiOutlineShop, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
-import NoDataRow from "../utils/NoDataRow";
+const ModifyCompany = () => {
 
-import "../styles/button.css";
-const ManageCompany = () => {
+    const location = useLocation()
+    const navigate = useNavigate();
+    const locationState = location.state
 
-  const location = useLocation()
-  const navigate = useNavigate()
+    const [coID, setcoID] = useState(locationState.id)
+    const [coName, setCoName] = useState('')
+    const [coDiv, setCoDiv] = useState()
+    const [coManagerID, setCoManagerID] = useState()
+    const [coManagerIDError, setCoManagerIDError] = useState('');
+    const [coPhone, setCoPhone] = useState()
+    const [coUse, setCoUse] = useState()
 
-  const [data, setData] = useState("")
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
-  const [pageGroupStart, setPageGroupStart] = useState(1); // 10개 단위 시작 페이
-  const totalPages = Math.ceil(data.length / postsPerPage)
-  // 현재 페이지에 해당하는 데이터 계산
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
-  // 페이지 번호 클릭 처리
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
-  // 이전 10페이지
-  const handlePrevGroup = () => {
-  const newStart = Math.max(pageGroupStart - 10, 1);
-  setPageGroupStart(newStart);
-  setCurrentPage(newStart);
-  }
-  // 다음 10페이지
-  const handleNextGroup = () => {
-  const newStart = pageGroupStart + 10;
-  if (newStart <= totalPages) {
-      setPageGroupStart(newStart);
-      setCurrentPage(newStart);
-  }
-  };
-  const [keyword, setKeyword] = useState("");
-  const [condition, setCondition] = useState("");
+    const [response, setResponse] = useState()
 
-  // HIST 저장
-  useEffect(() => {
-    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
-      .then((returnResponse) => {
-        if (returnResponse) {
-          console.log(returnResponse)
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
-  }, [])
-
-  useEffect(() => {
-    if (data === '') {
-      SendAPI('https://dev-home-api.leadcorp.co.kr:8080/agentUserCompany')
-        .then(returnResponse => {
-          setData(returnResponse.companyData)
-        })
-        .catch(error => {
-          console.error('API Error:', error);
-        });
-    }
-  })
-
-
-  const handleSearch = () => {
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
-      .then(returnResponse => {
-        setData(returnResponse.searchCompanyData)
-      })
-      .catch(error => {
-        console.error('API Error:', error);
-      });
-
-  }
-
-  const detailAgentCompany = (companyINDX) => {
-    navigate("/ModifyCompany", {
-      state: {
-        companyINDX: companyINDX
-      }
+    const [modifyData, setModifyData] = useState({
+        ID: '',
+        coName: '',
+        coDiv: '',
+        coManagerID: '',
+        coPhone: '',
+        coUse: ''
     })
-  }
 
-  const deleteAgentCompancy = (companyINDX) => {
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteAgentCompany', { companyINDX : companyINDX })
-      .then(returnResponse => {
-        if (returnResponse.result === 'Y') {
-          alert("삭제 되었습니다.")
-          window.location.reload()
+    // HIST 저장
+    useEffect(() => {
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체변경", note: '', IP : sessionStorage.getItem('IP') })
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    console.log(returnResponse)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }, [])
+
+    // 업체 세부 정보
+    useEffect(() => {
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentCompany", { companyINDX : locationState.companyINDX })
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    setCoName(returnResponse.detailAgentCompany[0].agent_co)
+                    setCoDiv(returnResponse.detailAgentCompany[0].agent_co_div)
+                    setCoManagerID(returnResponse.detailAgentCompany[0].agent_dlgt_id)
+                    setCoPhone(returnResponse.detailAgentCompany[0].agent_phn)
+                    setCoUse(returnResponse.detailAgentCompany[0].mgr_use_yn)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }, [])
+
+    const modifyAgentCompany = () => {
+        setModifyData({
+            companyINDX: locationState.companyINDX,
+            coName: coName,
+            coDiv: coDiv,
+            coManagerID: coManagerID,
+            coPhone: coPhone,
+            coUse: coUse,
+            ID: sessionStorage.getItem('ID')
+        })
+    }
+
+    useEffect(() => {
+        if (modifyData.ID !== '' && modifyData.ID !== undefined) {
+            validateManagerId(coManagerID);
+            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/modifyAgentCompany", modifyData)
+                .then((returnResponse) => {
+                    if (returnResponse.result === 'Y') {
+                        alert("수정이 완료 되었습니다.");
+                        navigate("/ManageCompany")
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+    }, [modifyData])
 
-  const section = (e) => {
-    if (e == '01') return "본사";
-    if (e == '02') return "에이전트";
-    if (e == '03') return "차입처";
-  }
+    const managerIP = (companyINDX) => {
+        navigate("/CompanyIP", {
+            state: {
+                companyINDX: companyINDX
+            }
+        })
+    }
 
+    const managerMoAccount = (companyINDX) => {
+        navigate("/CompanyMoAccount", {
+            state: {
+                companyINDX: companyINDX
+            }
+        })
+    }
 
-  return (
-    <>
-      <div className="content_body">
-        <div className="result_header">
-        <p className="menu_title"><AiOutlineShop/>  업체 관리
+    // 대표 아이디 validation
+    const handleCoManagerIDBlur = async () => {
+        setCoManagerIDError('');
+        if (!coManagerID || coManagerID.trim() === '') {
+          setCoManagerIDError('대표 아이디를 입력하세요.');
+          return;
+        }
+        validateManagerId(coManagerID);
+    };
 
-        <div className="search_layout">     
-          <select
-            name="condition"
-            className="form-control"
-            value={condition}
-            onChange={(e) => setCondition(e.target.value)}
-          >
-            <option value="">전체</option>
-            <option value="agent_co">업체명</option>
-            <option value="agent_dlgt_id">대표아이디</option>
-          </select>         
+    // 서버에 존재하는 ID인지 유효성 체크
+    const validateManagerId = (coManagerID) => {
+            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID })
+            .then((returnResponse) => {
+                if (returnResponse.result === 'N') {
+                    setCoManagerIDError(coManagerID + ' 은 등록되어 있지 않은 아이디 입니다.');
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
-          <input
-            type="text"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            placeholder="검색어"
-            className="searchInput"
-          />
-          <button className="searchBtn" onClick={handleSearch}>검색</button>
-        </div>
-        </p>
-      </div>
+    return (
+        <>
+            <div className="content_body">
+                <p className="menu_title">업체 변경</p>
+                
+                <table className="result_table">
+                    <colgroup>
+                        <col width="10%" />
+                        <col width="90%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>업체명</th>
+                            <td><input className="searchInput" value={coName} onChange={(e) => setCoName(e.target.value)} /></td>
+                        </tr>
+                        <tr>
+                            <th>업체 구분</th>
+                            <td><select className="searchInput" onChange={(e) => setCoDiv(e.target.value)} value={coDiv}>
+                                <option value="">구분</option>
+                                <option value="01">본사</option>
+                                <option value="02">에이전트</option>
+                                <option value="03">차입처</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <th>대표 아이디</th>
+                            <td>
+                                <input className="searchInput" value={coManagerID} onChange={(e) => setCoManagerID(e.target.value)} onBlur={handleCoManagerIDBlur} />
+                                {coManagerIDError && (
+                                    <span className="errorText" style={{ color: 'red', marginLeft: 16 }}>
+                                        {coManagerIDError}
+                                    </span>
+                                )}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>대표 연락처</th>
+                            <td><input className="searchInput" value={coPhone} onChange={(e) => setCoPhone(e.target.value)} /></td>
+                        </tr>
+                        <tr>
+                            <th>사용 여부</th>
+                            <td>Y <input type="radio" value="Y" checked={coUse === 'Y'} onChange={(e) => setCoUse(e.target.value)} />
+                                N <input type="radio" value="N" checked={coUse === 'N'} onChange={(e) => setCoUse(e.target.value)} />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div className="button_layout">
+                    <button className="modifyBtn" type="submit" onClick={modifyAgentCompany}>수정</button>
+                    <button className="generalBtn" type="submit" onClick={() => managerIP(locationState.companyINDX)}>IP 관리</button>
+                    <button className="generalBtn" type="submit" onClick={() => managerMoAccount(locationState.companyINDX)}>모 계좌 관리</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
+                </div>
+            </div>
+        </>
+    )
+}
 
-        <div className="pagination-info">
-          {data.length > 0 ? (
-            <span>Total : {data.length}건 [{currentPage}/{totalPages}] 페이지</span>
-          ) : (
-            <span>Total : 0건</span>
-          )}
-        </div>
-
-          <div className="grid-wrapper"> 
-          <table className="grid">
-            <thead>
-              <tr>
-                <th>번호</th>
-                <th>업체명</th>
-                <th>업체구분</th>
-                <th>대표아이디</th>
-                <th>대표전화</th>
-                <th>사용여부</th>
-                <th>등록일</th>
-                <th>수정</th>
-                <th>삭제</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data && data.length > 0 ? (
-                currentPosts.map((item, index) => (
-                  <tr key={item.co_indx}>
-                    <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                    <td>{item.agent_co}</td>
-                    <td>{section(item.agent_co_div)}</td>
-                    <td>{item.agent_dlgt_id}</td>
-                    <td>{item.agent_phn}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
-                    <td>{item.mgr_dt}</td>
-                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
-                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
-                  </tr>
-                ))) : 
-                   <NoDataRow colSpan={9} height="400px" />
-              }
-            </tbody>
-          </table>
-          </div>
-          <div className="pagenation">
-          {pageGroupStart > 1 && <a onClick={handlePrevGroup}><AiOutlineBackward/></a>}
-
-          {Array.from(
-              { length: Math.min(10, totalPages - pageGroupStart + 1) },
-              (_, i) => pageGroupStart + i
-          ).map((number) => (
-              <p key={number} className={number === currentPage ? "active" : null}>
-              <a onClick={() => paginate(number)}>{number}</a>
-              </p>
-          ))}
-
-          {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
-          </div>    
-
-          <div className='right-button-container'>
-            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>          
-          </div>
-
-      </div>
-    </>
-  );
-};
-
-export default ManageCompany
+export default ModifyCompany
