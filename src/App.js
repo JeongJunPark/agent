@@ -20,6 +20,7 @@ import UseHistory from "./user/UseHistory"
 
 import MainLayout from './layout/MainLayout'
 import RouteGuard from './login/RouteGuard';
+import Logout from './login/Logout';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
       {/* 로그인 페이지 */}
       <Route path="/" element={<Login />} />
       <Route path="/Login" element={<Login />} />
-
+      <Route path="/Logout" element={<Logout />} />
       {/* 메인 레이아웃 안에서 페이지 렌더링 */}
       <Route element={<MainLayout />}>
         <Route
