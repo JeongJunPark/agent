@@ -20,8 +20,6 @@ const ModifyUser = () => {
     const [auth, setAuth] = useState("1");
     const [use, setUse] = useState("Y")
 
-    const [agentDlgtId, getAgentDlgtId] = useState(sessionStorage.getItem('agent_dlgt_id'));
-
     
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: userINDX })
@@ -91,7 +89,7 @@ const ModifyUser = () => {
             phone: phone,
             auth: auth,
             use: use,
-            agentDlgtId: agentDlgtId
+            agentDlgtId: co
         };
 
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/modifyAgentUser", payload)
