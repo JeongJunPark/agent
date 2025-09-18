@@ -107,7 +107,7 @@ const ModifyCompany = () => {
 
     // 대표 아이디 validation
     const handleCoManagerIDBlur = async () => {
-        setCoManagerIDError('');
+
         if (!coManagerID || coManagerID.trim() === '') {
           setCoManagerIDError('대표 아이디를 입력하세요.');
           return;
@@ -122,6 +122,8 @@ const ModifyCompany = () => {
                 const result = returnResponse.result[0]['1'];
                 if (result === '0') {
                     setCoManagerIDError(coManagerID + ' 은 등록되어 있지 않은 아이디 입니다.');
+                } else {
+                    setCoManagerIDError('');                    
                 }
             })
             .catch((error) => {
