@@ -81,23 +81,28 @@ const Header = () => {
   const [open, setOpen] = useState(false);
     
   const myPageItems = [
-    { key: "1", label: <a href="/MyPage">My Page</a> },
-    { key: "2", label: <a href="/PersonalInfoModify">개인정보수정</a> }
+    { key: '1', label: <Link to="/MyPage">My Page</Link> },    
+    { key: '2', label: <Link to="/PersonalInfoModify">개인정보수정</Link> }       
   ];
 
   const companyMenuItems = [
-    { key: "1", label: <a href="/ManageCompany">업체 관리</a> },
-    { key: "2", label: <a href="/RegisterCompany">업체 등록</a> }
+    { key: '1', label: <Link to="/ManageCompany">업체 관리</Link> },    
+    { key: '2', label: <Link to="/RegisterCompany">업체 등록</Link> }    
   ];
 
   const userMenuItems = [
-    { key: "1", label: <a href="/ManageUser">사용자 계정 관리</a> },
-    { key: "2", label: <a href="/RegisterUser">사용자 계정 등록</a> },
-    { key: "3", label: <a href="/UseHistory">사용이력조회</a> }
+    { key: '1', label: <Link to="/ManageUser">사용자 계정 관리</Link> },    
+    { key: '2', label: <Link to="/RegisterUser">사용자 계정 등록</Link> },        
+    { key: '3', label: <Link to="/UseHistory">사용이력조회</Link> },        
   ];
 
-  const agentMenuItems = [{ key: "1", label: <a href="/Agent">에이전트 신청목록</a> }];
-  const borrowerMenuItems = [{ key: "1", label: <a href="/Borrower">가상계좌 현황조회</a> }];
+  const agentMenuItems = [
+    { key: '1', label: <Link to="/Agent">에이전트 신청목록</Link> }
+  ];
+
+  const borrowerMenuItems = [
+    { key: "1", label: <Link to="/Borrower">가상계좌 현황조회</Link> }
+  ];
 
 
   const myMenuItems = [

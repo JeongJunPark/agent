@@ -100,7 +100,7 @@ const CompanyIP = () => {
 
                 <table className="result_table" style={{ marginTop : "10px" }} border="1">
                     <tr>
-                        <td>등록할 IP</td>
+                        <th>등록할 IP</th>
                         <td><input className="searchInput" placeholder="IP 번호" onChange={(e) => setSubmittedIP(e.target.value)} /></td>
                     </tr>
                 </table>

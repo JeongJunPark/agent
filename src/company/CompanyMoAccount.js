@@ -150,7 +150,7 @@ const CompanyMoAccount = () => {
                 </div>
                 <table className="result_table" style={{ marginTop: "10px" }} border="1">
                     <tr>
-                        <td>은행</td>
+                        <th>은행</th>
                         <td>
                             <select className="searchInput" onChange={(e) => setSelectedBank(e.target.value)}>
                                 <option value="03">기업</option>
@@ -160,7 +160,8 @@ const CompanyMoAccount = () => {
                                 <option value="279">DB금융투자</option>
                             </select>
                         </td>
-                        <td>모계좌번호</td>
+
+                        <th>모계좌번호</th>
                         <td><input className="searchInput" placeholder="모계좌번호" onChange={(e) => setSubmittedMoAccount(e.target.value)} /></td>
                     </tr>
                 </table>
