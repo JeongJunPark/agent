@@ -19,8 +19,6 @@ import { AiOutlineForward } from "react-icons/ai";
 import "../styles/button.css"
 const Agent = () => {
 
-    const today = moment();
-
     // HIST 저장
     useEffect(() => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "에이전트조회", note: '', IP : sessionStorage.getItem('IP') })
@@ -89,8 +87,10 @@ const Agent = () => {
         document.body.removeChild(link);
     };
 
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const today = new Date();
+    const [startDate, setStartDate] = useState(today);
+    const [endDate, setEndDate] = useState(today);
+
 
     // 로그인 이후 상태값
     const [status, setStatus] = useState({
@@ -130,9 +130,8 @@ const Agent = () => {
 
     // 날짜 초기화
     useEffect(() => {
-        const today = moment();
-
-        const todayDate = today.format("YYYYMMDD");
+        const excelToday = moment();        
+        const todayDate = excelToday.format("YYYYMMDD");
         setFileName("에이전트 신청 현황" + todayDate + ".xlsx");
     }, [])
 
