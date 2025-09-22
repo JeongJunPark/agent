@@ -23,7 +23,7 @@ const Agent = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "에이전트조회", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "에이전트조회", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -139,7 +139,7 @@ const Agent = () => {
     // 에이전트 리스트 체크
     useEffect(() => {
         if (status.auth !== '' && status.auth !== undefined) {
-            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/checkAgentList", status)
+            SendAPI("https://home-api.leadcorp.co.kr:8080/checkAgentList", status)
                 .then((returnResponse) => {
                     if (returnResponse) {
                         console.log(returnResponse)
@@ -167,7 +167,7 @@ const Agent = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/agentResult', postData)
+            SendAPI('https://home-api.leadcorp.co.kr:8080/agentResult', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
                         console.log(returnResponse);

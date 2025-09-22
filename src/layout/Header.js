@@ -29,7 +29,7 @@ const Header = () => {
     }
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentMenu", ID)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentMenu", ID)
             .then((returnResponse) => {
                 if (returnResponse) {
                     setAuth(returnResponse.auth);
@@ -54,7 +54,7 @@ const Header = () => {
     }, [auth])
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfo", {
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfo", {
             ID: sessionStorage.getItem('ID'),
             menu: "Header",
             note: '',

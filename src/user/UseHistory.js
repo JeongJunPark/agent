@@ -107,7 +107,7 @@ const UseHistory = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getHistRows", {
+            SendAPI("https://home-api.leadcorp.co.kr:8080/getHistRows", {
                 ID: sessionStorage.getItem('ID'),
                 menu: "사용이력조회",
                 note: '',

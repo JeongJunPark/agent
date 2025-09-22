@@ -45,7 +45,7 @@ const ManageUser = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -59,7 +59,7 @@ const ManageUser = () => {
 
     useEffect(() => {
         if (data === '') {
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/agentUserCompany')
+            SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
                 .then(returnResponse => {
                     setData(returnResponse.userData)
                 })
@@ -71,7 +71,7 @@ const ManageUser = () => {
 
 
     const handleSearch = () => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
+        SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
             .then(returnResponse => {
                 setData(returnResponse.searchUserData)
             })
@@ -90,7 +90,7 @@ const ManageUser = () => {
     }
 
     const deleteAgentUser = (userINDX) => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteAgentUser', { userINDX: userINDX })
+        SendAPI('https://home-api.leadcorp.co.kr:8080/deleteAgentUser', { userINDX: userINDX })
             .then(returnResponse => {
                 if (returnResponse.result === 'Y') {
                     alert("삭제 되었습니다.")

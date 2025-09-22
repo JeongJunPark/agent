@@ -31,7 +31,7 @@ const ModifyCompany = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체변경", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체변경", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -45,7 +45,7 @@ const ModifyCompany = () => {
 
     // 업체 세부 정보
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentCompany", { companyINDX : locationState.companyINDX })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/detailAgentCompany", { companyINDX : locationState.companyINDX })
             .then((returnResponse) => {
                 if (returnResponse) {
                     setCoName(returnResponse.detailAgentCompany[0].agent_co)
@@ -76,7 +76,7 @@ const ModifyCompany = () => {
     useEffect(() => {
         if (modifyData.ID !== '' && modifyData.ID !== undefined) {
             validateManagerId(coManagerID);
-            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/modifyAgentCompany", modifyData)
+            SendAPI("https://home-api.leadcorp.co.kr:8080/modifyAgentCompany", modifyData)
                 .then((returnResponse) => {
                     if (returnResponse.result === 'Y') {
                         alert("수정이 완료 되었습니다.");
@@ -117,7 +117,7 @@ const ModifyCompany = () => {
 
     // 서버에 존재하는 ID인지 유효성 체크
     const validateManagerId = (coManagerID) => {
-            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID })
+            SendAPI("https://home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID })
             .then((returnResponse) => {
                 const result = returnResponse.result[0]['1'];
                 if (result === '0') {

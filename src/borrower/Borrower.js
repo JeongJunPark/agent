@@ -22,7 +22,7 @@ const Borrower = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -120,7 +120,7 @@ const Borrower = () => {
     };    
 
     useEffect(() => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
+        SendAPI('https://home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -154,7 +154,7 @@ const Borrower = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRows', postData)
+            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
                         setResponse(returnResponse.result1);
@@ -169,7 +169,7 @@ const Borrower = () => {
                     console.log(error)
                 })
                  
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
+            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {                       
                         setSummaryData(returnResponse.result2);

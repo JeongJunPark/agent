@@ -24,7 +24,7 @@ const RegisterUser = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "사용자등록", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "사용자등록", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -61,7 +61,7 @@ const RegisterUser = () => {
 
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentUserCoList", { ID: sessionStorage.getItem("ID") })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentUserCoList", { ID: sessionStorage.getItem("ID") })
             .then((returnResponse) => {
                 console.log(returnResponse)
                 setAgentList(returnResponse.result)
@@ -73,7 +73,7 @@ const RegisterUser = () => {
     }, [])
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/submitAgentUser", postData)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentUser", postData)
             .then((returnResponse) => {
                 console.log(returnResponse)
                 if (returnResponse.result === 'Y') {

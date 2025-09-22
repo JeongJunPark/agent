@@ -25,7 +25,7 @@ const ModifyUser = () => {
     const [userData, setUserData] = useState(null); // detailAgentUser API 결과 저장
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: userINDX })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/detailAgentUser", { userINDX: userINDX })
         .then((returnResponse) => {
             // 서버에서 받아온 데이터 배열
             const user = returnResponse.detailAgentUser[0];
@@ -71,7 +71,7 @@ const ModifyUser = () => {
 
 
         // 사용자 권한에 따른 업체 리스트
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentUserCoList", { ID: sessionStorage.getItem("ID") })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentUserCoList", { ID: sessionStorage.getItem("ID") })
             .then((returnResponse) => {
                 console.log(returnResponse)
                 setAgentList(returnResponse.result);
@@ -106,7 +106,7 @@ const ModifyUser = () => {
             use: use
         };
 
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/modifyAgentUser", payload)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/modifyAgentUser", payload)
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     alert("수정이 완료 되었습니다.");

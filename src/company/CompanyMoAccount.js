@@ -9,7 +9,7 @@ const CompanyMoAccount = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "모계좌관리", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "모계좌관리", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -42,7 +42,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 리스트
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/moAccountCompany", { companyINDX : locationState.companyINDX } )
+        SendAPI("https://home-api.leadcorp.co.kr:8080/moAccountCompany", { companyINDX : locationState.companyINDX } )
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -57,7 +57,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 사용 여부 변경
     const changeUse = (number, useValue) => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/changeUseMoAccount", { ID: sessionStorage.getItem('ID'), moAccount: number, useValue: useValue })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/changeUseMoAccount", { ID: sessionStorage.getItem('ID'), moAccount: number, useValue: useValue })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     window.location.reload();
@@ -71,7 +71,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 삭제
     const deleteMoAccount = (number) => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/deleteMoAccount", { moAccount: number })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/deleteMoAccount", { moAccount: number })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     window.location.reload();
@@ -85,7 +85,7 @@ const CompanyMoAccount = () => {
 
     // 모계좌 등록
     const submitIP = () => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/submitMoAccount", { companyINDX : locationState.companyINDX, bankCd: selectedBank, moAccount: subittedMoAccount, ID: sessionStorage.getItem('ID') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/submitMoAccount", { companyINDX : locationState.companyINDX, bankCd: selectedBank, moAccount: subittedMoAccount, ID: sessionStorage.getItem('ID') })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     alert("등록이 완료되었습니다.");

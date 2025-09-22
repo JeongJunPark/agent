@@ -65,7 +65,7 @@ const Login = () => {
             if (returnResponse) {
                 console.log(returnResponse)
                 if (returnResponse.result) {
-                    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN", note : '', IP : sessionStorage.getItem('IP')})
+                    SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN", note : '', IP : sessionStorage.getItem('IP')})
                         .then((returnResponse) => {
                             if (returnResponse) {
                                 console.log("returnResponse:  ===> ", returnResponse);

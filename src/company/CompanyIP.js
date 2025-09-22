@@ -8,7 +8,7 @@ const CompanyIP = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "IP관리", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "IP관리", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -31,7 +31,7 @@ const CompanyIP = () => {
 
     // 업체 IP 리스트
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/IPCompany", { companyINDX : locationState.companyINDX })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/IPCompany", { companyINDX : locationState.companyINDX })
             .then((returnResponse) => {
                 if (returnResponse) {
                     setResponse(returnResponse.IPList);
@@ -45,7 +45,7 @@ const CompanyIP = () => {
 
     // 업체 IP 사용 여부 변경
     const changeUse = (IP, useValue) => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/changeUseIP", { ID: sessionStorage.getItem('ID'), IP : IP, useValue: useValue })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/changeUseIP", { ID: sessionStorage.getItem('ID'), IP : IP, useValue: useValue })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     window.location.reload();
@@ -59,7 +59,7 @@ const CompanyIP = () => {
 
     // 업체 IP 등록
     const submitIP = () => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/submitIP", { ID: sessionStorage.getItem('ID'), companyINDX: locationState.companyINDX, IP: submittedIP,  })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/submitIP", { ID: sessionStorage.getItem('ID'), companyINDX: locationState.companyINDX, IP: submittedIP,  })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     alert("등록이 완료되었습니다.");
