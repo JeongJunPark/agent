@@ -121,26 +121,26 @@ const Header = () => {
         {/* Desktop 메뉴 */}
         <div className="desktop-menu">
           <div className="menu-left">
-          <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft">
+          <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
             <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
               <AiOutlineForm/> My Page
             </div>
           </Dropdown>
 
-          <Dropdown menu={{ items: companyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft">
+          <Dropdown menu={{ items: companyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
             <div className={`mypage_header ${isActive(['/ManageCompany', '/RegisterCompany', '/ModifyCompany']) ? 'active' : ''}`}>
               <AiOutlineShop/> 업체 관리
             </div>
           </Dropdown>
 
-          <Dropdown menu={{ items: userMenuItems }} trigger={["hover", "click"]} placement="bottomLeft">
+          <Dropdown menu={{ items: userMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
             <div className={`mypage_header ${isActive(['/ManageUser', '/RegisterUser', '/ModifyUser', '/UseHistory']) ? 'active' : ''}`}>
               <AiOutlineTeam/> 사용자 관리
             </div>
           </Dropdown>
 
           {authList && authList.some((value) => agentPageAuth.includes(value)) && (
-            <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft">
+            <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
               <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
                 <AiOutlineSolution/> 에이전트
               </div>
@@ -148,7 +148,7 @@ const Header = () => {
           )}
 
           {authList && authList.some((value) => borrowerPageAuth.includes(value)) && (
-            <Dropdown menu={{ items: borrowerMenuItems }} trigger={["hover", "click"]} placement="bottomLeft">
+            <Dropdown menu={{ items: borrowerMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
               <div className={`mypage_header ${isActive(['/Borrower']) ? 'active' : ''}`}>
                 <AiOutlineDollarCircle/> 차입처
               </div>
@@ -158,7 +158,7 @@ const Header = () => {
 
       </div>
         <div className="menu-right">
-          <Dropdown menu={{ items: myMenuItems }} trigger={['click', "hover"]} placement="bottomRight">
+          <Dropdown menu={{ items: myMenuItems }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
             <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
           </Dropdown>          
         </div>
