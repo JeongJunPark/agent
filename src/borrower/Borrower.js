@@ -22,7 +22,7 @@ const Borrower = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -66,7 +66,8 @@ const Borrower = () => {
     // 로그인 이후 상태값
     const [status, setStatus] = useState({
         auth: sessionStorage.getItem('auth'),
-        ID: sessionStorage.getItem('ID')
+        ID: sessionStorage.getItem('ID'),
+        agent_id: sessionStorage.getItem('agent_dlgt_id')        
     });
 
     // 날짜 초기화
@@ -118,15 +119,14 @@ const Borrower = () => {
             setCurrentPage(newStart);
         }
     };    
+    // alert(auth);
 
     useEffect(() => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse)
+                    console.log("returnResponse_chk: ",returnResponse)
                     setManagerBranch(returnResponse.managerBranch)
-                    setBank(returnResponse.bank)
-                    setMoAccount(returnResponse.moAccount)
                 }
             })
             .catch((error) => {
@@ -135,9 +135,36 @@ const Borrower = () => {
     }, [])
 
     useEffect(() => {
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectBankList', status)
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    console.log("returnResponse_bank: ",returnResponse)
+                    setBank(returnResponse.bank)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
+
+    useEffect(() => {
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectMoactList', status)
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    console.log("returnResponse_chk: ",returnResponse)
+                    setMoAccount(returnResponse.moAccount)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])    
+
+    useEffect(() => {
         if (moAccount.length > 0) {
             setMatchMoAccount(moAccount.filter(item => item.mo_bank_cd === selectedBank));
         }
+
     }, [selectedBank, moAccount])
 
     const searchBorrower = () => {
@@ -154,7 +181,7 @@ const Borrower = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', postData)
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRows', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
                         setResponse(returnResponse.result1);
@@ -169,7 +196,7 @@ const Borrower = () => {
                     console.log(error)
                 })
                  
-            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {                       
                         setSummaryData(returnResponse.result2);
