@@ -9,6 +9,7 @@
     padding: 0 16px;
     /* background-color: rgba(255,255,255,255.0.2); */
     background: #333;
+    color: #a3a3a3;
     /* border: 1px solid #ddd; */
     cursor: pointer;
     align-items: center;
@@ -70,17 +71,24 @@
   font-size: 18x;
 }
 
+/* Dropdown 기본 */
 .custom-dropdown .ant-dropdown-menu {
-  background-color: #333 !important;
+  background-color: white !important;
+  color: #333 !important;
 }
 
+/* 기본 아이템 */
 .custom-dropdown .ant-dropdown-menu-item {
-  background-color: #333 !important;
+  background-color: white !important;
+  color: #333 !important;
 }
 
+/* hover 상태 */
 .custom-dropdown .ant-dropdown-menu-item:hover {
-  background-color: #333 !important;
+  /* background-color: #a3a3a3 !important; */
+  color: #0069a6 !important;
 }
+
 
 /* 모바일 화면에서는 desktop-menu + user-menu 숨기고 햄버거 버튼만 보이게 */
 @media (max-width: 768px) {
