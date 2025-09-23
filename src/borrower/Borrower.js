@@ -22,7 +22,7 @@ const Borrower = () => {
 
     // HIST 저장
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "가상계좌 현황조회", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -84,9 +84,9 @@ const Borrower = () => {
 
     // 선택한 값
     const [selectedManagerBranch, setSelectedManagerBranch] = useState('');
-    const [selectedBank, setSelectedBank] = useState('279');
-    const [selectedMoAccount, setSelectedMoAccount] = useState('10161802501');
-    const [selectedSect, setSelectedSect] = useState("0");
+    const [selectedBank, setSelectedBank] = useState('');
+    const [selectedMoAccount, setSelectedMoAccount] = useState('');
+    const [selectedSect, setSelectedSect] = useState("");
 
     // 검색 Data
     const [postData, setPostData] = useState("")
@@ -121,7 +121,7 @@ const Borrower = () => {
     // alert(auth);
 
     useEffect(() => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
+        SendAPI('https://home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log("returnResponse_chk: ",returnResponse)
@@ -134,7 +134,7 @@ const Borrower = () => {
     }, [])
 
     useEffect(() => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectBankList', 
+        SendAPI('https://home-api.leadcorp.co.kr:8080/selectBankList', 
         {   auth: sessionStorage.getItem('auth'),
             ID: sessionStorage.getItem('ID'),
             bankCd: selectedBank,
@@ -144,7 +144,8 @@ const Borrower = () => {
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log("returnResponse_bank: ",returnResponse)
-                    setBank(returnResponse.bank)
+                    // setBank(returnResponse.bank)
+                    setBank(Array.isArray(returnResponse.result) ? returnResponse.result : []);                    
                 }
             })
             .catch((error) => {
@@ -153,7 +154,7 @@ const Borrower = () => {
     }, [])
 
     useEffect(() => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectMoactList', 
+        SendAPI('https://home-api.leadcorp.co.kr:8080/selectMoactList', 
         {   auth: sessionStorage.getItem('auth'),
             ID: sessionStorage.getItem('ID'),
             bankCd: selectedBank,
@@ -163,7 +164,8 @@ const Borrower = () => {
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log("returnResponse_chk: ",returnResponse)
-                    setMoAccount(returnResponse.moAccount)
+                    // setMoAccount(returnResponse.moAccount)
+                    setMoAccount(Array.isArray(returnResponse.moAccount) ? returnResponse.moAccount : []);                    
                 }
             })
             .catch((error) => {
@@ -171,14 +173,13 @@ const Borrower = () => {
             })
     }, [])    
 
-    useEffect(() => {
-        setMatchMoAccount(
-            Array.isArray(moAccount)
-                ? moAccount.filter(item => item.mo_bank_cd === selectedBank)
-                : []
-        );
-    }, [selectedBank, moAccount]);
-
+        useEffect(() => {
+            setMatchMoAccount(
+                Array.isArray(moAccount)
+                    ? moAccount.filter(item => String(item.mo_bank_cd) === String(selectedBank))
+                    : []
+            );
+        }, [selectedBank, moAccount]);
 
     const searchBorrower = () => {
         setPostData({
@@ -193,7 +194,7 @@ const Borrower = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRows', postData)
+            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
                         setResponse(returnResponse.result1);
@@ -208,7 +209,7 @@ const Borrower = () => {
                     console.log(error)
                 })
                  
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
+            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {                       
                         setSummaryData(returnResponse.result2);
@@ -307,8 +308,8 @@ const Borrower = () => {
                         <th>은행</th>
                         <td>
                             <select onChange={(e) => setSelectedBank(e.target.value)} value={selectedBank}>
-                                {bank && bank.map((item, index) => (
-                                    <option value={item.code} >{item.name}</option>
+                                {Array.isArray(bank) && bank.map((item, index) => (
+                                    <option key={index} value={item.cd}>{item.cd_nm}</option>
                                 ))}
                             </select>
                         </td>
