@@ -66,8 +66,7 @@ const Borrower = () => {
     // 로그인 이후 상태값
     const [status, setStatus] = useState({
         auth: sessionStorage.getItem('auth'),
-        ID: sessionStorage.getItem('ID'),
-        agent_id: sessionStorage.getItem('agent_dlgt_id')        
+        ID: sessionStorage.getItem('ID'),     
     });
 
     // 날짜 초기화
@@ -79,8 +78,8 @@ const Borrower = () => {
 
     // DB로부터 <option> 리스트 추출
     const [managerBranch, setManagerBranch] = useState();
-    const [bank, setBank] = useState("");
-    const [moAccount, setMoAccount] = useState("")
+    const [bank, setBank] = useState([]);
+    const [moAccount, setMoAccount] = useState([])
     const [matchMoAccount, setMatchMoAccount] = useState("")
 
     // 선택한 값
@@ -135,7 +134,13 @@ const Borrower = () => {
     }, [])
 
     useEffect(() => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectBankList', status)
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectBankList', 
+        {   auth: sessionStorage.getItem('auth'),
+            ID: sessionStorage.getItem('ID'),
+            bankCd: selectedBank,
+            agent_id: sessionStorage.getItem('ID')             
+        }           
+        )
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log("returnResponse_bank: ",returnResponse)
@@ -148,7 +153,13 @@ const Borrower = () => {
     }, [])
 
     useEffect(() => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectMoactList', status)
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/selectMoactList', 
+        {   auth: sessionStorage.getItem('auth'),
+            ID: sessionStorage.getItem('ID'),
+            bankCd: selectedBank,
+            agent_id: sessionStorage.getItem('ID')                 
+        }              
+        )
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log("returnResponse_chk: ",returnResponse)
@@ -161,11 +172,13 @@ const Borrower = () => {
     }, [])    
 
     useEffect(() => {
-        if (moAccount.length > 0) {
-            setMatchMoAccount(moAccount.filter(item => item.mo_bank_cd === selectedBank));
-        }
+        setMatchMoAccount(
+            Array.isArray(moAccount)
+                ? moAccount.filter(item => item.mo_bank_cd === selectedBank)
+                : []
+        );
+    }, [selectedBank, moAccount]);
 
-    }, [selectedBank, moAccount])
 
     const searchBorrower = () => {
         setPostData({
@@ -175,7 +188,6 @@ const Borrower = () => {
             moActNum: selectedMoAccount,
 
             actSt: selectedSect,
-            bankCd: selectedBank,
         })
     }
 
