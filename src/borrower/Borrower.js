@@ -34,13 +34,13 @@ const Borrower = () => {
 
     }, [])
     const [data, setData] = useState([]);
-    const exportToExcel = () => {
-        const table = document.getElementById('tableData'); // 테이블 요소 가져오기
-        const ws = XLSX.utils.table_to_sheet(table); // 테이블을 Excel 시트로 변환
-        const wb = XLSX.utils.book_new(); // 새 워크북 생성
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // 시트를 워크북에 추가
 
-        // Excel 파일 저장
+    const exportToExcel = () => {
+        // data: 전체 데이터 배열
+        const ws = XLSX.utils.json_to_sheet(data); // json 배열을 Excel 시트로 변환
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
         const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
         const s2ab = s => {
             const buf = new ArrayBuffer(s.length);
@@ -48,7 +48,7 @@ const Borrower = () => {
             for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
             return buf;
         };
-        // const fileName = 'table_data.xlsx';
+
         const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);
 
@@ -59,6 +59,8 @@ const Borrower = () => {
         link.click();
         document.body.removeChild(link);
     };
+
+    
     const today = new Date();
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
@@ -80,6 +82,8 @@ const Borrower = () => {
     const [managerBranch, setManagerBranch] = useState();
     const [bank, setBank] = useState([]);
     const [moAccount, setMoAccount] = useState([])
+    
+    // const [moAccount, setMoAccount] = useState('')
     const [matchMoAccount, setMatchMoAccount] = useState("")
 
     // 선택한 값
@@ -118,13 +122,14 @@ const Borrower = () => {
             setCurrentPage(newStart);
         }
     };    
-    // alert(auth);
 
+    
+    
     useEffect(() => {
         SendAPI('https://home-api.leadcorp.co.kr:8080/checkBorrowerList', status)
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log("returnResponse_chk: ",returnResponse)
+                    console.log("returnResponse_chk1: ",returnResponse)
                     setManagerBranch(returnResponse.managerBranch)
                 }
             })
@@ -145,7 +150,7 @@ const Borrower = () => {
                 if (returnResponse) {
                     console.log("returnResponse_bank: ",returnResponse)
                     // setBank(returnResponse.bank)
-                    setBank(Array.isArray(returnResponse.result) ? returnResponse.result : []);                    
+                    setBank(Array.isArray(returnResponse.bank) ? returnResponse.bank : []);                    
                 }
             })
             .catch((error) => {
@@ -175,12 +180,12 @@ const Borrower = () => {
 
         useEffect(() => {
             setMatchMoAccount(
-                Array.isArray(moAccount)
+                Array.isArray(moAccount)  // 이제 bank 배열을 기준으로 필터
                     ? moAccount.filter(item => String(item.mo_bank_cd) === String(selectedBank))
                     : []
             );
-        }, [selectedBank, moAccount]);
-
+        }, [selectedBank, moAccount]);  // 의존성도 bank로 변경
+        
     const searchBorrower = () => {
         setPostData({
             startDate: moment(startDate).format("YYYYMMDD"),
@@ -316,9 +321,12 @@ const Borrower = () => {
                         <th>모계좌번호</th>
                         <td>
                             <select onChange={(e) => setSelectedMoAccount(e.target.value)} value={selectedMoAccount}>
-                                {selectedBank && matchMoAccount.length > 0 && matchMoAccount.map((item, index) => (
-                                    <option value={item.moActNum}>{item.mo_ssn}</option>
-                                ))}
+                                {Array.isArray(matchMoAccount) && matchMoAccount.length > 0
+                                    ? matchMoAccount.map((item, index) => (
+                                        <option key={index} value={item.vir_act_moact_no}>{item.vir_act_moact_nm}</option>
+                                    ))
+                                    : <option value="">모계좌 없음</option>
+                                }
                             </select>
                         </td>
                         <th>구분</th>

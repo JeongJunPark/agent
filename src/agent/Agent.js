@@ -62,12 +62,11 @@ const Agent = () => {
     };
 
     const exportToExcel = () => {
-        const table = document.getElementById('tableData'); // 테이블 요소 가져오기
-        const ws = XLSX.utils.table_to_sheet(table); // 테이블을 Excel 시트로 변환
-        const wb = XLSX.utils.book_new(); // 새 워크북 생성
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // 시트를 워크북에 추가
+        // data: 전체 데이터 배열
+        const ws = XLSX.utils.json_to_sheet(data); // json 배열을 Excel 시트로 변환
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-        // Excel 파일 저장
         const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
         const s2ab = s => {
             const buf = new ArrayBuffer(s.length);
@@ -75,7 +74,7 @@ const Agent = () => {
             for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
             return buf;
         };
-        // const fileName = 'table_data.xlsx';
+
         const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);
 
@@ -86,6 +85,9 @@ const Agent = () => {
         link.click();
         document.body.removeChild(link);
     };
+
+    
+
 
     const today = new Date();
     const [startDate, setStartDate] = useState(today);
@@ -99,7 +101,7 @@ const Agent = () => {
     });
 
     // DB로부터 <option> 리스트 추출
-    const [agentList, setAgentList] = useState()
+    const [agentList, setAgentList] = useState();
     const reqSc = [
         { value: "", name: "전체" },
         { value: "Z", name: "가접수" },
