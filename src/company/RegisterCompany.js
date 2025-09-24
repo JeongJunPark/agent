@@ -55,6 +55,7 @@ const RegisterCompany = () => {
         validateManagerId(coManagerID);
         if( coManagerIDError !== '') {
             alert("존재하지 않는 대표 아이디 입니다. 대표 아이디를 확인해주세요.")
+            return
         }
         if (postData.ID !== '' && postData.ID !== undefined) {
             SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentCompany", postData)
