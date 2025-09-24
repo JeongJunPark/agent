@@ -230,6 +230,7 @@ useEffect(() => {
           onClose={() => setOpen(false)}
           open={open}
         >
+  {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (          
           <Menu mode="inline">
             <Menu.SubMenu key="mypage" title="My Page">
               {myPageItems.map((item) => (
@@ -246,26 +247,95 @@ useEffect(() => {
                 <Menu.Item key={item.key}>{item.label}</Menu.Item>
               ))}
             </Menu.SubMenu>
-            {/* {authList && authList.some((value) => agentPageAuth.includes(value)) && ( */}
               <Menu.SubMenu key="agent" title="에이전트">
                 {agentMenuItems.map((item) => (
                   <Menu.Item key={item.key}>{item.label}</Menu.Item>
                 ))}
               </Menu.SubMenu>
-            {/* )} */}
-            {/* {authList && authList.some((value) => borrowerPageAuth.includes(value)) && ( */}
+
               <Menu.SubMenu key="borrower" title="차입처">
                 {borrowerMenuItems.map((item) => (
                   <Menu.Item key={item.key}>{item.label}</Menu.Item>
                 ))}
               </Menu.SubMenu>
-            {/* )} */}
+
               <Menu.SubMenu key="user-right" title={ID}>
                 {myMenuItems.map((item) => (
                   <Menu.Item key={item.key}>{item.label}</Menu.Item>
                 ))}
               </Menu.SubMenu>            
           </Menu>
+  )}
+
+{authList.some(role => ["ROLE_AGENT_ADMIN"].includes(role)) && (    
+           <Menu mode="inline">
+            <Menu.SubMenu key="mypage" title="My Page">
+              {myPageItems.map((item) => (
+                <Menu.Item key={item.key}>{item.label}</Menu.Item>
+              ))}
+            </Menu.SubMenu>
+
+            <Menu.SubMenu key="user" title="사용자 관리">
+              {userMenuItems.map((item) => (
+                <Menu.Item key={item.key}>{item.label}</Menu.Item>
+              ))}
+            </Menu.SubMenu>
+              <Menu.SubMenu key="agent" title="에이전트">
+                {agentMenuItems.map((item) => (
+                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                ))}
+              </Menu.SubMenu>
+
+              <Menu.SubMenu key="user-right" title={ID}>
+                {myMenuItems.map((item) => (
+                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                ))}
+              </Menu.SubMenu>            
+          </Menu>       
+  )}
+
+{authList.some(role => ["ROLE_AGENT_USER"].includes(role)) && (    
+           <Menu mode="inline">
+            <Menu.SubMenu key="mypage" title="My Page">
+              {myPageItems.map((item) => (
+                <Menu.Item key={item.key}>{item.label}</Menu.Item>
+              ))}
+            </Menu.SubMenu>
+              <Menu.SubMenu key="agent" title="에이전트">
+                {agentMenuItems.map((item) => (
+                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                ))}
+              </Menu.SubMenu>
+
+              <Menu.SubMenu key="user-right" title={ID}>
+                {myMenuItems.map((item) => (
+                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                ))}
+              </Menu.SubMenu>            
+          </Menu>       
+  )}
+
+  {authList.some(role => ["ROLE_BORROWER"].includes(role)) && (    
+           <Menu mode="inline">
+            <Menu.SubMenu key="mypage" title="My Page">
+              {myPageItems.map((item) => (
+                <Menu.Item key={item.key}>{item.label}</Menu.Item>
+              ))}
+            </Menu.SubMenu>
+
+              <Menu.SubMenu key="borrower" title="차입처">
+                {borrowerMenuItems.map((item) => (
+                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                ))}
+              </Menu.SubMenu>
+
+              <Menu.SubMenu key="user-right" title={ID}>
+                {myMenuItems.map((item) => (
+                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                ))}
+              </Menu.SubMenu>            
+          </Menu>       
+  )}
         </Drawer>
       </div>
     </header>
