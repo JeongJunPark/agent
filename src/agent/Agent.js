@@ -122,7 +122,7 @@ const Agent = () => {
     const tmddlsArr = ['대출대상', '대출'];
 
     // 선택한 값
-    const [selectedAgent, setSelectedAgent] = useState('')
+    const [selectedAgent, setSelectedAgent] = useState(sessionStorage.getItem("ad_medi") || "")
     const [selectedReqSc, setSelectedReqSc] = useState("A")
     const [name, setName] = useState("");
     const [postData, setPostData] = useState({
@@ -143,8 +143,9 @@ const Agent = () => {
             SendAPI("https://home-api.leadcorp.co.kr:8080/checkAgentList", status)
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log(returnResponse)
-                        setAgentList(returnResponse.agentList)
+                        console.log(returnResponse);
+                        setAgentList(returnResponse.agentList);
+                        sessionStorage.setItem("ad_medi", returnResponse.agentList[0].ad_medi);
                     }
                 })
                 .catch((error) => {
@@ -189,7 +190,7 @@ const Agent = () => {
             endDate: endDate,
             name: '',
             reqSc: 'A',
-            agent: ''
+            agent: sessionStorage.getItem("ad_medi") || ''
 
         })
     }, [startDate])
@@ -237,7 +238,10 @@ const Agent = () => {
                     <tr>
                         <th>에이전트</th>
                         <td>
-                            <select onChange={(e) => setSelectedAgent(e.target.value)} value={selectedAgent}>
+                            <select onChange={(e) => {
+                                setSelectedAgent(e.target.value);
+                                sessionStorage.setItem("ad_medi", e.target.value);
+                            }} value={selectedAgent}>
                                 {agentList && agentList.map((item, index) => (
                                     <option key={index} value={item.ad_medi} >{item.name}</option>
                                 ))}
