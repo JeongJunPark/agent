@@ -45,10 +45,10 @@ const ModifyUser = () => {
 
             // agent_auth 매핑
             switch (user.agent_auth) {
-            case 'ROLE_MANAGER,ROLE_AGENT_USER':
+            case 'ROLE_MANAGER,ROLE_AGENT_ADMIN':
                 setAuth("1");
                 break;
-            case 'ROLE_MANAGER,ROLE_AGENT_ADMIN':
+            case 'ROLE_MANAGER,ROLE_AGENT_USER':
                 setAuth("2");
                 break;
             case 'ROLE_MANAGER,ROLE_ADMIN':
@@ -162,9 +162,9 @@ const ModifyUser = () => {
                     </tr>
                     <tr>
                         <th>권한</th>
-                        <td>에이전트 관리자 <input type="radio" value="1" checked={auth === '1'} onChange={(e) => setAuth(e.target.value)} />
-                            에이전트 사용자 <input type="radio" value="2" checked={auth === '2'} onChange={(e) => setAuth(e.target.value)} />
-                            관리자 <input type="radio" value="3" checked={auth === '3'} onChange={(e) => setAuth(e.target.value)} />
+                        <td>에이전트 관리자 <input type="radio" value="1" checked={auth === '1'} onChange={(e) => setAuth(e.target.value)} /> &nbsp;
+                            에이전트 사용자 <input type="radio" value="2" checked={auth === '2'} onChange={(e) => setAuth(e.target.value)} /> &nbsp;
+                            관리자 <input type="radio" value="3" checked={auth === '3'} onChange={(e) => setAuth(e.target.value)} /> &nbsp;
                             차입처 <input type="radio" value="4" checked={auth === '4'} onChange={(e) => setAuth(e.target.value)} />
                         </td>
                     </tr>

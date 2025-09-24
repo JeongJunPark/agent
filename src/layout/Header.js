@@ -16,10 +16,11 @@ const Header = () => {
     const [managerVO, setManagerVO] = useState({});
     const [name, setName] = useState(''); 
     const [auth, setAuth] = useState();
-    const [authList, setAuthList] = useState();
+    const [authList, setAuthList] = useState([]);
 
-    const agentPageAuth = ["ROLE_ADMIN", "ROLE_AGENT_ADMIN", "ROLE_AGENT_USER"];
-    const borrowerPageAuth = ["ROLE_ADMIN", "ROLE_BORROWER"];
+    const allAuth = ["ROLE_ADMIN", "ROLE_AGENT_ADMIN", "ROLE_AGENT_USER", "ROLE_BORROWER"];
+    // const agentPageAuth = ["ROLE_ADMIN", "ROLE_AGENT_ADMIN", "ROLE_AGENT_USER"];
+    // const borrowerPageAuth = "ROLE_BORROWER";
 
     const location = useLocation();
 
@@ -28,28 +29,23 @@ const Header = () => {
       return paths.some(path => location.pathname.startsWith(path));
     }
 
-    useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/agentMenu", ID)
-            .then((returnResponse) => {
-                if (returnResponse) {
-                    setAuth(returnResponse.auth);
-                    if (!returnResponse.auth.includes("ROLE_ADMIN")) {
-                        sessionStorage.setItem('auth', 0); // 관리자일 경우 0으로 session 권한 저장
-                    } else {
-                        sessionStorage.setItem('auth', 1); // 비관리자일 경우 1로 session 권한 저장
-                    }
-
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    })
+useEffect(() => {
+    SendAPI("https://home-api.leadcorp.co.kr:8080/agentMenu", ID)
+        .then((returnResponse) => {
+            if (returnResponse?.auth) {
+                setAuth(returnResponse.auth);
+                setAuthList(returnResponse.auth.split(',')); // authList 세팅
+                sessionStorage.setItem('auth', returnResponse.auth.includes("ROLE_ADMIN") ? 1 : 0);
+            }
+        })
+        .catch(console.log);
+}, [ID]);
 
     useEffect(() => {
         if (auth !== '' && auth !== undefined) {
             setAuthList(auth.split(','));
-            console.log(auth.split(','))
+            console.log(auth.split(','));
+            console.log("auth: ", auth)
         }
     }, [auth])
 
@@ -120,43 +116,97 @@ const Header = () => {
 
         {/* Desktop 메뉴 */}
         <div className="desktop-menu">
-          <div className="menu-left">
-          <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
-            <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
-              <AiOutlineForm/> My Page
-            </div>
-          </Dropdown>
-
-          <Dropdown menu={{ items: companyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
-            <div className={`mypage_header ${isActive(['/ManageCompany', '/RegisterCompany', '/ModifyCompany']) ? 'active' : ''}`}>
-              <AiOutlineShop/> 업체 관리
-            </div>
-          </Dropdown>
-
-          <Dropdown menu={{ items: userMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
-            <div className={`mypage_header ${isActive(['/ManageUser', '/RegisterUser', '/ModifyUser', '/UseHistory']) ? 'active' : ''}`}>
-              <AiOutlineTeam/> 사용자 관리
-            </div>
-          </Dropdown>
-
-          {authList && authList.some((value) => agentPageAuth.includes(value)) && (
-            <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
-              <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
-                <AiOutlineSolution/> 에이전트
-              </div>
-            </Dropdown>
-          )}
-
-          {authList && authList.some((value) => borrowerPageAuth.includes(value)) && (
-            <Dropdown menu={{ items: borrowerMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
-              <div className={`mypage_header ${isActive(['/Borrower']) ? 'active' : ''}`}>
-                <AiOutlineDollarCircle/> 차입처
-              </div>
-            </Dropdown>
-          )}
-        </div>
-
+<div className="menu-left">
+  {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (
+    <>
+    <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
+        <AiOutlineForm/> My Page
       </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: companyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/ManageCompany', '/RegisterCompany', '/ModifyCompany']) ? 'active' : ''}`}>
+        <AiOutlineShop/> 업체 관리
+      </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: userMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/ManageUser', '/RegisterUser', '/ModifyUser', '/UseHistory']) ? 'active' : ''}`}>
+        <AiOutlineTeam/> 사용자 관리
+      </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
+        <AiOutlineSolution/> 에이전트
+      </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: borrowerMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/Borrower']) ? 'active' : ''}`}>
+        <AiOutlineDollarCircle/> 차입처
+      </div>
+    </Dropdown>
+  </>
+  )}
+
+  {authList.some(role => ["ROLE_AGENT_ADMIN"].includes(role)) && (
+    <>
+    <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
+        <AiOutlineForm/> My Page
+      </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: userMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/ManageUser', '/RegisterUser', '/ModifyUser', '/UseHistory']) ? 'active' : ''}`}>
+        <AiOutlineTeam/> 사용자 관리
+      </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
+        <AiOutlineSolution/> 에이전트
+      </div>
+    </Dropdown>
+  </>
+  )}  
+
+  {authList.some(role => ["ROLE_AGENT_USER"].includes(role)) && (
+    <>
+    <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
+        <AiOutlineForm/> My Page
+      </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
+        <AiOutlineSolution/> 에이전트
+      </div>
+    </Dropdown>
+  </>
+  )}  
+
+  {authList.some(role => ["ROLE_BORROWER"].includes(role)) && (
+    <>
+    <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
+        <AiOutlineForm/> My Page
+      </div>
+    </Dropdown>
+
+    <Dropdown menu={{ items: borrowerMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+      <div className={`mypage_header ${isActive(['/Borrower']) ? 'active' : ''}`}>
+        <AiOutlineDollarCircle/> 차입처
+      </div>
+    </Dropdown>
+  </>
+  )}  
+
+</div>
+</div>
         <div className="menu-right">
           <Dropdown menu={{ items: myMenuItems }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
             <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
@@ -196,20 +246,20 @@ const Header = () => {
                 <Menu.Item key={item.key}>{item.label}</Menu.Item>
               ))}
             </Menu.SubMenu>
-            {authList && authList.some((value) => agentPageAuth.includes(value)) && (
+            {/* {authList && authList.some((value) => agentPageAuth.includes(value)) && ( */}
               <Menu.SubMenu key="agent" title="에이전트">
                 {agentMenuItems.map((item) => (
                   <Menu.Item key={item.key}>{item.label}</Menu.Item>
                 ))}
               </Menu.SubMenu>
-            )}
-            {authList && authList.some((value) => borrowerPageAuth.includes(value)) && (
+            {/* )} */}
+            {/* {authList && authList.some((value) => borrowerPageAuth.includes(value)) && ( */}
               <Menu.SubMenu key="borrower" title="차입처">
                 {borrowerMenuItems.map((item) => (
                   <Menu.Item key={item.key}>{item.label}</Menu.Item>
                 ))}
               </Menu.SubMenu>
-            )}
+            {/* )} */}
               <Menu.SubMenu key="user-right" title={ID}>
                 {myMenuItems.map((item) => (
                   <Menu.Item key={item.key}>{item.label}</Menu.Item>
