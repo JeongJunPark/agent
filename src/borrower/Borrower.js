@@ -16,6 +16,10 @@ import NoDataRow from "../utils/NoDataRow";
 import { AiOutlineForward,AiOutlineBackward,AiOutlineDollarCircle } from "react-icons/ai";
 import { PiMicrosoftExcelLogoDuotone } from "react-icons/pi";
 import "../styles/button.css"
+
+
+import Loading from '../utils/Loading';
+
 const Borrower = () => {
 
     const [fileName, setFileName] = useState("");
@@ -195,6 +199,7 @@ const Borrower = () => {
  
 
     const searchBorrower = () => {
+        setLoading(true); 
         const payload = {
             startDate: moment(startDate).format("YYYYMMDD"),
             endDate: moment(endDate).format("YYYYMMDD"),
@@ -206,31 +211,30 @@ const Borrower = () => {
         setPostData(payload); // 상태도 업데이트
 
         // 바로 API 호출
-        SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', payload)
-            .then((returnResponse) => {
-                if (returnResponse) {
-                    setResponse(returnResponse.result1);
-                    setData(returnResponse.result1);
+       Promise.all([
+            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', payload),
+            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', payload)
+            ])
+            .then(([rowsResponse, sumResponse]) => {
+                setResponse(rowsResponse?.result1 || []);
+                setData(rowsResponse?.result1 || []);
+                setSummaryData(sumResponse?.result2 || []);
 
-                    if (!returnResponse.result1 || returnResponse.result1.length === 0) {
-                        alert("조회 결과가 없습니다.");
-                    }
+                if (!rowsResponse?.result1 || rowsResponse.result1.length === 0) {
+                    alert("조회 결과가 없습니다.");
+                }
+
+                if (!sumResponse?.result2 || sumResponse.result2.length === 0) {
+                    alert("합산 결과가 없습니다.");
                 }
             })
-            .catch((error) => console.log(error));
-
-        SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', payload)
-            .then((returnResponse) => {
-                if (returnResponse) {
-                    setSummaryData(returnResponse.result2);
-
-                    if (!returnResponse.result2 || returnResponse.result2.length === 0) {
-                        alert("합산 결과가 없습니다.");
-                    }
-                }
+            .catch((error) => {
+                console.log(error);
             })
-            .catch((error) => console.log(error));
-    };
+            .finally(() => {
+                setLoading(false);
+            });
+        };
 
 
     const renderCustomHeader = ({
@@ -259,8 +263,14 @@ const Borrower = () => {
         );
     };
 
+
+      const [loading, setLoading] = useState(false);
+
     return (
         <>
+            {loading && (
+                <Loading />
+            )} 
             <div className="content_body">
                 <p className="menu_title_container">                      
                 <span className="menu_title">
@@ -271,6 +281,7 @@ const Borrower = () => {
                         <button className="excelDownBtn" onClick={exportToExcel}><PiMicrosoftExcelLogoDuotone className="excelIcon"/> 다운로드</button>
                 </span>
                 </p>
+
                 <table className="result_table" border="1">
                     <tr>
                         <th>대출일자</th>
@@ -342,6 +353,7 @@ const Borrower = () => {
                     </tr>
                 </table>
 
+
                 <div className="pagination-info">
                     {data.length > 0 ? (
                         <span>Total : {response.length}건 [{currentPage}/{totalPages}] 페이지</span>
@@ -350,7 +362,8 @@ const Borrower = () => {
                     )}
                 </div>   
 
-                    <div className="grid-wrapper">   
+                {/* 테이블 영역 */}
+                <div className="grid-wrapper">
                     <table id="tableData" className="grid">
                         <thead>
                             <tr>
@@ -416,7 +429,7 @@ const Borrower = () => {
                             }
                         </tbody>
                     </table>
-                    </div>
+                    </div>                
                     <table className="result_table">
                         
                         <tbody>

@@ -7,6 +7,9 @@ import { AiOutlineTeam } from "react-icons/ai";
 import { AiOutlineBackward } from "react-icons/ai";
 import { AiOutlineForward } from "react-icons/ai";
 import "../styles/button.css"
+
+import Loading from '../utils/Loading';
+
 const ManageUser = () => {
 
     const location = useLocation();
@@ -59,25 +62,34 @@ const ManageUser = () => {
 
     useEffect(() => {
         if (data === '') {
+            setLoading(true);
             SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
                 .then(returnResponse => {
                     setData(returnResponse.userData)
                 })
                 .catch(error => {
                     console.error('API Error:', error);
-                });
+                })
+                .finally(() => {
+                    setLoading(false);
+                });                      
+
         }
     })
 
 
     const handleSearch = () => {
+        setLoading(true);
         SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
             .then(returnResponse => {
                 setData(returnResponse.searchUserData)
             })
             .catch(error => {
                 console.error('API Error:', error);
-            });
+            })
+            .finally(() => {
+                setLoading(false);
+            });                      
 
     }
 
@@ -102,9 +114,13 @@ const ManageUser = () => {
             });
     }
 
+    const [loading, setLoading] = useState(false);
 
     return (
         <>
+            {loading && (
+                <Loading />
+            )}                 
             <div className="content_body">             
                 <p className="menu_title"><AiOutlineTeam/> 사용자 관리
                 <div className="search_layout">

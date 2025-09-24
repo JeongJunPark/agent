@@ -135,14 +135,14 @@ const CompanyMoAccount = () => {
                     </tr>
                     {response && response.map((item, index) => (
                         <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{formattedData(item.bank_cd)}</td>
-                            <td>{item.mo_act_number}</td>
-                            <td>{item.mgr_use_yn}</td>
+                            <td style={{ textAlign: "center" }}>{index + 1}</td>
+                            <td style={{ textAlign: "center" }}>{formattedData(item.bank_cd)}</td>
+                            <td style={{ textAlign: "center" }}>{item.mo_act_number}</td>
+                            <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
                             <td>{item.mgr_dt}</td>
-                            <td>{item.mgr_id}</td>
-                            <td><button className="generalBtn" onClick={() => changeUse(item.mo_act_number, item.mgr_use_yn)}>변경</button></td>
-                            <td><button className="deleteBtn" onClick={() => deleteMoAccount(item.mo_act_number)}>삭제</button></td>
+                            <td style={{ textAlign: "center" }}>{item.mgr_id}</td>
+                            <td style={{ textAlign: "center" }}><button className="generalBtn" onClick={() => changeUse(item.mo_act_number, item.mgr_use_yn)}>변경</button></td>
+                            <td style={{ textAlign: "center" }}><button className="deleteBtn" onClick={() => deleteMoAccount(item.mo_act_number)}>삭제</button></td>
                         </tr>
 
                     ))}

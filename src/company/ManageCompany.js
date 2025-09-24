@@ -7,6 +7,9 @@ import { AiOutlineShop, AiOutlineBackward, AiOutlineForward } from "react-icons/
 import NoDataRow from "../utils/NoDataRow";
 
 import "../styles/button.css";
+import Loading from '../utils/Loading';
+
+
 const ManageCompany = () => {
 
   const location = useLocation()
@@ -56,25 +59,33 @@ const ManageCompany = () => {
 
   useEffect(() => {
     if (data === '') {
+      setLoading(true);
       SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
         .then(returnResponse => {
           setData(returnResponse.companyData)
         })
         .catch(error => {
           console.error('API Error:', error);
-        });
+        })
+        .finally(() => {
+            setLoading(false);
+        });          
     }
   })
 
 
   const handleSearch = () => {
+    setLoading(true);
     SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
       .then(returnResponse => {
         setData(returnResponse.searchCompanyData)
       })
       .catch(error => {
         console.error('API Error:', error);
-      });
+      })
+      .finally(() => {
+           setLoading(false);
+      });       
 
   }
 
@@ -105,9 +116,13 @@ const ManageCompany = () => {
     if (e == '03') return "차입처";
   }
 
+const [loading, setLoading] = useState(false);
 
   return (
     <>
+            {loading && (
+                <Loading />
+            )}         
       <div className="content_body">
         <div className="result_header">
         <p className="menu_title"><AiOutlineShop/>  업체 관리

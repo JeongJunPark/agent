@@ -6,6 +6,9 @@ import NoDataRow from "../utils/NoDataRow";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 import moment from "moment";
+
+import Loading from '../utils/Loading';
+
 const UseHistory = () => {
 
     const [userHistVO, setUserHist] = useState({});
@@ -107,6 +110,7 @@ const UseHistory = () => {
 
     useEffect(() => {
         if (postData.startDate !== '' && postData.startDate !== undefined) {
+            setLoading(true);
             SendAPI("https://home-api.leadcorp.co.kr:8080/getHistRows", {
                 ID: sessionStorage.getItem('ID'),
                 menu: "사용이력조회",
@@ -129,14 +133,22 @@ const UseHistory = () => {
                 })
                 .catch((error) => {
                     console.log(error);
-                });
+                })
+                .finally(() => {
+                    setLoading(false);
+                });                 
             }
         }, [postData]);
 
 
-    console.log("currentPosts: " + currentPosts);
+    const [loading, setLoading] = useState(false);
+        
+        
     return (
         <>
+            {loading && (
+                <Loading />
+            )}            
             <div className="content_body">
                 <p className="menu_title"><AiOutlineTeam/> 사용이력 조회</p>
 

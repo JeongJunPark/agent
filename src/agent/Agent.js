@@ -17,6 +17,9 @@ import "../styles/icon.css";
 import { AiOutlineBackward } from "react-icons/ai";
 import { AiOutlineForward } from "react-icons/ai";
 import "../styles/button.css"
+
+import Loading from '../utils/Loading';
+
 const Agent = () => {
 
     // HIST 저장
@@ -174,8 +177,9 @@ const Agent = () => {
         // sessionStorage.setItem("ad_medi", "");
     }
 
-    useEffect(() => {
+    useEffect(() => {     
         if (postData.startDate !== '' && postData.startDate !== undefined) {
+            setLoading(true);
             SendAPI('https://home-api.leadcorp.co.kr:8080/agentResult', postData)
                 .then((returnResponse) => {
                     if (returnResponse) {
@@ -187,21 +191,11 @@ const Agent = () => {
                 .catch((error) => {
                     console.log(error)
                 })
+                .finally(() => {
+                    setLoading(false);
+                });                
         }
     }, [postData])
-
-    // 초기 진입 시
-    // useEffect(() => {
-    //     setPostData({
-    //         startDate: startDate,
-    //         endDate: endDate,
-    //         name: '',
-    //         reqSc: 'A',
-    //         agent: status.auth === 1 ? 
-    //             (selectedAgent === undefined ? '' : selectedAgent)
-    //             : sessionStorage.getItem("ad_medi")
-    //     })
-    // }, [startDate])
 
     const renderCustomHeader = ({
         date,
@@ -228,9 +222,14 @@ const Agent = () => {
             </div>
         );
     };
-
+    
+    const [loading, setLoading] = useState(false);
+    
     return (
         <>
+            {loading && (
+                <Loading />
+            )}         
             <div className="content_body">
                 <div className="result_header">                                
                 <p className="menu_title_container">
