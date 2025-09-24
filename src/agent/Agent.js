@@ -165,13 +165,13 @@ const Agent = () => {
             endDate: moment(endDate).format("YYYYMMDD"),
             name: name,
             reqSc: selectedReqSc,
-            agent: status.auth === 1 ? 
+            agent: status.auth == 1 ? 
                 (selectedAgent === undefined ? '' : selectedAgent)
                 : sessionStorage.getItem("ad_medi")
                 
         })
 
-        sessionStorage.setItem("ad_medi", "");
+        // sessionStorage.setItem("ad_medi", "");
     }
 
     useEffect(() => {
@@ -248,7 +248,7 @@ const Agent = () => {
                         <td>
                             <select onChange={(e) => {
                                 setSelectedAgent(e.target.value);
-                                sessionStorage.setItem("ad_medi", "");
+                                // sessionStorage.setItem("ad_medi", "");
                             }} value={selectedAgent}>
                                 {agentList && agentList.map((item, index) => (
                                     <option key={index} value={item.ad_medi} >{item.name}</option>

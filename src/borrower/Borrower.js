@@ -177,7 +177,7 @@ const Borrower = () => {
                 console.log(error)
             })
     }, [])    
-       
+
     useEffect(() => {
         if (Array.isArray(bank) && bank.length > 0 && !selectedBank) {
             setSelectedBank(bank[0].cd);
@@ -185,56 +185,53 @@ const Borrower = () => {
     }, [bank]);
     
     useEffect(() => {
-        setMatchMoAccount(
-            Array.isArray(moAccount)
-                ? moAccount.filter(item => String(item.mo_bank_cd) === String(selectedBank))
-                : []
-        );
-    }, [selectedBank, moAccount]);    
+        const filtered = Array.isArray(moAccount)
+            ? moAccount.filter(item => String(item.mo_bank_cd) === String(selectedBank))
+            : [];
+
+        setMatchMoAccount(filtered);
+        setSelectedMoAccount(filtered.length > 0 ? filtered[0].vir_act_moact_no : "");
+    }, [selectedBank, moAccount]);
+ 
 
     const searchBorrower = () => {
-        setPostData({
+        const payload = {
             startDate: moment(startDate).format("YYYYMMDD"),
             endDate: moment(endDate).format("YYYYMMDD"),
-            brNm: selectedManagerBranch,
-            moActNum: selectedMoAccount,
+            brNm: selectedBank || "",     
+            moActNum: selectedMoAccount || "",     
+            actSt: selectedSect || "0",            
+        };
 
-            actSt: selectedSect,
-        })
-    }
+        setPostData(payload); // 상태도 업데이트
 
-    useEffect(() => {
-        if (postData.startDate !== '' && postData.startDate !== undefined) {
-            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', postData)
-                .then((returnResponse) => {
-                    if (returnResponse) {
-                        setResponse(returnResponse.result1);
-                        setData(returnResponse.result1);
-                        
-                        if (!returnResponse.result1 || returnResponse.result1.length === 0) {
-                            alert("조회 결과가 없습니다.");
-                        }                        
+        // 바로 API 호출
+        SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', payload)
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    setResponse(returnResponse.result1);
+                    setData(returnResponse.result1);
+
+                    if (!returnResponse.result1 || returnResponse.result1.length === 0) {
+                        alert("조회 결과가 없습니다.");
                     }
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-                 
-            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', postData)
-                .then((returnResponse) => {
-                    if (returnResponse) {                       
-                        setSummaryData(returnResponse.result2);
-                        
-                        if (!returnResponse.result2 || returnResponse.result2.length === 0) {
-                            alert("합산 결과가 없습니다.");
-                        }                        
+                }
+            })
+            .catch((error) => console.log(error));
+
+        SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', payload)
+            .then((returnResponse) => {
+                if (returnResponse) {
+                    setSummaryData(returnResponse.result2);
+
+                    if (!returnResponse.result2 || returnResponse.result2.length === 0) {
+                        alert("합산 결과가 없습니다.");
                     }
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
-    }, [postData])
+                }
+            })
+            .catch((error) => console.log(error));
+    };
+
 
     const renderCustomHeader = ({
         date,
@@ -331,7 +328,7 @@ const Borrower = () => {
                                     ? matchMoAccount.map((item, index) => (
                                         <option key={index} value={item.vir_act_moact_no}>{item.vir_act_moact_nm}</option>
                                     ))
-                                    : <option value="">모계좌 없음</option>
+                                    : <option value="">선택</option>
                                 }
                             </select>
                         </td>
