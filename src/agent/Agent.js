@@ -144,8 +144,10 @@ const Agent = () => {
                 .then((returnResponse) => {
                     if (returnResponse) {
                         console.log(returnResponse);
+                        console.log("adsad",status.auth);
                         setAgentList(returnResponse.agentList);
                         sessionStorage.setItem("ad_medi", returnResponse.agentList[0].ad_medi);
+                        selectedAgent = '';
                     }
                 })
                 .catch((error) => {
@@ -163,8 +165,13 @@ const Agent = () => {
             endDate: moment(endDate).format("YYYYMMDD"),
             name: name,
             reqSc: selectedReqSc,
-            agent: selectedAgent === undefined ? '' : selectedAgent
+            agent: status.auth === 1 ? 
+                (selectedAgent === undefined ? '' : selectedAgent)
+                : sessionStorage.getItem("ad_medi")
+                
         })
+
+        sessionStorage.setItem("ad_medi", "");
     }
 
     useEffect(() => {
@@ -184,16 +191,17 @@ const Agent = () => {
     }, [postData])
 
     // 초기 진입 시
-    useEffect(() => {
-        setPostData({
-            startDate: startDate,
-            endDate: endDate,
-            name: '',
-            reqSc: 'A',
-            agent: sessionStorage.getItem("ad_medi") || ''
-
-        })
-    }, [startDate])
+    // useEffect(() => {
+    //     setPostData({
+    //         startDate: startDate,
+    //         endDate: endDate,
+    //         name: '',
+    //         reqSc: 'A',
+    //         agent: status.auth === 1 ? 
+    //             (selectedAgent === undefined ? '' : selectedAgent)
+    //             : sessionStorage.getItem("ad_medi")
+    //     })
+    // }, [startDate])
 
     const renderCustomHeader = ({
         date,
@@ -240,7 +248,7 @@ const Agent = () => {
                         <td>
                             <select onChange={(e) => {
                                 setSelectedAgent(e.target.value);
-                                sessionStorage.setItem("ad_medi", e.target.value);
+                                sessionStorage.setItem("ad_medi", "");
                             }} value={selectedAgent}>
                                 {agentList && agentList.map((item, index) => (
                                     <option key={index} value={item.ad_medi} >{item.name}</option>
