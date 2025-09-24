@@ -177,15 +177,21 @@ const Borrower = () => {
                 console.log(error)
             })
     }, [])    
+       
+    useEffect(() => {
+        if (Array.isArray(bank) && bank.length > 0 && !selectedBank) {
+            setSelectedBank(bank[0].cd);
+        }
+    }, [bank]);
+    
+    useEffect(() => {
+        setMatchMoAccount(
+            Array.isArray(moAccount)
+                ? moAccount.filter(item => String(item.mo_bank_cd) === String(selectedBank))
+                : []
+        );
+    }, [selectedBank, moAccount]);    
 
-        useEffect(() => {
-            setMatchMoAccount(
-                Array.isArray(moAccount)  // 이제 bank 배열을 기준으로 필터
-                    ? moAccount.filter(item => String(item.mo_bank_cd) === String(selectedBank))
-                    : []
-            );
-        }, [selectedBank, moAccount]);  // 의존성도 bank로 변경
-        
     const searchBorrower = () => {
         setPostData({
             startDate: moment(startDate).format("YYYYMMDD"),
