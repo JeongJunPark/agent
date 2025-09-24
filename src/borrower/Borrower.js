@@ -79,7 +79,7 @@ const Borrower = () => {
     }, [])
 
     // DB로부터 <option> 리스트 추출
-    const [managerBranch, setManagerBranch] = useState();
+    const [managerBranch, setManagerBranch] = useState('');
     const [bank, setBank] = useState([]);
     const [moAccount, setMoAccount] = useState([])
     
@@ -198,7 +198,7 @@ const Borrower = () => {
         const payload = {
             startDate: moment(startDate).format("YYYYMMDD"),
             endDate: moment(endDate).format("YYYYMMDD"),
-            brNm: selectedBank || "",     
+            brNm: setManagerBranch || "",     
             moActNum: selectedMoAccount || "",     
             actSt: selectedSect || "0",            
         };
