@@ -76,6 +76,10 @@ const ModifyCompany = () => {
     useEffect(() => {
         if (modifyData.ID !== '' && modifyData.ID !== undefined) {
             validateManagerId(coManagerID);
+            if( coManagerIDError !== '') {
+                alert("존재하지 않는 대표 아이디 입니다. 대표 아이디를 확인해주세요.")
+                return
+            }
             SendAPI("https://home-api.leadcorp.co.kr:8080/modifyAgentCompany", modifyData)
                 .then((returnResponse) => {
                     if (returnResponse.result === 'Y') {
@@ -107,7 +111,6 @@ const ModifyCompany = () => {
 
     // 대표 아이디 validation
     const handleCoManagerIDBlur = async () => {
-
         if (!coManagerID || coManagerID.trim() === '') {
           setCoManagerIDError('대표 아이디를 입력하세요.');
           return;
