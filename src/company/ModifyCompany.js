@@ -74,24 +74,29 @@ const ModifyCompany = () => {
     }
 
     useEffect(() => {
-        if (modifyData.ID !== '' && modifyData.ID !== undefined) {
-            validateManagerId(coManagerID);
-            if( coManagerIDError !== '') {
-                alert("존재하지 않는 대표 아이디 입니다. 대표 아이디를 확인해주세요.")
-                return
+        const modifyAgentCompany = async () => {
+            if (modifyData.ID !== "" && modifyData.ID !== undefined) {
+            const check = await validateManagerId(coManagerID);
+
+            if (!check.valid) {
+                alert(check.message);
+                return;
             }
-            SendAPI("https://home-api.leadcorp.co.kr:8080/modifyAgentCompany", modifyData)
+
+            await SendAPI("https://home-api.leadcorp.co.kr:8080/modifyAgentCompany", modifyData)
                 .then((returnResponse) => {
-                    if (returnResponse.result === 'Y') {
+                    if (returnResponse.result === "Y") {
                         alert("수정이 완료 되었습니다.");
-                        navigate("/ManageCompany")
+                        navigate("/ManageCompany");
                     }
                 })
                 .catch((error) => {
-                    console.log(error)
-                })
-        }
-    }, [modifyData])
+                    console.log(error);
+                });
+            }
+        };
+        modifyAgentCompany();
+    }, [modifyData]);
 
     const managerIP = (companyINDX) => {
         navigate("/CompanyIP", {
@@ -119,20 +124,25 @@ const ModifyCompany = () => {
     };
 
     // 서버에 존재하는 ID인지 유효성 체크
-    const validateManagerId = (coManagerID) => {
-            SendAPI("https://home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID })
-            .then((returnResponse) => {
-                const result = returnResponse.result[0]['1'];
-                if (result === '0') {
-                    setCoManagerIDError(coManagerID + ' 은 등록되어 있지 않은 아이디 입니다.');
-                } else {
-                    setCoManagerIDError('');                    
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
+    const validateManagerId = async (coManagerID) => {
+        try {
+            const returnResponse = await SendAPI("https://home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID });
+            const result = returnResponse.result[0]["1"];
+
+            if (result === "0") {
+                const msg = `${coManagerID} 은 등록되어 있지 않은 아이디 입니다.`;
+                setCoManagerIDError(msg);
+                return { valid: false, message: msg };
+            } else {
+                setCoManagerIDError("");
+                return { valid: true };
+            }
+        } catch (error) {
+            console.log(error);
+            setCoManagerIDError("검증 중 오류가 발생했습니다.");
+            return { valid: false, message: "검증 중 오류가 발생했습니다." };
+        }
+    };
 
     return (
         <>

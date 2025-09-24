@@ -52,11 +52,6 @@ const RegisterCompany = () => {
     }, [])
 
     useEffect(() => {
-        validateManagerId(coManagerID);
-        if( coManagerIDError !== '') {
-            alert("존재하지 않는 대표 아이디 입니다. 대표 아이디를 확인해주세요.")
-            return
-        }
         if (postData.ID !== '' && postData.ID !== undefined) {
             SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentCompany", postData)
                 .then((returnResponse) => {
@@ -72,23 +67,6 @@ const RegisterCompany = () => {
                 })
         }
     }, [postData])
-
-    // 서버에 존재하는 ID인지 유효성 체크
-    const validateManagerId = (coManagerID) => {
-            SendAPI("https://home-api.leadcorp.co.kr:8080/validateManagerId", { agent_dlgt_id: coManagerID })
-            .then((returnResponse) => {
-                const result = returnResponse.result[0]['1'];
-                if (result === '0') {
-                    setCoManagerIDError(coManagerID + ' 은 등록되어 있지 않은 아이디 입니다.');
-                } else {
-                    setCoManagerIDError('');                    
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
 
     return (
         <>
