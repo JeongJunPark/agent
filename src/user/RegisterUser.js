@@ -44,11 +44,14 @@ const RegisterUser = () => {
     const [phone, setPhone] = useState("");
     const [auth, setAuth] = useState("1");
     const [use, setUse] = useState("Y")
+    const [dlgtId, setDlgtID] = useState()
+    
 
     const registerAgentUser = () => {
         setPostData({         
             userID: userID,
-            ID: sessionStorage.getItem("ID"),                           
+            // ID: sessionStorage.getItem("ID"),
+            ID: dlgtId,
             userName: userName,                       
             co: co,                                   
             mgr: mgr,                                 
@@ -109,12 +112,34 @@ const RegisterUser = () => {
                     <tr>
                         <th>소속</th>
                         <td>
-                            <select className="searchInput" onChange={(e) => setCo(e.target.value)} value={co}>
+                            <select
+                            className="searchInput"
+                            onChange={(e) => {
+                                const selectedOption = e.target.options[e.target.selectedIndex];
+                                setCo(selectedOption.getAttribute("data-co"));
+                                setDlgtID(selectedOption.getAttribute("data-dlgtid"));
+                            }}
+                            >
+                            <option value="">구분</option>
+                            {agentList && agentList.map((item, index) => (
+                                <option
+                                key={index}
+                                value={item.agent_co}
+                                data-co={item.agent_co}
+                                data-dlgtid={item.agent_dlgt_id}
+                                >
+                                {item.agent_co}
+                                </option>
+                            ))}
+                            </select>
+
+
+                            {/* <select className="searchInput" onChange={(e) => setCo(e.target.value) setDlgtID(e.target.value) } value={co, dlgtId}>
                             <option value="">구분</option>
                             {agentList && agentList.map((item, index) => (
                                 <option key={index} value={item.agent_co}>{item.agent_co}</option>
                             ))}
-                        </select>
+                        </select> */}
                         </td>
                     </tr>
                     <tr>
