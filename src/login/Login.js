@@ -93,7 +93,7 @@ const Login = () => {
 
     const sendSMSManager = () => {
         // 초기에 ID 체크 (인증번호 전송)
-        SendAPI("https://home-api.leadcorp.co.kr:8080/checkManagerLoginID", { ID : ID, IP : IP, PW : PW })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/checkManagerLoginID", { ID : ID, IP : IP, PW : PW })
         .then((returnResponse) => {
             if (returnResponse) {
                 console.log(returnResponse)
@@ -104,7 +104,7 @@ const Login = () => {
                 } else {
                     alert(returnResponse.message)
                     if (returnResponse.state !== '') {
-                        SendAPI("https://home-api.leadcorp.co.kr:8080/managerHistManage", {ID : ID, menu : "LOG-IN-MANAGER(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
+                        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/managerHistManage", {ID : ID, menu : "LOG-IN-MANAGER(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
                             .then((returnResponse) => {
                                 if (returnResponse) {
                                     console.log("returnResponse ----> ", returnResponse);
@@ -128,28 +128,30 @@ const Login = () => {
 
     const loginManager = () => {
         // ID + PW 체크
-        SendAPI("https://home-api.leadcorp.co.kr:8080/checkManagerLogin", { ID : ID, PW : PW })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/checkManagerLogin", { ID : ID, PW : PW })
         .then((returnResponse) => {
             if (returnResponse) {
                 console.log(returnResponse)
                 if (returnResponse.result) {
-                    SendAPI("https://home-api.leadcorp.co.kr:8080/managerHistManage", { ID : ID, menu : "LOG-IN-MANAGER", note : '', IP : sessionStorage.getItem('IP') })
-                        .then((returnResponse) => {
-                            if (returnResponse) {
+                    // SendAPI("https://dev-home-api.leadcorp.co.kr:8080/managerHistManage", { ID : ID, menu : "LOG-IN-MANAGER", note : '', IP : sessionStorage.getItem('IP') })
+                    //     .then((returnResponse) => {
+                    //         if (returnResponse) {
                                 console.log("returnResponse:  ===> ", returnResponse);
                                 if (returnResponse.result) {
                                     sessionStorage.setItem('ID', ID); // 사용자 ID session 저장
                                     sessionStorage.setItem('validToken', 'valid');
                                     sessionStorage.setItem('Name', Name);
+                                    sessionStorage.setItem('managerYN', coUse);
+                                    console.log("fff   ---> ", sessionStorage.getItem("managerYN"));
                                     console.log("sessionStorage ==== > : ", sessionStorage);
-                                    window.location.href = "/List"
+                                    window.location.href = "/myPageMng"
                                 }   
                             }
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
-                }
+                        // })
+                //         .catch((error) => {
+                //             console.log(error)
+                //         })
+                // }
             }
         })
         .catch((error) => {
@@ -169,7 +171,7 @@ const Login = () => {
                     <input
                     type="radio"
                     value="agent"
-                    checked={coUse === 'agent'}
+                    checked={coUse === "agent"}
                     onChange={(e) => setCoUse(e.target.value)}
                     />
                     <span>Agent / 차입처</span>
@@ -179,7 +181,7 @@ const Login = () => {
                     <input
                     type="radio"
                     value="manager"
-                    checked={coUse === 'manager'}
+                    checked={coUse === "manager"}
                     onChange={(e) => setCoUse(e.target.value)}
                     />
                     <span>홈페이지 관리자</span>

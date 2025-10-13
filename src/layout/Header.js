@@ -114,32 +114,43 @@ useEffect(() => {
     { key: '3', label: <Link to="/Logout">로그아웃</Link> },    
   ];
 
+  const myMenuItemsMng = [
+    { key: '1', label: <Link to="/MyPageMng">내 정보</Link> },    
+    { key: '2', label: <Link to="/PersonalInfoModifyMng">설정</Link> },        
+    { key: '3', label: <Link to="/LogoutMng">로그아웃</Link> },    
+  ];
+
+
   return (
     <header>
       <div className="header-container">
-        <div className="mypage_header" onClick={() => (window.location.href = "/MyPage")}>
+        <div className="mypage_header" onClick={() => (window.location.href = "/MyPageMng")}>
         <img src={Logo} alt="logo" width={100} height={40}/>
         </div>
 
-        {/* Desktop 메뉴 */}
-        <div className="desktop-menu">
-          <div className="menu-left">
-            {authList.some(role => ["ROLE_ADMIN_ALL"].includes(role)) && (
-              <>
-              {/* <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
-                <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
-                  <AiTwotoneContainer/> 약관 / 방침
-                </div>
-              </Dropdown> */}
-
-              <Dropdown menu={{ items: adminCompanyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
-                <div className={`mypage_header ${isActive(['/List']) ? 'active' : ''}`}>
-                  <AiOutlineShop/> 회사
-                </div>
-              </Dropdown>              
-            </>
-            )}
-
+        {sessionStorage.getItem("managerYN") === "manager" ? (
+          <>
+            <div className="desktop-menu">
+              <div className="menu-left">
+                <Dropdown
+                  menu={{ items: adminCompanyMenuItems }}
+                  trigger={["hover", "click"]}
+                  placement="bottomLeft"
+                  overlayClassName="custom-dropdown"
+                >
+                  <div className={`mypage_header ${isActive(["/List"]) ? "active" : ""}`}>
+                    <AiOutlineShop /> 회사
+                  </div>
+                </Dropdown>
+              </div>
+              </div>
+          </>
+        ) 
+            
+           : (
+            <>
+            <div className="desktop-menu">
+              <div className="menu-left">            
             {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (
               <>
               <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
@@ -226,140 +237,179 @@ useEffect(() => {
                 </div>
               </Dropdown>
             </>
-            )}  
-            </div>
-               </div>     
-        <div className="menu-right">
-          <Dropdown menu={{ items: myMenuItems }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
-            <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
-          </Dropdown>          
+            )}
+
         </div>
+            </div>
+         </>
+         )}      
+
+        {sessionStorage.getItem("managerYN") === "manager" ? (
+          <>
+            <div className="menu-right">
+              <Dropdown menu={{ items: myMenuItemsMng }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
+                <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
+              </Dropdown>          
+            </div>
+            <Button
+              className="mobile-menu-btn"
+              type="text"
+              icon={<MenuOutlined />}
+              onClick={() => setOpen(true)}
+            />
+
+            <Drawer
+              title="메뉴"
+              placement="right"
+              onClose={() => setOpen(false)}
+              open={open}
+            >
+              <Menu mode="inline">
+                <Menu.SubMenu key="user" title="회사">
+                  {adminCompanyMenuItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+                  <Menu.SubMenu key="user-right" title={ID}>
+                    {myMenuItemsMng.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>            
+              </Menu>              
+              </Drawer>         
+          </>  
+        ) : (
+            <>
+            <div className="menu-right">
+              <Dropdown menu={{ items: myMenuItemsMng }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
+                <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
+              </Dropdown>          
+            </div>
 
 
+            <Button
+              className="mobile-menu-btn"
+              type="text"
+              icon={<MenuOutlined />}
+              onClick={() => setOpen(true)}
+            />
 
+            <Drawer
+              title="메뉴"
+              placement="right"
+              onClose={() => setOpen(false)}
+              open={open}
+            >
 
-        {/* 모바일 햄버거 버튼 */}
-        <Button
-          className="mobile-menu-btn"
-          type="text"
-          icon={<MenuOutlined />}
-          onClick={() => setOpen(true)}
-        />
+            {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (          
+              <Menu mode="inline">
+                <Menu.SubMenu key="mypage" title="My Page">
+                  {myPageItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+                <Menu.SubMenu key="company" title="업체 관리">
+                  {companyMenuItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+                <Menu.SubMenu key="user" title="사용자 관리">
+                  {userMenuItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+                  <Menu.SubMenu key="agent" title="에이전트">
+                    {agentMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>
 
-        {/* Drawer 메뉴 */}
-        <Drawer
-          title="메뉴"
-          placement="right"
-          onClose={() => setOpen(false)}
-          open={open}
-        >
-        {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (          
-          <Menu mode="inline">
-            <Menu.SubMenu key="mypage" title="My Page">
-              {myPageItems.map((item) => (
-                <Menu.Item key={item.key}>{item.label}</Menu.Item>
-              ))}
-            </Menu.SubMenu>
-            <Menu.SubMenu key="company" title="업체 관리">
-              {companyMenuItems.map((item) => (
-                <Menu.Item key={item.key}>{item.label}</Menu.Item>
-              ))}
-            </Menu.SubMenu>
-            <Menu.SubMenu key="user" title="사용자 관리">
-              {userMenuItems.map((item) => (
-                <Menu.Item key={item.key}>{item.label}</Menu.Item>
-              ))}
-            </Menu.SubMenu>
-              <Menu.SubMenu key="agent" title="에이전트">
-                {agentMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>
+                  <Menu.SubMenu key="borrower" title="차입처">
+                    {borrowerMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>
 
-              <Menu.SubMenu key="borrower" title="차입처">
-                {borrowerMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>
+                  <Menu.SubMenu key="user-right" title={ID}>
+                    {myMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>            
+              </Menu>
+              )}
 
-              <Menu.SubMenu key="user-right" title={ID}>
-                {myMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>            
-          </Menu>
-          )}
+                {authList.some(role => ["ROLE_AGENT_ADMIN"].includes(role)) && (    
+              <Menu mode="inline">
+                <Menu.SubMenu key="mypage" title="My Page">
+                  {myPageItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
 
-            {authList.some(role => ["ROLE_AGENT_ADMIN"].includes(role)) && (    
-           <Menu mode="inline">
-            <Menu.SubMenu key="mypage" title="My Page">
-              {myPageItems.map((item) => (
-                <Menu.Item key={item.key}>{item.label}</Menu.Item>
-              ))}
-            </Menu.SubMenu>
+                <Menu.SubMenu key="user" title="사용자 관리">
+                  {userMenuItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+                  <Menu.SubMenu key="agent" title="에이전트">
+                    {agentMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>
 
-            <Menu.SubMenu key="user" title="사용자 관리">
-              {userMenuItems.map((item) => (
-                <Menu.Item key={item.key}>{item.label}</Menu.Item>
-              ))}
-            </Menu.SubMenu>
-              <Menu.SubMenu key="agent" title="에이전트">
-                {agentMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>
+                  <Menu.SubMenu key="user-right" title={ID}>
+                    {myMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>            
+              </Menu>       
+                )}
 
-              <Menu.SubMenu key="user-right" title={ID}>
-                {myMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>            
-          </Menu>       
-            )}
+              {authList.some(role => ["ROLE_AGENT_USER"].includes(role)) && (    
+              <Menu mode="inline">
+                <Menu.SubMenu key="mypage" title="My Page">
+                  {myPageItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+                  <Menu.SubMenu key="agent" title="에이전트">
+                    {agentMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>
 
-          {authList.some(role => ["ROLE_AGENT_USER"].includes(role)) && (    
-           <Menu mode="inline">
-            <Menu.SubMenu key="mypage" title="My Page">
-              {myPageItems.map((item) => (
-                <Menu.Item key={item.key}>{item.label}</Menu.Item>
-              ))}
-            </Menu.SubMenu>
-              <Menu.SubMenu key="agent" title="에이전트">
-                {agentMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>
+                  <Menu.SubMenu key="user-right" title={ID}>
+                    {myMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>            
+              </Menu>       
+                )}
 
-              <Menu.SubMenu key="user-right" title={ID}>
-                {myMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>            
-          </Menu>       
-            )}
+                {authList.some(role => ["ROLE_BORROWER"].includes(role)) && (    
+              <Menu mode="inline">
+                <Menu.SubMenu key="mypage" title="My Page">
+                  {myPageItems.map((item) => (
+                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                  ))}
+                </Menu.SubMenu>
 
-            {authList.some(role => ["ROLE_BORROWER"].includes(role)) && (    
-           <Menu mode="inline">
-            <Menu.SubMenu key="mypage" title="My Page">
-              {myPageItems.map((item) => (
-                <Menu.Item key={item.key}>{item.label}</Menu.Item>
-              ))}
-            </Menu.SubMenu>
+                  <Menu.SubMenu key="borrower" title="차입처">
+                    {borrowerMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>
 
-              <Menu.SubMenu key="borrower" title="차입처">
-                {borrowerMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>
-
-              <Menu.SubMenu key="user-right" title={ID}>
-                {myMenuItems.map((item) => (
-                  <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                ))}
-              </Menu.SubMenu>            
-          </Menu>       
-            )}
-        </Drawer>
+                  <Menu.SubMenu key="user-right" title={ID}>
+                    {myMenuItems.map((item) => (
+                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                    ))}
+                  </Menu.SubMenu>            
+              </Menu>       
+                )}
+            </Drawer>
+            </>      
+        )}
       </div>
     </header>
   );

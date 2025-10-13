@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Login from './login/Login';
 import Borrower from './borrower/Borrower';
 import Agent from './agent/Agent'
 import MyPage from "./mypage/MyPage"
@@ -19,10 +18,15 @@ import UseHistory from "./user/UseHistory"
 
 
 import MainLayout from './layout/MainLayout'
+
+import Login from './login/Login';
 import RouteGuard from './login/RouteGuard';
 import Logout from './login/Logout';
+import LogoutMng from './login/LogoutMng';
 
 import List from './admin/history/List';
+import MyPageMng from './admin/mypage/MyPageMng';
+
 
 function App() {
   return (
@@ -31,6 +35,7 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Logout" element={<Logout />} />
+      <Route path="/LogoutMng" element={<LogoutMng />} />
       {/* 메인 레이아웃 안에서 페이지 렌더링 */}
       <Route element={<MainLayout />}>
         <Route
@@ -154,7 +159,17 @@ function App() {
             </RouteGuard>
           }
         />		        
+
+        <Route
+          path="/MyPageMng"
+          element={
+            <RouteGuard>
+              <MyPageMng />
+            </RouteGuard>
+          }
+        />		        
       </Route>
+
     </Routes>
   );
 }
