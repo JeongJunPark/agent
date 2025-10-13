@@ -97,3 +97,20 @@
   width: 45%;
   min-width: auto;
 }
+
+.loginMngBtn {
+  margin-left: 5px;
+  border: 0.5px solid #0069a6;
+  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
+  border-radius: 5px;
+  color: #0069a6 !important;
+  width: 90px;
+  background-color: #f0f0f0 !important;
+  padding: 13px 0;
+  cursor: pointer;
+}
+
+.loginMngBtn td {
+  width: 45%;
+  min-width: auto;
+}

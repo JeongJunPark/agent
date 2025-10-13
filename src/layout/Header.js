@@ -4,7 +4,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import SendAPI from "../utils/SendAPI";
 import { useLocation, Link } from "react-router-dom";
 
-import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution, AiTwotoneContainer } from "react-icons/ai";
 
 import "../styles/common.css"
 import "../styles/header.css"
@@ -18,7 +18,7 @@ const Header = () => {
     const [auth, setAuth] = useState();
     const [authList, setAuthList] = useState([]);
 
-    const allAuth = ["ROLE_ADMIN", "ROLE_AGENT_ADMIN", "ROLE_AGENT_USER", "ROLE_BORROWER"];
+    // const allAuth = ["ROLE_ADMIN", "ROLE_AGENT_ADMIN", "ROLE_AGENT_USER", "ROLE_BORROWER"];
     // const agentPageAuth = ["ROLE_ADMIN", "ROLE_AGENT_ADMIN", "ROLE_AGENT_USER"];
     // const borrowerPageAuth = "ROLE_BORROWER";
 
@@ -100,6 +100,13 @@ useEffect(() => {
     { key: "1", label: <Link to="/Borrower">가상계좌 현황조회</Link> }
   ];
 
+  const adminPrivacyMenuItems = [
+    { key: "1", label: <Link to="/List1">개인정보처리방침</Link> }
+  ];  
+
+  const adminCompanyMenuItems = [
+    { key: "1", label: <Link to="/List">연혁관리</Link> }
+  ];  
 
   const myMenuItems = [
     { key: '1', label: <Link to="/MyPage">내 정보</Link> },    
@@ -117,6 +124,22 @@ useEffect(() => {
         {/* Desktop 메뉴 */}
         <div className="desktop-menu">
           <div className="menu-left">
+            {authList.some(role => ["ROLE_ADMIN_ALL"].includes(role)) && (
+              <>
+              {/* <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+                <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
+                  <AiTwotoneContainer/> 약관 / 방침
+                </div>
+              </Dropdown> */}
+
+              <Dropdown menu={{ items: adminCompanyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+                <div className={`mypage_header ${isActive(['/List']) ? 'active' : ''}`}>
+                  <AiOutlineShop/> 회사
+                </div>
+              </Dropdown>              
+            </>
+            )}
+
             {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (
               <>
               <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">

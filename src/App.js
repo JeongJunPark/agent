@@ -22,6 +22,7 @@ import MainLayout from './layout/MainLayout'
 import RouteGuard from './login/RouteGuard';
 import Logout from './login/Logout';
 
+import List from './admin/history/List';
 
 function App() {
   return (
@@ -144,40 +145,18 @@ function App() {
             </RouteGuard>
           }
         />		
+
+        <Route
+          path="/List"
+          element={
+            <RouteGuard>
+              <List />
+            </RouteGuard>
+          }
+        />		        
       </Route>
     </Routes>
   );
 }
-
-/*
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/Login" element={<Login />} />
-        
-        <Route path="/MyPage" element={<MyPage />} />
-        <Route path="/PersonalInfoModify" element={<PersonalInfoModify />} />
-
-        <Route path="/Borrower" element={<Borrower />} />
-        <Route path="/Agent" element={<Agent />} />
-        <Route path="/ManageCompany" element={<ManageCompany />} />
-        <Route path="/RegisterCompany" element={<RegisterCompany />} />
-        <Route path="/ModifyCompany" element={<ModifyCompany />} />
-        <Route path="/CompanyIP" element={<CompanyIP />} />
-        <Route path="/CompanyMoAccount" element={<CompanyMoAccount />} />
-
-        <Route path="/ManageUser" element={<ManageUser />} />
-        <Route path="/ModifyUser" element={<ModifyUser />} />
-        <Route path="/RegisterUser" element={<RegisterUser />} />
-        <Route path="/UseHistory" element={<UseHistory />} />
-
-
-      </Routes>
-    </BrowserRouter>
-  );
-}
-*/
 
 export default App;
