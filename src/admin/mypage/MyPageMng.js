@@ -9,7 +9,7 @@ const MyPageMng = () => {
 
     // alert(managerVO);
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfoMng", {
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfoMng", {
             ID: sessionStorage.getItem('ID'),
             menu: "My page",
             note: '',
@@ -19,7 +19,6 @@ const MyPageMng = () => {
                 if (returnResponse) {
                     console.log(returnResponse);
                     setManagerVO(returnResponse.result[0]);
-                    // alert(managerVO.agent_dlgt_id);
                 }
             })
             .catch((error) => {
@@ -36,34 +35,34 @@ const MyPageMng = () => {
                         <col width="15%" />
                         <col width="85%" />
                     </colgroup>
-                        <tr>
-                            <th>아이디</th>
-                            <td>{managerVO.agent_id }</td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <td>{managerVO.agent_nm }</td>
-                        </tr>
-                        <tr>
-                            <th>소속</th>
-                            <td>{managerVO.agent_co }</td>
-                        </tr>
-                        <tr>
-                            <th>부서</th>
-                            <td>{managerVO.agent_dept }</td>
-                        </tr>
-                        <tr>
-                            <th>연락처</th>
-                            <td>{managerVO.agent_phn }</td>
-                        </tr>
-                        <tr>
-                            <th>접속시간</th>
-                            <td>{managerVO.mgr_last }</td>
-                        </tr>
-                        <tr>
-                            <th>접속아이피</th>
-                            <td>{managerVO.mgr_ip }</td>
-                        </tr>
+                    <tr>
+                    <th>아이디</th>
+                    <td>{managerVO?.mgr_id ?? "-"}</td>
+                    </tr>
+                    <tr>
+                    <th>이름</th>
+                    <td>{managerVO?.mgr_nm ?? "-"}</td>
+                    </tr>
+                    <tr>
+                    <th>부서</th>
+                    <td>{managerVO?.mgr_dept ?? "-"}</td>
+                    </tr>
+                    <tr>
+                    <th>연락처</th>
+                    <td>{managerVO?.mgr_phn ?? "-"}</td>
+                    </tr>
+                    <tr>
+                    <th>등록일</th>
+                    <td>{managerVO?.mgr_dt ?? "-"}</td>
+                    </tr>
+                    <tr>
+                    <th>접속시간</th>
+                    <td>{managerVO?.mgr_last ?? "-"}</td>
+                    </tr>
+                    <tr>
+                    <th>접속아이피</th>
+                    <td>{managerVO?.mgr_ip ?? "-"}</td>
+                    </tr>
                 </table>
             </div>
         </>

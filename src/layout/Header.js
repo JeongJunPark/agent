@@ -4,7 +4,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import SendAPI from "../utils/SendAPI";
 import { useLocation, Link } from "react-router-dom";
 
-import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution, AiTwotoneContainer } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution, AiTwotoneContainer, AiFillSetting } from "react-icons/ai";
 
 import "../styles/common.css"
 import "../styles/header.css"
@@ -29,50 +29,64 @@ const Header = () => {
       return paths.some(path => location.pathname.startsWith(path));
     }
 
-useEffect(() => {
-    SendAPI("https://home-api.leadcorp.co.kr:8080/agentMenu", ID)
-        .then((returnResponse) => {
+    useEffect(() => {
+      if (sessionStorage.getItem("managerYN") === "manager") return
+      else { 
+        SendAPI("https://home-api.leadcorp.co.kr:8080/agentMenu", ID)
+          .then((returnResponse) => {
             if (returnResponse?.auth) {
-                setAuth(returnResponse.auth);
-                setAuthList(returnResponse.auth.split(',')); // authList 세팅
-                sessionStorage.setItem('auth', returnResponse.auth.includes("ROLE_ADMIN") ? 1 : 0);
+              setAuth(returnResponse.auth);
+              setAuthList(returnResponse.auth.split(','));
+              sessionStorage.setItem(
+                'auth',
+                returnResponse.auth.includes("ROLE_ADMIN") ? 1 : 0
+              );
             }
-        })
-        .catch(console.log);
-}, [ID]);
+          })
+          .catch(console.log);
+      }
+    }, [ID]);
 
-    useEffect(() => {
-        if (auth !== '' && auth !== undefined) {
-            setAuthList(auth.split(','));
-            console.log(auth.split(','));
-            console.log("auth: ", auth)
+        useEffect(() => {
+      if (sessionStorage.getItem("managerYN") === "manager") return
+        else {           
+              if (auth !== '' && auth !== undefined) {
+                  setAuthList(auth.split(','));
+                  console.log(auth.split(','));
+                  console.log("auth: ", auth)
+              }
         }
-    }, [auth])
+      }, [auth])
 
-    useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfo", {
-            ID: sessionStorage.getItem('ID'),
-            menu: "Header",
-            note: '',
-            IP: sessionStorage.getItem('IP')
-        })
-            .then((returnResponse) => {
-                if (returnResponse) {
-                    console.log(returnResponse);
-                    const manager = returnResponse.result[0]; 
-                    setManagerVO(manager);
-                    setName(manager.agent_nm);
-                    sessionStorage.setItem('agent_dlgt_id', manager.agent_dlgt_id);
-                    if (!sessionStorage.getItem('agent_dlgt_id')) { // 없으면
-                        sessionStorage.setItem('agent_dlgt_id', manager.agent_dlgt_id);
-                    }
-                  }
-                
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+        
+      
+      useEffect(() => {
+            if (sessionStorage.getItem("managerYN") === "manager") return
+            else { 
+              SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfo", {
+                  ID: sessionStorage.getItem('ID'),
+                  menu: "Header",
+                  note: '',
+                  IP: sessionStorage.getItem('IP')
+              })
+                  .then((returnResponse) => {
+                      if (returnResponse) {
+                          console.log(returnResponse);
+                          const manager = returnResponse.result[0]; 
+                          setManagerVO(manager);
+                          setName(manager.agent_nm);
+                          sessionStorage.setItem('agent_dlgt_id', manager.agent_dlgt_id);
+                          if (!sessionStorage.getItem('agent_dlgt_id')) { // 없으면
+                              sessionStorage.setItem('agent_dlgt_id', manager.agent_dlgt_id);
+                          }
+                        }
+                      
+                  })
+                  .catch((error) => {
+                      console.log(error);
+                  });
+              }
+        }, []);
 
   const [open, setOpen] = useState(false);
     
@@ -100,19 +114,35 @@ useEffect(() => {
     { key: "1", label: <Link to="/Borrower">가상계좌 현황조회</Link> }
   ];
 
-  const adminPrivacyMenuItems = [
-    { key: "1", label: <Link to="/List1">개인정보처리방침</Link> }
-  ];  
-
-  const adminCompanyMenuItems = [
-    { key: "1", label: <Link to="/List">연혁관리</Link> }
-  ];  
-
   const myMenuItems = [
     { key: '1', label: <Link to="/MyPage">내 정보</Link> },    
     { key: '2', label: <Link to="/PersonalInfoModify">설정</Link> },        
     { key: '3', label: <Link to="/Logout">로그아웃</Link> },    
   ];
+
+  const adminSettingMenuItems = [
+    { key: "1", label: <Link to="/ManagerList">연혁관리</Link> }
+  ];    
+
+  const adminPrivacyMenuItems = [
+    { key: "1", label: <Link to="/List1">개인정보처리방침</Link> },
+    { key: "2", label: <Link to="/List2">개인정보취급방침</Link> },
+    { key: "3", label: <Link to="/List3">개인정보처리방침</Link> },
+    { key: "4", label: <Link to="/List4">개인정보처리방침</Link> },
+    { key: "5", label: <Link to="/List5">개인정보처리방침</Link> },
+    { key: "6", label: <Link to="/List6">개인정보처리방침</Link> },
+    { key: "7", label: <Link to="/List7">개인정보처리방침</Link> },
+    { key: "8", label: <Link to="/List8">개인정보처리방침</Link> },
+    { key: "9", label: <Link to="/List9">개인정보처리방침</Link> },
+    { key: "10", label: <Link to="/List10">개인정보처리방침</Link> },
+    { key: "11", label: <Link to="/List11">개인정보처리방침</Link> },
+    { key: "12", label: <Link to="/List12">개인정보처리방침</Link> },
+    { key: "13", label: <Link to="/List13">개인정보처리방침</Link> }
+  ];  
+
+  const adminCompanyMenuItems = [
+    { key: "1", label: <Link to="/List">연혁관리</Link> }
+  ];  
 
   const myMenuItemsMng = [
     { key: '1', label: <Link to="/MyPageMng">내 정보</Link> },    
@@ -133,6 +163,17 @@ useEffect(() => {
             <div className="desktop-menu">
               <div className="menu-left">
                 <Dropdown
+                  menu={{ items: adminSettingMenuItems }}
+                  trigger={["hover", "click"]}
+                  placement="bottomLeft"
+                  overlayClassName="custom-dropdown"
+                >
+                  <div className={`mypage_header ${isActive(["/ManagerList"]) ? "active" : ""}`}>
+                    <AiFillSetting /> 관리자계정 관리
+                  </div>
+                </Dropdown>
+
+                <Dropdown
                   menu={{ items: adminCompanyMenuItems }}
                   trigger={["hover", "click"]}
                   placement="bottomLeft"
@@ -142,11 +183,11 @@ useEffect(() => {
                     <AiOutlineShop /> 회사
                   </div>
                 </Dropdown>
+
               </div>
               </div>
           </>
         ) 
-            
            : (
             <>
             <div className="desktop-menu">

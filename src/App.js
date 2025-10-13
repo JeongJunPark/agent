@@ -26,7 +26,8 @@ import LogoutMng from './login/LogoutMng';
 
 import List from './admin/history/List';
 import MyPageMng from './admin/mypage/MyPageMng';
-
+import PersonalInfoModifyMng from './admin/mypage/PersonalInfoModifyMng';
+import ManagerList from './admin/manage/ManagerList'
 
 function App() {
   return (
@@ -168,6 +169,26 @@ function App() {
             </RouteGuard>
           }
         />		        
+        <Route
+          path="/PersonalInfoModifyMng"
+          element={
+            <RouteGuard>
+              <PersonalInfoModifyMng />
+            </RouteGuard>
+          }
+        />		     
+
+        <Route
+          path="/ManagerList"
+          element={
+            <RouteGuard>
+              <ManagerList />
+            </RouteGuard>
+          }
+        />		     
+
+        
+        
       </Route>
 
     </Routes>
