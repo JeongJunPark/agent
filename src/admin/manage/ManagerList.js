@@ -45,10 +45,11 @@ const ManagerList = () => {
 
   // HIST 저장
   useEffect(() => {
-    SendAPI("https://home-api.leadcorp.co.kr:8080/getAdminHistoryRows", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRowsMng", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
           console.log(returnResponse)
+          setData(returnResponse.result)
         }
       })
       .catch((error) => {
@@ -59,9 +60,9 @@ const ManagerList = () => {
 
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://home-api.leadcorp.co.kr:8080/getAdminHistoryRows', { search: keyword })
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getManagerRowsMng', { search: keyword })
       .then(returnResponse => {
-        setData(returnResponse.searchCompanyData)
+        setData(returnResponse.result)
       })
       .catch(error => {
         console.error('API Error:', error);
@@ -70,6 +71,28 @@ const ManagerList = () => {
            setLoading(false);
       });       
   }
+
+  const modifyManager = (mgr_indx) => {
+    navigate("/ModifyManager", {
+      state: {
+        mgr_indx: mgr_indx
+      }
+    })
+  }  
+
+  const deleteManager = (mgr_indx) => {
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteManagerRow', { mgr_indx : mgr_indx })
+      .then(returnResponse => {
+        if (returnResponse.result) {
+          alert("삭제 되었습니다.")
+          window.location.reload()
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
 
   const [loading, setLoading] = useState(false);
 
@@ -80,7 +103,7 @@ const ManagerList = () => {
             )}         
       <div className="content_body">
         <div className="result_header">
-        <p className="menu_title"><AiFillSetting/>  관리자계정 관리
+        <p className="menu_title"><AiFillSetting/> 관리자계정 관리
 
         <div className="search_layout">     
           <select
@@ -123,17 +146,17 @@ const ManagerList = () => {
           <table className="grid">
             <thead>
               <tr>
-				<th>번호</th>
-				<th>아이디</th>
-				<th>이름</th>
-				<th>부서</th>
-				<th>연락처</th>
-				<th>승인</th>
-				<th>등록일</th>
-				<th>접속아이피</th>
-				<th>접속일</th>
-                {/* <th>수정</th> */}
-                {/* <th>삭제</th> */}
+                <th>번호</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>부서</th>
+                <th>연락처</th>
+                <th>승인</th>
+                <th>등록일</th>
+                <th>접속아이피</th>
+                <th>접속일</th>
+                <th>수정</th>
+                <th>삭제</th>
               </tr>
             </thead>
             <tbody>
@@ -141,17 +164,17 @@ const ManagerList = () => {
                 currentPosts.map((item, index) => (
                   <tr key={item.co_indx}>
                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                    <td>{item.mgr_id}</td>
-                    <td>{item.mgr_nm}</td>
-                    <td>{item.mgr_dept}</td>
-                    <td>{item.mgr_phn}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_id}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_nm}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_dept}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_phn}</td>
 
-					<td>{item.mgr_aprv}</td>
-					<td>{item.mgr_dt}</td>
-					<td>{item.mgr_ip}</td>
-					<td>{item.mgr_last}</td>                    
-                    {/* <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
-                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td> */}
+                    <td style={{ textAlign: "center" }}>{item.mgr_aprv}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_dt}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_ip}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_last}</td>                    
+                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => modifyManager(item.indx)}>수정</button></td>
+                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteManager(item.indx)}>삭제</button></td>
                   </tr>
                 ))) : 
                    <NoDataRow colSpan={9} height="400px" />
@@ -175,7 +198,7 @@ const ManagerList = () => {
           </div>    
 
           <div className='right-button-container'>
-            {/* <button className="registBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>           */}
+            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterManager')}>등록</button>          
           </div>
 
       </div>

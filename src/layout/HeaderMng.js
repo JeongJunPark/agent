@@ -22,8 +22,6 @@ const HeaderMng = () => {
       return paths.some(path => location.pathname.startsWith(path));
     }
 
-    console.log('ff ', sessionStorage)
-
       useEffect(() => {
               SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfoMng", {
                   ID: sessionStorage.getItem('ID'),
@@ -48,7 +46,8 @@ const HeaderMng = () => {
         }, []);
 
   const [open, setOpen] = useState(false);
-    
+  sessionStorage.setItem('userName', name);
+  
   const adminSettingMenuItems = [
     { key: "1", label: <Link to="/ManagerList">관리자계정 관리</Link> }
   ];    
@@ -56,17 +55,17 @@ const HeaderMng = () => {
   const adminPrivacyMenuItems = [
     { key: "1", label: <Link to="/List1">개인정보처리방침</Link> },
     { key: "2", label: <Link to="/List2">개인정보취급방침</Link> },
-    { key: "3", label: <Link to="/List3">개인정보처리방침</Link> },
-    { key: "4", label: <Link to="/List4">개인정보처리방침</Link> },
-    { key: "5", label: <Link to="/List5">개인정보처리방침</Link> },
-    { key: "6", label: <Link to="/List6">개인정보처리방침</Link> },
-    { key: "7", label: <Link to="/List7">개인정보처리방침</Link> },
-    { key: "8", label: <Link to="/List8">개인정보처리방침</Link> },
-    { key: "9", label: <Link to="/List9">개인정보처리방침</Link> },
-    { key: "10", label: <Link to="/List10">개인정보처리방침</Link> },
-    { key: "11", label: <Link to="/List11">개인정보처리방침</Link> },
-    { key: "12", label: <Link to="/List12">개인정보처리방침</Link> },
-    { key: "13", label: <Link to="/List13">개인정보처리방침</Link> }
+    { key: "9", label: <Link to="/List9">신용정보활용체제</Link> },
+    { key: "3", label: <Link to="/List3">제3자 제공현황</Link> },
+    { key: "4", label: <Link to="/List4">내부정보관리규정</Link> },
+    { key: "5", label: <Link to="/List5">법적고지</Link> },
+    { key: "6", label: <Link to="/List6">약관조회</Link> },
+    { key: "7", label: <Link to="/List7">유의사항</Link> },
+    { key: "8", label: <Link to="/List8">이메일무단수집거부</Link> },
+    { key: "10", label: <Link to="/List10">채권추심업무처리절차</Link> },
+    { key: "11", label: <Link to="/List11">불법채권추심대응요령</Link> },
+    { key: "12", label: <Link to="/List12">소멸시효완성채권추심관련유의사항</Link> },
+    { key: "13", label: <Link to="/List13">대출계약철회권안내</Link> }
   ];  
 
   const adminCompanyMenuItems = [
@@ -98,6 +97,16 @@ const HeaderMng = () => {
                     <AiFillSetting /> 관리자계정 관리
                   </div>
                 </Dropdown>
+
+              <Dropdown menu={{ items: adminPrivacyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <div
+                className={`mypage_header ${
+                  isActive(Array.from({ length: 13 }, (_, i) => `/List${i + 1}`)) ? 'active' : ''
+                }`}
+              >
+                <AiOutlineForm /> 약관 / 정책
+              </div>
+              </Dropdown>
 
                 <Dropdown
                   menu={{ items: adminCompanyMenuItems }}
@@ -136,14 +145,24 @@ const HeaderMng = () => {
                 mode="inline"
                 items={[
                 {
+                    key: 'manage',
+                    label: '관리자계정 관리',
+                    children: adminSettingMenuItems,
+                },
+                {
+                    key: 'privacy',
+                    label: '약관 / 정책',
+                    children: adminPrivacyMenuItems,
+                },                
+                {
                     key: 'company',
                     label: '회사',
-                    children: adminCompanyMenuItems, // ✅ 이게 기존 Menu.Item 배열
-                },
+                    children: adminCompanyMenuItems,
+                },                
                 {
                     key: 'user-right',
                     label: `${ID} ${name}`,
-                    children: myMenuItemsMng, // ✅ 이게 기존 myMenuItemsMng 배열
+                    children: myMenuItemsMng,
                 },
                 ]}
             />          

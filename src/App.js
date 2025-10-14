@@ -24,12 +24,39 @@ import RouteGuard from './login/RouteGuard';
 import Logout from './login/Logout';
 import LogoutMng from './login/LogoutMng';
 
+
 import List from './admin/history/List';
+import ModifyList from './admin/history/ModifyList';
+import RegisterList from './admin/history/RegisterList';
+
+
 import MyPageMng from './admin/mypage/MyPageMng';
 import PersonalInfoModifyMng from './admin/mypage/PersonalInfoModifyMng';
 import ManagerList from './admin/manage/ManagerList'
+import ModifyManager from './admin/manage/ModifyManager'
+import RegisterManager from './admin/manage/RegisterManager'
+
+
+import List1 from './admin/privacy/List1';
+import List2 from './admin/privacy/List2';
+import List3 from './admin/privacy/List3';
+import List4 from './admin/privacy/List4';
+import List5 from './admin/privacy/List5';
+import List6 from './admin/privacy/List6';
+import List7 from './admin/privacy/List7';
+import List8 from './admin/privacy/List8';
+import List9 from './admin/privacy/List9';
+import List10 from './admin/privacy/List10';
+import List11 from './admin/privacy/List11';
+import List12 from './admin/privacy/List12';
+import List13 from './admin/privacy/List13';
+
 
 function App() {
+  const listComponents = [
+    List1, List2, List3, List4, List5, List6, List7, List8, List9, List10, List11, List12, List13
+  ];
+
   return (
     <Routes>
       {/* 로그인 페이지 */}
@@ -159,7 +186,25 @@ function App() {
               <List />
             </RouteGuard>
           }
-        />		        
+        />		       
+
+        <Route
+          path="/ModifyList"
+          element={
+            <RouteGuard>
+              <ModifyList />
+            </RouteGuard>
+          }
+        />		            
+
+        <Route
+          path="/RegisterList"
+          element={
+            <RouteGuard>
+              <RegisterList />
+            </RouteGuard>
+          }
+        />
 
         <Route
           path="/MyPageMng"
@@ -187,6 +232,35 @@ function App() {
           }
         />		     
 
+        <Route
+          path="/ModifyManager"
+          element={
+            <RouteGuard>
+              <ModifyManager />
+            </RouteGuard>
+          }
+        />		     
+
+        <Route
+          path="/RegisterManager"
+          element={
+            <RouteGuard>
+              <RegisterManager />
+            </RouteGuard>
+          }
+        />		     
+
+      {listComponents.map((Comp, index) => (
+        <Route
+          key={index}
+          path={`/List${index + 1}`}
+          element={
+            <RouteGuard>
+              <Comp />
+            </RouteGuard>
+          }
+        />
+      ))}
         
         
       </Route>

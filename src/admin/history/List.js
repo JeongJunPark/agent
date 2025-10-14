@@ -43,12 +43,11 @@ const List = () => {
   const [keyword, setKeyword] = useState("");
   const [condition, setCondition] = useState("");
 
-  // HIST 저장
   useEffect(() => {
-    SendAPI("https://home-api.leadcorp.co.kr:8080/getAdminHistoryRows", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getHistoryRows", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
-          console.log(returnResponse)
+          setData(returnResponse.result)
         }
       })
       .catch((error) => {
@@ -57,11 +56,13 @@ const List = () => {
 
   }, [])
 
+
+  // search 버튼 조회 기능 구현 해야함
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://home-api.leadcorp.co.kr:8080/getAdminHistoryRows', { search: keyword })
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getHistoryRows', { search: keyword })
       .then(returnResponse => {
-        setData(returnResponse.searchCompanyData)
+        setData(returnResponse.result)
       })
       .catch(error => {
         console.error('API Error:', error);
@@ -69,6 +70,31 @@ const List = () => {
       .finally(() => {
            setLoading(false);
       });       
+  }
+
+  const insertHistory = () => {
+    navigate("/RegisterList");
+  }  
+
+  const updateHistory = (HIS_INDX) => {
+    navigate("/ModifyList", {
+      state: {
+        HIS_INDX: HIS_INDX
+      }
+    })
+  }
+
+  const deleteHistory = (indx) => {
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteHistory', { indx : indx })
+      .then(returnResponse => {
+        if (returnResponse.result === 'Y') {
+          alert("삭제 되었습니다.")
+          window.location.reload()
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   const [loading, setLoading] = useState(false);
@@ -122,10 +148,10 @@ const List = () => {
                 <th>연도</th>
                 <th>월</th>
                 <th>제목</th>
-				<th>작성자</th>
-				<th>등록일</th>
-				{/* <th>수정</th> */}
-				{/* <th>삭제</th> */}
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>수정</th>
+                <th>삭제</th>
               </tr>
             </thead>
             <tbody>
@@ -133,13 +159,13 @@ const List = () => {
                 currentPosts.map((item, index) => (
                   <tr key={item.co_indx}>
                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                    <td>{item.his_year}</td>
-                    <td>{item.his_mth}</td>
-                    <td>{item.his_titl}</td>
-                    <td>{item.his_nm}</td>
+                    <td style={{ textAlign: "center" }}>{item.his_year}</td>
+                    <td style={{ textAlign: "center" }}>{item.his_mth}</td>
+                    <td style={{ textAlign: "left" }}>{item.his_titl}</td>
+                    <td style={{ textAlign: "center" }}>{item.his_nm}</td>
                     <td style={{ textAlign: "center" }}>{item.his_dt}</td>
-                    {/* <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
-                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td> */}
+                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => updateHistory(item.his_indx)}>수정</button></td>
+                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteHistory(item.his_indx)}>삭제</button></td>
                   </tr>
                 ))) : 
                    <NoDataRow colSpan={9} height="400px" />
@@ -163,7 +189,7 @@ const List = () => {
           </div>    
 
           <div className='right-button-container'>
-            {/* <button className="registBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>           */}
+            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterList')}>등록</button>          
           </div>
 
       </div>
