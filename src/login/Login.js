@@ -37,7 +37,7 @@ const Login = () => {
                     setStatus(true)
                 } else {
                     alert(returnResponse.message)
-                    if (returnResponse.state !== '') {
+                    if (returnResponse.state === 'agent') {
                         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
                             .then((returnResponse) => {
                                 if (returnResponse) {
@@ -103,19 +103,19 @@ const Login = () => {
                     setStatus(true)
                 } else {
                     alert(returnResponse.message)
-                    if (returnResponse.state !== '') {
-                        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/managerHistManage", {ID : ID, menu : "LOG-IN-MANAGER(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
-                            .then((returnResponse) => {
-                                if (returnResponse) {
+                    if (returnResponse.state === 'manager') {
+                        // SendAPI("https://dev-home-api.leadcorp.co.kr:8080/managerHistManage", {ID : ID, menu : "LOG-IN-MANAGER(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
+                        //     .then((returnResponse) => {
+                        //         if (returnResponse) {
                                     console.log("returnResponse ----> ", returnResponse);
-                                    setName(returnResponse.agent_nm);
+                                    setName(returnResponse.mgr_nm);
                                 }
-                            })
-                            .catch((error) => {
-                                console.log(error)
-                            })
+                            // })
+                    //         .catch((error) => {
+                    //             console.log(error)
+                    //         })
                             
-                    }
+                    // }
                 }
                 
             }

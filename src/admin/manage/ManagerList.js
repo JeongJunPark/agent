@@ -80,7 +80,7 @@ const ManagerList = () => {
             )}         
       <div className="content_body">
         <div className="result_header">
-        <p className="menu_title"><AiFillSetting/>  관리자 계정 관리
+        <p className="menu_title"><AiFillSetting/>  관리자계정 관리
 
         <div className="search_layout">     
           <select

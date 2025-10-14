@@ -30,8 +30,7 @@ const Header = () => {
     }
 
     useEffect(() => {
-      if (sessionStorage.getItem("managerYN") === "manager") return
-      else { 
+
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentMenu", ID)
           .then((returnResponse) => {
             if (returnResponse?.auth) {
@@ -44,25 +43,19 @@ const Header = () => {
             }
           })
           .catch(console.log);
-      }
     }, [ID]);
 
-        useEffect(() => {
-      if (sessionStorage.getItem("managerYN") === "manager") return
-        else {           
+        useEffect(() => {   
               if (auth !== '' && auth !== undefined) {
                   setAuthList(auth.split(','));
                   console.log(auth.split(','));
                   console.log("auth: ", auth)
               }
-        }
       }, [auth])
 
         
       
       useEffect(() => {
-            if (sessionStorage.getItem("managerYN") === "manager") return
-            else { 
               SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfo", {
                   ID: sessionStorage.getItem('ID'),
                   menu: "Header",
@@ -85,7 +78,6 @@ const Header = () => {
                   .catch((error) => {
                       console.log(error);
                   });
-              }
         }, []);
 
   const [open, setOpen] = useState(false);
@@ -120,76 +112,12 @@ const Header = () => {
     { key: '3', label: <Link to="/Logout">로그아웃</Link> },    
   ];
 
-  const adminSettingMenuItems = [
-    { key: "1", label: <Link to="/ManagerList">연혁관리</Link> }
-  ];    
-
-  const adminPrivacyMenuItems = [
-    { key: "1", label: <Link to="/List1">개인정보처리방침</Link> },
-    { key: "2", label: <Link to="/List2">개인정보취급방침</Link> },
-    { key: "3", label: <Link to="/List3">개인정보처리방침</Link> },
-    { key: "4", label: <Link to="/List4">개인정보처리방침</Link> },
-    { key: "5", label: <Link to="/List5">개인정보처리방침</Link> },
-    { key: "6", label: <Link to="/List6">개인정보처리방침</Link> },
-    { key: "7", label: <Link to="/List7">개인정보처리방침</Link> },
-    { key: "8", label: <Link to="/List8">개인정보처리방침</Link> },
-    { key: "9", label: <Link to="/List9">개인정보처리방침</Link> },
-    { key: "10", label: <Link to="/List10">개인정보처리방침</Link> },
-    { key: "11", label: <Link to="/List11">개인정보처리방침</Link> },
-    { key: "12", label: <Link to="/List12">개인정보처리방침</Link> },
-    { key: "13", label: <Link to="/List13">개인정보처리방침</Link> }
-  ];  
-
-  const adminCompanyMenuItems = [
-    { key: "1", label: <Link to="/List">연혁관리</Link> }
-  ];  
-
-  const myMenuItemsMng = [
-    { key: '1', label: <Link to="/MyPageMng">내 정보</Link> },    
-    { key: '2', label: <Link to="/PersonalInfoModifyMng">설정</Link> },        
-    { key: '3', label: <Link to="/LogoutMng">로그아웃</Link> },    
-  ];
-
-
   return (
     <header>
       <div className="header-container">
         <div className="mypage_header" onClick={() => (window.location.href = "/MyPageMng")}>
         <img src={Logo} alt="logo" width={100} height={40}/>
         </div>
-
-        {sessionStorage.getItem("managerYN") === "manager" ? (
-          <>
-            <div className="desktop-menu">
-              <div className="menu-left">
-                <Dropdown
-                  menu={{ items: adminSettingMenuItems }}
-                  trigger={["hover", "click"]}
-                  placement="bottomLeft"
-                  overlayClassName="custom-dropdown"
-                >
-                  <div className={`mypage_header ${isActive(["/ManagerList"]) ? "active" : ""}`}>
-                    <AiFillSetting /> 관리자계정 관리
-                  </div>
-                </Dropdown>
-
-                <Dropdown
-                  menu={{ items: adminCompanyMenuItems }}
-                  trigger={["hover", "click"]}
-                  placement="bottomLeft"
-                  overlayClassName="custom-dropdown"
-                >
-                  <div className={`mypage_header ${isActive(["/List"]) ? "active" : ""}`}>
-                    <AiOutlineShop /> 회사
-                  </div>
-                </Dropdown>
-
-              </div>
-              </div>
-          </>
-        ) 
-           : (
-            <>
             <div className="desktop-menu">
               <div className="menu-left">            
             {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (
@@ -281,48 +209,10 @@ const Header = () => {
             )}
 
         </div>
-            </div>
-         </>
-         )}      
+            </div> 
 
-        {sessionStorage.getItem("managerYN") === "manager" ? (
-          <>
             <div className="menu-right">
-              <Dropdown menu={{ items: myMenuItemsMng }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
-                <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
-              </Dropdown>          
-            </div>
-            <Button
-              className="mobile-menu-btn"
-              type="text"
-              icon={<MenuOutlined />}
-              onClick={() => setOpen(true)}
-            />
-
-            <Drawer
-              title="메뉴"
-              placement="right"
-              onClose={() => setOpen(false)}
-              open={open}
-            >
-              <Menu mode="inline">
-                <Menu.SubMenu key="user" title="회사">
-                  {adminCompanyMenuItems.map((item) => (
-                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                  ))}
-                </Menu.SubMenu>
-                  <Menu.SubMenu key="user-right" title={ID}>
-                    {myMenuItemsMng.map((item) => (
-                      <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                    ))}
-                  </Menu.SubMenu>            
-              </Menu>              
-              </Drawer>         
-          </>  
-        ) : (
-            <>
-            <div className="menu-right">
-              <Dropdown menu={{ items: myMenuItemsMng }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: myMenuItems }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
                 <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
               </Dropdown>          
             </div>
@@ -371,7 +261,7 @@ const Header = () => {
                     ))}
                   </Menu.SubMenu>
 
-                  <Menu.SubMenu key="user-right" title={ID}>
+                  <Menu.SubMenu key="user-right" title={name ? `${ID} ${name}` : ID}>
                     {myMenuItems.map((item) => (
                       <Menu.Item key={item.key}>{item.label}</Menu.Item>
                     ))}
@@ -398,7 +288,7 @@ const Header = () => {
                     ))}
                   </Menu.SubMenu>
 
-                  <Menu.SubMenu key="user-right" title={ID}>
+                  <Menu.SubMenu key="user-right" title={name ? `${ID} ${name}` : ID}>
                     {myMenuItems.map((item) => (
                       <Menu.Item key={item.key}>{item.label}</Menu.Item>
                     ))}
@@ -419,7 +309,7 @@ const Header = () => {
                     ))}
                   </Menu.SubMenu>
 
-                  <Menu.SubMenu key="user-right" title={ID}>
+                  <Menu.SubMenu key="user-right" title={name ? `${ID} ${name}` : ID}>
                     {myMenuItems.map((item) => (
                       <Menu.Item key={item.key}>{item.label}</Menu.Item>
                     ))}
@@ -441,7 +331,7 @@ const Header = () => {
                     ))}
                   </Menu.SubMenu>
 
-                  <Menu.SubMenu key="user-right" title={ID}>
+                  <Menu.SubMenu key="user-right" title={name ? `${ID} ${name}` : ID}>
                     {myMenuItems.map((item) => (
                       <Menu.Item key={item.key}>{item.label}</Menu.Item>
                     ))}
@@ -449,8 +339,6 @@ const Header = () => {
               </Menu>       
                 )}
             </Drawer>
-            </>      
-        )}
       </div>
     </header>
   );

@@ -25,11 +25,11 @@ const PersonalInfoModifyMng = () => {
 
     // modify action
     const modifyPersonalInfo = () => {
-        const payload = {            
-            agent_id: sessionStorage.getItem('ID'),
-            agent_co: managerVO.agent_co || "",
-            agent_dept: managerVO.agent_dept || "",
-            agent_phn: managerVO.agent_phn || "",
+        const payload = {
+            mgr_nm: managerVO.mgr_nm || "",           
+            mgr_id: sessionStorage.getItem('ID'),
+            mgr_dept: managerVO.mgr_dept || "",
+            mgr_phn: managerVO.mgr_phn || "",
             mgr_dt: new Date().toISOString().split("T")[0]
         };
 
@@ -37,7 +37,7 @@ const PersonalInfoModifyMng = () => {
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     alert("수정이 완료 되었습니다.");
-                    navigate("/PersonalInfoModify");
+                    navigate("/PersonalInfoModifyMng");
                 }
             })
             .catch((error) => {
