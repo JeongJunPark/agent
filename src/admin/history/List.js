@@ -60,7 +60,7 @@ const List = () => {
   // search 버튼 조회 기능 구현 해야함
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getHistoryRows', { search: keyword })
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getHistoryRows', { words: keyword })
       .then(returnResponse => {
         setData(returnResponse.result)
       })

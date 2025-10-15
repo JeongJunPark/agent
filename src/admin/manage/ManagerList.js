@@ -60,7 +60,7 @@ const ManagerList = () => {
 
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getManagerRowsMng', { search: keyword })
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getManagerRowsMng', { words: keyword })
       .then(returnResponse => {
         setData(returnResponse.result)
       })
