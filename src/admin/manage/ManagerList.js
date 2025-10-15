@@ -43,6 +43,8 @@ const ManagerList = () => {
   const [keyword, setKeyword] = useState("");
   const [condition, setCondition] = useState("");
 
+  const [mgr_indx, setMgrIndx] = useState("");
+
   // HIST 저장
   useEffect(() => {
     SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRowsMng", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
@@ -81,7 +83,7 @@ const ManagerList = () => {
   }  
 
   const deleteManager = (mgr_indx) => {
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteManagerRow', { mgr_indx : mgr_indx })
+    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteManagerMng', { mgr_indx : mgr_indx })
       .then(returnResponse => {
         if (returnResponse.result) {
           alert("삭제 되었습니다.")
@@ -173,8 +175,8 @@ const ManagerList = () => {
                     <td style={{ textAlign: "center" }}>{item.mgr_dt}</td>
                     <td style={{ textAlign: "center" }}>{item.mgr_ip}</td>
                     <td style={{ textAlign: "center" }}>{item.mgr_last}</td>                    
-                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => modifyManager(item.indx)}>수정</button></td>
-                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteManager(item.indx)}>삭제</button></td>
+                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => modifyManager(item.mgr_indx)}>수정</button></td>
+                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteManager(item.mgr_indx)}>삭제</button></td>
                   </tr>
                 ))) : 
                    <NoDataRow colSpan={9} height="400px" />

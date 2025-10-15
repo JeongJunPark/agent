@@ -12,7 +12,7 @@ const ModifyManager = () => {
     const locationState = location.state
     console.log("locationState: ", locationState)
     const [coID, setcoID] = useState(locationState.mgr_indx)
-
+    console.log('coID', coID)
     const [mgr_id, setMgrId] = useState('')
     const [mgr_nm, setMgrNm] = useState('')
     const [mgr_dept, setMgrDept] = useState('')
@@ -23,7 +23,7 @@ const ModifyManager = () => {
     
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRow", { mgr_indx : coID })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRowMng", { indx : coID })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log('dd ', returnResponse.result[0])
@@ -31,6 +31,7 @@ const ModifyManager = () => {
                     // setHisYear(returnResponse.result[0].his_year)
                     // setHisMth(returnResponse.result[0].his_mth)
                     // setCoManagerID(returnResponse.result[0].his_titl)
+                    setMgrAprv(returnResponse.result[0].mgr_aprv);
                 }
             })
             .catch((error) => {
@@ -40,7 +41,8 @@ const ModifyManager = () => {
     }, [])
     
     const ModifyManagerInfo = () => {
-        const payload = {            
+        const payload = {      
+            mgr_indx: managerVO.mgr_indx || "",      
             mgr_id: mgr_id || managerVO.mgr_id || "",
             mgr_nm: mgr_nm || managerVO.mgr_nm || "",
             mgr_dept: mgr_dept || managerVO.mgr_dept || "",
@@ -52,7 +54,7 @@ const ModifyManager = () => {
             mgr_dt: new Date().toISOString().split("T")[0]
         };
     
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updateManager", payload)
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updateManagerMng", payload)
             .then((returnResponse) => {
                 if (returnResponse.result === "Y") {
                     alert("수정이 완료 되었습니다.");
@@ -79,11 +81,7 @@ const ModifyManager = () => {
                         <tr>
                             <th>아이디</th>
                             <td>
-                                <input 
-                                    className="searchInput" 
-                                    value={mgr_id || managerVO.mgr_id || ""} 
-                                    onChange={(e) => setMgrId(e.target.value)} 
-                                />
+                                {managerVO.mgr_id}
                             </td>                        
                         </tr>
                         
@@ -120,7 +118,7 @@ const ModifyManager = () => {
                         </tr>
                         <tr>
                             <th>인증</th>
-                            <td>Y <input type="radio" value="Y" checked={mgr_aprv === 'Y'} onChange={(e) => setMgrAprv(e.target.value)} />
+                            <td>Y <input type="radio" value="Y" checked={mgr_aprv === 'Y'} onChange={(e) => setMgrAprv(e.target.value)} /> &nbsp;
                                 N <input type="radio" value="N" checked={mgr_aprv === 'N'} onChange={(e) => setMgrAprv(e.target.value)} />
                             </td>                            
                         </tr>                        
