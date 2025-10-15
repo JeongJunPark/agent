@@ -76,7 +76,7 @@ const ManageCompany = () => {
 
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword, condition: condition })
       .then(returnResponse => {
         setData(returnResponse.searchCompanyData)
       })
