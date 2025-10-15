@@ -1,16 +1,20 @@
 import { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import SendAPI from "../utils/SendAPI";
-import "../styles/common.css"
-import NoDataRow from "../utils/NoDataRow";
-import { AiOutlineTeam } from "react-icons/ai";
-import { AiOutlineBackward } from "react-icons/ai";
-import { AiOutlineForward } from "react-icons/ai";
-import "../styles/button.css"
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { AiOutlineForm, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
 
-import Loading from '../utils/Loading';
+import SendAPI from "../../utils/SendAPI";
+import SendAPIPrivacy from "../../utils/SendAPIPrivacy";
 
-const ManageUser = () => {
+import "../../styles/common.css"
+import NoDataRow from "../../utils/NoDataRow";
+import "../../styles/button.css"
+import Loading from '../../utils/Loading';
+
+
+
+const PrivacyList = ({ menuItems }) => {
+    const { pageId } = useParams();
+    const currentTitle = menuItems.find(item => item.key === pageId)?.label || "";
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -44,28 +48,19 @@ const ManageUser = () => {
         setCurrentPage(newStart);
     }
     };
-    const [keyword, setKeyword] = useState("");
+    const [keyword, setKeyword] = useState("");  
+    const [condition, setCondition] = useState("");  
+    
+    const [loading, setLoading] = useState(false);
 
-    // HIST 저장
-    useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
-            .then((returnResponse) => {
-                if (returnResponse) {
-                    console.log(returnResponse)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-
-    }, [])
-
+    console.log("pageId --?", pageId)
     useEffect(() => {
         if (data === '') {
             setLoading(true);
-            SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
+            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowsMng', { bbs : pageId })
                 .then(returnResponse => {
-                    setData(returnResponse.userData)
+                    console.log(returnResponse.result[0]);
+                    setData(returnResponse.result)
                 })
                 .catch(error => {
                     console.error('API Error:', error);
@@ -75,14 +70,16 @@ const ManageUser = () => {
                 });                      
 
         }
-    })
+
+    }, [])
+
 
 
     const handleSearch = () => {
         setLoading(true);
-        SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowsMng', { words: keyword, condition: condition, bbs : pageId })
             .then(returnResponse => {
-                setData(returnResponse.searchUserData)
+                setData(returnResponse.result)
             })
             .catch(error => {
                 console.error('API Error:', error);
@@ -93,16 +90,17 @@ const ManageUser = () => {
 
     }
 
-    const detailAgentUser = (userINDX) => {
-        navigate("/ModifyUser", {
+    const modifyPrivacyList = (indx, pageId) => {
+        navigate("/ModifyPrivacy", {
             state: {
-                userINDX: userINDX
+                indx: indx,
+                bbs: pageId
             }
         })
     }
 
-    const deleteAgentUser = (userINDX) => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/deleteAgentUser', { userINDX: userINDX })
+    const deletePrivacyList = (indx, pageId) => {
+        SendAPI('https://home-api.leadcorp.co.kr:8080/deletePrivacyRowMng', { indx: indx, bbs: pageId })
             .then(returnResponse => {
                 if (returnResponse.result === 'Y') {
                     alert("삭제 되었습니다.")
@@ -114,39 +112,57 @@ const ManageUser = () => {
             });
     }
 
-    const [loading, setLoading] = useState(false);
 
-    return (
+  return (
         <>
             {loading && (
                 <Loading />
             )}                 
-            <div className="content_body">             
-                <p className="menu_title"><AiOutlineTeam/> 사용자 관리
-                <div className="search_layout">
-                    <input
-                        type="text"
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
-                        placeholder="검색어"
-                        className="searchInput"
-                    />
-                    <button className="searchBtn" onClick={handleSearch}>검색</button>
+            <div className="content_body">
+                    <div className="result_header">           
+                <p className="menu_title"><AiOutlineForm/> {currentTitle}
+
+                <div className="search_layout">     
+                <select
+                    name="condition"
+                    className="form-control"
+                    value={condition}
+                    onChange={(e) => setCondition(e.target.value)}
+                >
+                    <option value="">전체</option>
+                    <option value="privacy_cont">내용</option>
+                    <option value="privacy_nm">작성자</option>
+                    <option value="privacy_titl">제목</option>
+                </select>         
+
+                <input
+                    type="text"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
+                    placeholder="검색어"
+                    className="searchInput"
+                />
+                <button className="searchBtn" onClick={handleSearch}>검색</button>
                 </div>
                 </p>
+            </div>
+
+                <div className="pagination-info">
+                {data.length > 0 ? (
+                    <span>Total : {data.length}건 [{currentPage}/{totalPages}] 페이지</span>
+                ) : (
+                    <span>Total : 0건</span>
+                )}
+                </div>
+
                     <div className="grid-wrapper">   
                     <table className="grid" border="1">
                         <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>아이디</th>
-                                <th>이름</th>
-                                <th>소속</th>
-                                <th>부서</th>
-                                <th>연락처</th>
-                                <th>사용여부</th>
-                                <th>접속 아이피</th>
-                                <th>접속일</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>등록일</th>
                                 <th>수정</th>
                                 <th>삭제</th>
                             </tr>
@@ -157,16 +173,11 @@ const ManageUser = () => {
                                 currentPosts.map((item, index) => (
                                     <tr key={item.co_indx}>
                                         <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                                        <td>{item.agent_id}</td>
-                                        <td>{item.agent_nm}</td>
-                                        <td>{item.agent_co}</td>
-                                        <td>{item.agent_dept}</td>
-                                        <td style={{ textAlign: "center" }}>{item.agent_phn}</td>
-                                        <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
-                                        <td>{item.mgr_ip}</td>
-                                        <td>{item.mgr_last}</td>
-                                        <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => detailAgentUser(item.agent_indx)}>수정</button></td>
-                                        <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => deleteAgentUser(item.agent_indx)}>삭제</button></td>
+                                        <td style={{ textAlign: "center" }}>{item.privacy_titl}</td>
+                                        <td style={{ textAlign: "center" }}>{item.privacy_nm}</td>
+                                        <td style={{ textAlign: "center" }}>{item.privacy_dt}</td>
+                                        <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => modifyPrivacyList(item.privacy_indx, pageId)}>수정</button></td>
+                                        <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => deletePrivacyList(item.privacy_indx, pageId)}>삭제</button></td>
                                     </tr>
                                 ))) :
                                     <NoDataRow colSpan={9} height="400px" />                                
@@ -190,11 +201,15 @@ const ManageUser = () => {
                     {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
                     </div>      
                     <div className='right-button-container'>
-                        <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterUser')}>등록</button>          
+                        <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterPrivacy')}>등록</button>          
                     </div>                         
             </div>
         </>
-    );
-};
 
-export default ManageUser;
+  );
+
+
+
+}
+
+export default PrivacyList;

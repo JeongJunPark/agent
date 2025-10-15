@@ -37,25 +37,27 @@ import ModifyManager from './admin/manage/ModifyManager'
 import RegisterManager from './admin/manage/RegisterManager'
 
 
-import List1 from './admin/privacy/List1';
-import List2 from './admin/privacy/List2';
-import List3 from './admin/privacy/List3';
-import List4 from './admin/privacy/List4';
-import List5 from './admin/privacy/List5';
-import List6 from './admin/privacy/List6';
-import List7 from './admin/privacy/List7';
-import List8 from './admin/privacy/List8';
-import List9 from './admin/privacy/List9';
-import List10 from './admin/privacy/List10';
-import List11 from './admin/privacy/List11';
-import List12 from './admin/privacy/List12';
-import List13 from './admin/privacy/List13';
+import PrivacyList from './admin/privacy/PrivacyList';
 
 
 function App() {
-  const listComponents = [
-    List1, List2, List3, List4, List5, List6, List7, List8, List9, List10, List11, List12, List13
-  ];
+
+
+  const adminPrivacyMenuItems = [
+    { key: "1",  label: "개인정보처리방침" },
+    { key: "2",  label: "개인정보취급방침" },
+    { key: "9",  label: "신용정보활용체제" },
+    { key: "3",  label: "제3자 제공현황" },
+    { key: "4",  label: "내부정보관리규정" },
+    { key: "5",  label: "법적고지" },
+    { key: "6",  label: "약관조회" },
+    { key: "7",  label: "유의사항" },
+    { key: "8",  label: "이메일무단수집거부" },
+    { key: "10", label: "채권추심업무처리절차" },
+    { key: "11", label: "불법채권추심대응요령" },
+    { key: "12", label: "소멸시효완성채권추심관련유의사항" },
+    { key: "13", label: "대출계약철회권안내" }
+  ];    
 
   return (
     <Routes>
@@ -250,18 +252,14 @@ function App() {
           }
         />		     
 
-      {listComponents.map((Comp, index) => (
         <Route
-          key={index}
-          path={`/List${index + 1}`}
+          path="/List/:pageId"
           element={
             <RouteGuard>
-              <Comp />
+              <PrivacyList menuItems={adminPrivacyMenuItems} />
             </RouteGuard>
           }
         />
-      ))}
-        
         
       </Route>
 
