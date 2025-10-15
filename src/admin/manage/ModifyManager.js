@@ -11,7 +11,7 @@ const ModifyManager = () => {
     const navigate = useNavigate();
     const locationState = location.state
     console.log("locationState: ", locationState)
-    const [coID, setcoID] = useState(locationState.HIS_INDX)
+    const [coID, setcoID] = useState(locationState.mgr_indx)
 
     const [mgr_id, setMgrId] = useState('')
     const [mgr_nm, setMgrNm] = useState('')
@@ -23,7 +23,7 @@ const ModifyManager = () => {
     
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRow", { indx : coID })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRow", { mgr_indx : coID })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log('dd ', returnResponse.result[0])
