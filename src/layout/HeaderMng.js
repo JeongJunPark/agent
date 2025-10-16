@@ -36,6 +36,7 @@ const HeaderMng = () => {
                           console.log(returnResponse);
                           const manager = returnResponse.result[0]; 
                           setManagerVO(manager);
+                          sessionStorage.setItem('userName', returnResponse.result[0].mgr_nm)
                           setName(manager.mgr_nm);
                           console.log('name: ', name)
                         }
@@ -47,9 +48,6 @@ const HeaderMng = () => {
         }, []);
 
   const [open, setOpen] = useState(false);
-
-  sessionStorage.setItem('userName', name);
-  
   const adminSettingMenuItems = [
     { key: "1", label: <Link to="/ManagerList">관리자계정 관리</Link> }
   ];    
@@ -129,8 +127,8 @@ const HeaderMng = () => {
               </div>
 
             <div className="menu-right">
-              <Dropdown menu={{ items: myMenuItemsMng }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
-                <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
+              <Dropdown menu={{ items: myMenuItemsMng }} trigger={['click']} placement="bottomRight" overlayClassName="custom-dropdown">
+                <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {sessionStorage.getItem('userName')}</div>
               </Dropdown>          
             </div>
             

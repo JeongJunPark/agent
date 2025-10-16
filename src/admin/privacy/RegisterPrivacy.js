@@ -17,9 +17,17 @@ const RegisterPrivacy = ({ menuItems }) => {
 
     const [privacy_titl, setPrivacyTitl ] = useState('');
     const [privacy_cont, setPrivacyCont ] = useState('');
-    
-    const privacy_id = sessionStorage.getItem("ID");
-    const privacy_nm = sessionStorage.getItem("userName");
+
+    const [privacy_id, setPrivacyId] = useState('');
+    const [privacy_nm, setPrivacyNm] = useState('');
+
+    useEffect(() => {
+        const id = sessionStorage.getItem("ID") || "";
+        const name = sessionStorage.getItem("userName") || "";
+        setPrivacyId(id);
+        setPrivacyNm(name);
+    }, []);    
+
 
     const insertPrivacy = () => {
         const payload = {      
@@ -49,7 +57,7 @@ const RegisterPrivacy = ({ menuItems }) => {
     return (
         <>
             <div className="content_body">
-                <p className="menu_title"><AiOutlineForm/> {currentTitle} 수정</p>
+                <p className="menu_title"><AiOutlineForm/> {currentTitle} 등록</p>
                 
                 <table className="result_table">
                     <colgroup>
@@ -84,7 +92,7 @@ const RegisterPrivacy = ({ menuItems }) => {
                             <td>
                                 <CKEditor
                                 editor={ClassicEditor}
-                                data={privacy_cont || ""}                       
+                                data={privacy_cont || ""}                                          
                                 onChange={(event, editor) => {
                                     const data = editor.getData();
                                     setPrivacyCont(data);

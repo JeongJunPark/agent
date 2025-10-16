@@ -668,3 +668,8 @@ label {
 .grid tbody tr:hover {
     background-color: #f2f2f2;
 }
+
+.ck-editor__editable_inline {
+    min-height: 500px !important;
+    max-height: 800px;
+}

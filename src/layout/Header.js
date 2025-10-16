@@ -67,6 +67,7 @@ const Header = () => {
                           console.log(returnResponse);
                           const manager = returnResponse.result[0]; 
                           setManagerVO(manager);
+                          sessionStorage.setItem('userName', returnResponse.result[0].agent_nm)
                           setName(manager.agent_nm);
                           sessionStorage.setItem('agent_dlgt_id', manager.agent_dlgt_id);
                           if (!sessionStorage.getItem('agent_dlgt_id')) { // 없으면
@@ -212,8 +213,8 @@ const Header = () => {
             </div> 
 
             <div className="menu-right">
-              <Dropdown menu={{ items: myMenuItems }} trigger={['click', "hover"]} placement="bottomRight" overlayClassName="custom-dropdown">
-                <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {name}</div>
+              <Dropdown menu={{ items: myMenuItems }} trigger={['click']} placement="bottomRight" overlayClassName="custom-dropdown">
+                <div className="mypage_header user-menu">{<AiOutlineUser/>} {ID} {sessionStorage.getItem('userName')}</div>
               </Dropdown>          
             </div>
 
