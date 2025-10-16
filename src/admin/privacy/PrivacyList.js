@@ -89,11 +89,11 @@ const PrivacyList = ({ menuItems }) => {
     }
 
     const deletePrivacyList = (indx, bbs) => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: pageId })
+        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: pageId })
         .then(returnResponse => {
             if (returnResponse.result === 'Y') {
             alert("삭제 되었습니다.")
-            navigate(`/List/${pageId}`);
+            window.location.reload()
             }
         })
         .catch(error => {
