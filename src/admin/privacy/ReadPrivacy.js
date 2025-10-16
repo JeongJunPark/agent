@@ -24,6 +24,12 @@ const ReadPrivacy = ({ menuItems }) => {
     const [privacy_nm, setPrivacyNm] = useState('')
     const [privacy_cont, setPrivacyCont] = useState('')
     
+    useEffect(() => {
+        const editable = document.querySelector(".ck-editor__editable");
+        if (editable) {
+        editable.style.backgroundColor = "#e2e2e2ff";
+        }
+    }, []);
 
     useEffect(() => {
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowMng", { indx : indx, bbs: bbs })
@@ -58,22 +64,14 @@ const ReadPrivacy = ({ menuItems }) => {
                         <tr>
                             <th>제목</th>
                             <td>
-                                <input 
-                                    className="searchInput" 
-                                    value={privacyVO.privacy_titl || ""} 
-                                    onChange={(e) => setPrivacyTitl(e.target.value)}
-                                />
+                            {privacyVO.privacy_titl}
                             </td>                        
                         </tr>
                         
                         <tr>
                             <th>작성자</th>
                             <td>
-                                <input 
-                                    className="searchInput" 
-                                    value={privacy_nm || privacyVO.privacy_nm || ""} 
-                                    onChange={(e) => setPrivacyNm(e.target.value)} 
-                                />
+                            {privacyVO.privacy_nm}
                             </td>                                  
                         </tr>
                         
@@ -93,7 +91,7 @@ const ReadPrivacy = ({ menuItems }) => {
                 <div className="button_layout">
                     {/* <button className="deleteBtn" type="submit" onClick={deletePrivacyList}>삭제</button> */}
                     <button className="modifyBtn" type="submit" onClick={() => modifyPrivacyList(indx, bbs)}>수정</button>
-                    <button className="listBtn" type="submit" onClick={() => navigate("/PrivacyList")}>목록</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate(`/List/${bbs}`)}>목록</button>
                 </div>
             </div>
         </>

@@ -39,16 +39,19 @@ const ModifyPrivacy = ({ menuItems }) => {
 
     const updatePrivacy = () => {
         const payload = {      
-            privacy_titl: privacyVO.privacy_titl || "",      
+            privacy_titl: privacy_titl || privacyVO.privacy_titl || "",      
             privacy_nm: privacyVO.privacy_nm || "",
-            privacy_cont: privacyVO.privacy_cont || "",
+            privacy_cont: privacy_cont || privacyVO.privacy_cont ||"",
+            privacy_id: sessionStorage.getItem('ID'),
+            privacy_dt: new Date().toISOString().split("T")[0],
+            privacy_indx: privacyVO.privacy_indx || "",
         };
     
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updatePrivacyMng", payload)
             .then((returnResponse) => {
                 if (returnResponse.result === "Y") {
                     alert("수정이 완료 되었습니다.");
-                    navigate("/ManagerList");
+                    navigate(`/ReadPrivacy/${indx}/${bbs}`);
                 }
             })
             .catch((error) => {
@@ -73,7 +76,7 @@ const ModifyPrivacy = ({ menuItems }) => {
                             <td>
                                 <input 
                                     className="searchInput" 
-                                    value={privacyVO.privacy_titl || ""} 
+                                    value={privacy_titl || privacyVO.privacy_titl || ""} 
                                     onChange={(e) => setPrivacyTitl(e.target.value)}
                                 />
                             </td>                        
@@ -83,9 +86,9 @@ const ModifyPrivacy = ({ menuItems }) => {
                             <th>작성자</th>
                             <td>
                                 <input 
-                                    className="searchInput" 
-                                    value={privacy_nm || privacyVO.privacy_nm || ""} 
-                                    onChange={(e) => setPrivacyNm(e.target.value)} 
+                                    className="tdInputReadonly" 
+                                    value={privacyVO.privacy_nm || ""} 
+                                    readOnly
                                 />
                             </td>                                  
                         </tr>
@@ -108,7 +111,7 @@ const ModifyPrivacy = ({ menuItems }) => {
                 
                 <div className="button_layout">
                     <button className="modifyBtn" type="submit" onClick={updatePrivacy}>수정</button>
-                    <button className="listBtn" type="submit" onClick={() => navigate("/PrivacyList")}>목록</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate(`/List/${bbs}`)}>목록</button>
                 </div>
             </div>
         </>
