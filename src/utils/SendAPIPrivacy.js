@@ -1,25 +1,28 @@
+import axios from "axios";
+
 const SendAPIPrivacy = (url, postData) => {
-    console.log("ffaaaa");
-    console.log("url: ", url)
-    console.log("postData: ", postData)
+    // postData 객체를 x-www-form-urlencoded 형태로 변환
+    const formBody = Object.keys(postData)
+        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(postData[key]))
+        .join("&");
 
     return fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(postData)
+        headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' 
+        },
+        body: formBody
     })
-    .then(async (response) => {
-        const text = await response.text();
-        console.log("ff");
-        try {
-        console.log("ffgg");
-            
-            return text ? JSON.parse(text) : {};  // 빈 문자열이면 빈 객체 반환
-        } catch (err) {
-            console.error('JSON 파싱 실패', err, '응답:', text);
-            throw err;
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("HTTP 오류 " + response.status);
         }
+        return response.json();  // JSON 반환
     })
+    .catch(error => {
+        console.error('네트워크 오류:', error);
+        throw error;
+    });
 }
 
 export default SendAPIPrivacy;

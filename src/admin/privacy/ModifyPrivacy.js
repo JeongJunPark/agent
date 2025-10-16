@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineForm } from "react-icons/ai";
 import SendAPI from "../../utils/SendAPI";
-import SendAPIPrivacy from "../../utils/SendAPIPrivacy";
-
 
 import "../../styles/common.css"
 import "../../styles/button.css"
@@ -26,11 +24,11 @@ const ModifyPrivacy = ({ menuItems }) => {
     
 
     useEffect(() => {
-        SendAPIPrivacy("https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowMng", { indx : indx, bbs: bbs })
+        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowMng", { indx : indx, bbs: bbs })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log('dd ', returnResponse.result)
-                    setPrivacyVO(returnResponse.result);
+                    console.log('dd ', returnResponse.result[0])
+                    setPrivacyVO(returnResponse.result[0]);
                 }
             })
             .catch((error) => {
@@ -41,9 +39,9 @@ const ModifyPrivacy = ({ menuItems }) => {
 
     const updatePrivacy = () => {
         const payload = {      
-            privacy_titl: privacy_nm || privacyVO.privacy_titl || "",      
-            privacy_nm: privacy_nm || privacyVO.privacy_nm || "",
-            privacy_cont: privacy_cont || privacyVO.privacy_cont || "",
+            privacy_titl: privacyVO.privacy_titl || "",      
+            privacy_nm: privacyVO.privacy_nm || "",
+            privacy_cont: privacyVO.privacy_cont || "",
         };
     
         SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updatePrivacyMng", payload)
@@ -75,8 +73,8 @@ const ModifyPrivacy = ({ menuItems }) => {
                             <td>
                                 <input 
                                     className="searchInput" 
-                                    value={privacy_titl || privacyVO.privacy_titl || ""} 
-                                    onChange={(e) => setPrivacyTitl(e.target.value)} setPrivacyNm
+                                    value={privacyVO.privacy_titl || ""} 
+                                    onChange={(e) => setPrivacyTitl(e.target.value)}
                                 />
                             </td>                        
                         </tr>
@@ -95,10 +93,13 @@ const ModifyPrivacy = ({ menuItems }) => {
                         <tr>
                             <th>내용</th>
                             <td>
-                                <input 
-                                    className="searchInput" 
-                                    value={privacy_cont || privacyVO.privacy_cont || ""}  
-                                    onChange={(e) => setPrivacyCont(e.target.value)} 
+                                <CKEditor
+                                editor={ClassicEditor}
+                                data={privacy_cont || privacyVO.privacy_cont || ""}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    setPrivacyCont(data);
+                                }}
                                 />
                             </td>
                         </tr>              

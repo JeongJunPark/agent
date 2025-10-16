@@ -265,10 +265,10 @@ function App() {
         />   
 
         <Route
-          path="/ReadPrivacy/:privacy_indx/:pageid"
+          path="/ReadPrivacy/:indx/:bbs"
           element={
             <RouteGuard>
-              <ReadPrivacy />
+              <ReadPrivacy menuItems={adminPrivacyMenuItems} />
             </RouteGuard>
           }
         />          
