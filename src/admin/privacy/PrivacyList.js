@@ -86,12 +86,7 @@ const PrivacyList = ({ menuItems }) => {
     }
 
     const modifyPrivacyList = (indx, pageId) => {
-        navigate("/ModifyPrivacy", {
-            state: {
-                indx: indx,
-                bbs: pageId
-            }
-        })
+        navigate(`/ModifyPrivacy/${indx}/${pageId}`);
     }
 
     const deletePrivacyList = (indx, pageId) => {

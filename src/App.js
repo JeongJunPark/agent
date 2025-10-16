@@ -39,6 +39,7 @@ import RegisterManager from './admin/manage/RegisterManager'
 
 import PrivacyList from './admin/privacy/PrivacyList';
 import ReadPrivacy from './admin/privacy/ReadPrivacy';
+import ModifyPrivacy from './admin/privacy/ModifyPrivacy';
 
 
 
@@ -272,7 +273,14 @@ function App() {
           }
         />          
 
-        
+    <Route
+          path="/ModifyPrivacy/:indx/:bbs"
+          element={
+            <RouteGuard>
+              <ModifyPrivacy menuItems={adminPrivacyMenuItems} />
+            </RouteGuard>
+          }
+        />          
       </Route>
 
     </Routes>

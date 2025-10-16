@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from "react";
-
 const SendAPIPrivacy = (url, postData) => {
-    console.log(url, postData)
+    console.log("ffaaaa");
+    console.log("url: ", url)
+    console.log("postData: ", postData)
 
     return fetch(url, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(postData)
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("HTTP 오류 " + response.status);
-            } 
-            return response.json();
-        })
-        // .then((data) => {
-            // console.log(data)
-            // if (data.code === "Y") {
-            //     console.log(data);
-            //     return data;
-            // } else {
-            //     console.error('POST 요청 실패!!!');
-            //     throw new Error("API 요청 실패!")
-            // }
-            // return data;
-        // })
-        .catch((error) => {
-            console.error('네트워크 오류:', error);
-            throw error;
-        });
+    .then(async (response) => {
+        const text = await response.text();
+        console.log("ff");
+        try {
+        console.log("ffgg");
+            
+            return text ? JSON.parse(text) : {};  // 빈 문자열이면 빈 객체 반환
+        } catch (err) {
+            console.error('JSON 파싱 실패', err, '응답:', text);
+            throw err;
+        }
+    })
 }
 
 export default SendAPIPrivacy;
