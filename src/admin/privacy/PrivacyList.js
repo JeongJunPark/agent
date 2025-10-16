@@ -3,7 +3,6 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineForm, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
 
 import SendAPI from "../../utils/SendAPI";
-import SendAPIPrivacy from "../../utils/SendAPIPrivacy";
 
 import "../../styles/common.css"
 import NoDataRow from "../../utils/NoDataRow";

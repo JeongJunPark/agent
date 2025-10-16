@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineForm } from "react-icons/ai";
 import SendAPI from "../../utils/SendAPI";
-import SendAPIPrivacy from "../../utils/SendAPIPrivacy";
 
 
 import "../../styles/common.css"
