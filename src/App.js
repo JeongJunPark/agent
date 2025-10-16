@@ -38,6 +38,8 @@ import RegisterManager from './admin/manage/RegisterManager'
 
 
 import PrivacyList from './admin/privacy/PrivacyList';
+import ReadPrivacy from './admin/privacy/ReadPrivacy';
+
 
 
 function App() {
@@ -259,7 +261,17 @@ function App() {
               <PrivacyList menuItems={adminPrivacyMenuItems} />
             </RouteGuard>
           }
-        />
+        />   
+
+        <Route
+          path="/ReadPrivacy/:privacy_indx/:pageid"
+          element={
+            <RouteGuard>
+              <ReadPrivacy />
+            </RouteGuard>
+          }
+        />          
+
         
       </Route>
 

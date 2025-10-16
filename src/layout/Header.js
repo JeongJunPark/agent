@@ -122,31 +122,31 @@ const Header = () => {
               <div className="menu-left">            
             {authList.some(role => ["ROLE_ADMIN"].includes(role)) && (
               <>
-              <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: myPageItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
                   <AiOutlineForm/> My Page
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: companyMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: companyMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/ManageCompany', '/RegisterCompany', '/ModifyCompany']) ? 'active' : ''}`}>
                   <AiOutlineShop/> 업체 관리
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: userMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: userMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/ManageUser', '/RegisterUser', '/ModifyUser', '/UseHistory']) ? 'active' : ''}`}>
                   <AiOutlineTeam/> 사용자 관리
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: agentMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
                   <AiOutlineSolution/> 에이전트
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: borrowerMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: borrowerMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/Borrower']) ? 'active' : ''}`}>
                   <AiOutlineDollarCircle/> 차입처
                 </div>
@@ -156,19 +156,19 @@ const Header = () => {
 
             {authList.some(role => ["ROLE_AGENT_ADMIN"].includes(role)) && (
               <>
-              <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: myPageItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
                   <AiOutlineForm/> My Page
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: userMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: userMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/ManageUser', '/RegisterUser', '/ModifyUser', '/UseHistory']) ? 'active' : ''}`}>
                   <AiOutlineTeam/> 사용자 관리
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: agentMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
                   <AiOutlineSolution/> 에이전트
                 </div>
@@ -178,13 +178,13 @@ const Header = () => {
 
             {authList.some(role => ["ROLE_AGENT_USER"].includes(role)) && (
               <>
-              <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: myPageItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
                   <AiOutlineForm/> My Page
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: agentMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: agentMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/Agent']) ? 'active' : ''}`}>
                   <AiOutlineSolution/> 에이전트
                 </div>
@@ -194,13 +194,13 @@ const Header = () => {
 
             {authList.some(role => ["ROLE_BORROWER"].includes(role)) && (
               <>
-              <Dropdown menu={{ items: myPageItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: myPageItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/MyPage', '/PersonalInfoModify']) ? 'active' : ''}`}>
                   <AiOutlineForm/> My Page
                 </div>
               </Dropdown>
 
-              <Dropdown menu={{ items: borrowerMenuItems }} trigger={["hover", "click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
+              <Dropdown menu={{ items: borrowerMenuItems }} trigger={["click"]} placement="bottomLeft" overlayClassName="custom-dropdown">
                 <div className={`mypage_header ${isActive(['/Borrower']) ? 'active' : ''}`}>
                   <AiOutlineDollarCircle/> 차입처
                 </div>

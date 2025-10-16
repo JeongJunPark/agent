@@ -91,7 +91,7 @@ const HeaderMng = () => {
               <div className="menu-left">
                 <Dropdown
                   menu={{ items: adminSettingMenuItems }}
-                  trigger={["hover", "click"]}
+                  trigger={["click"]}
                   placement="bottomLeft"
                   overlayClassName="custom-dropdown"
                 >
@@ -101,7 +101,7 @@ const HeaderMng = () => {
                 </Dropdown>
 
               <Dropdown menu={{ items: adminPrivacyMenuItems }} 
-                trigger={["hover", "click"]} 
+                trigger={["click"]} 
                 placement="bottomLeft" 
                 overlayClassName="custom-dropdown"
               >
@@ -116,7 +116,7 @@ const HeaderMng = () => {
 
                 <Dropdown
                   menu={{ items: adminCompanyMenuItems }}
-                  trigger={["hover", "click"]}
+                  trigger={["click"]}
                   placement="bottomLeft"
                   overlayClassName="custom-dropdown"
                 >

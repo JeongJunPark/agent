@@ -55,11 +55,9 @@ const PrivacyList = ({ menuItems }) => {
 
     console.log("pageId --?", pageId)
     useEffect(() => {
-        if (data === '') {
             setLoading(true);
             SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowsMng', { bbs : pageId })
                 .then(returnResponse => {
-                    console.log(returnResponse.result[0]);
                     setData(returnResponse.result)
                 })
                 .catch(error => {
@@ -68,10 +66,7 @@ const PrivacyList = ({ menuItems }) => {
                 .finally(() => {
                     setLoading(false);
                 });                      
-
-        }
-
-    }, [])
+    }, [pageId])
 
 
 
@@ -171,9 +166,15 @@ const PrivacyList = ({ menuItems }) => {
                         <tbody>
                             {data.length > 0 ? (
                                 currentPosts.map((item, index) => (
-                                    <tr key={item.co_indx}>
+                                    <tr key={item.privacy_indx}>
                                         <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                                        <td style={{ textAlign: "center" }}>{item.privacy_titl}</td>
+                                        <td style={{
+                                            textAlign: "center",
+                                            color: "#0069a6",
+                                            cursor: "pointer",
+                                            textDecoration: "underline"
+                                        }}
+                                         onClick={() => navigate(`/ReadPrivacy/${item.privacy_indx}/${pageId}`)}>{item.privacy_titl}</td>
                                         <td style={{ textAlign: "center" }}>{item.privacy_nm}</td>
                                         <td style={{ textAlign: "center" }}>{item.privacy_dt}</td>
                                         <td style={{ textAlign: "center" }}><button className="loginBtn" type="submit" onClick={() => modifyPrivacyList(item.privacy_indx, pageId)}>수정</button></td>
