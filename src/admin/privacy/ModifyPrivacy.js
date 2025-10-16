@@ -5,9 +5,9 @@ import SendAPI from "../../utils/SendAPI";
 
 import "../../styles/common.css"
 import "../../styles/button.css"
+
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 const ModifyPrivacy = ({ menuItems }) => {
     const { indx } = useParams();
     const { bbs } = useParams();
@@ -98,7 +98,7 @@ const ModifyPrivacy = ({ menuItems }) => {
                             <td>
                                 <CKEditor
                                 editor={ClassicEditor}
-                                data={privacy_cont || privacyVO.privacy_cont || ""}
+                                data={privacy_cont || privacyVO.privacy_cont || ""}                       
                                 onChange={(event, editor) => {
                                     const data = editor.getData();
                                     setPrivacyCont(data);

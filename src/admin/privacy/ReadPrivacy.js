@@ -48,6 +48,19 @@ const ReadPrivacy = ({ menuItems }) => {
         navigate(`/ModifyPrivacy/${indx}/${bbs}`);
     }
 
+  const deletePrivacyList = (indx, bbs) => {
+    SendAPI('https://home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: bbs })
+      .then(returnResponse => {
+        if (returnResponse.result === 'Y') {
+          alert("삭제 되었습니다.")
+          navigate(`/List/${bbs}`);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
 
     return (
         <>
@@ -79,7 +92,7 @@ const ReadPrivacy = ({ menuItems }) => {
                             <td>
                                 <CKEditor
                                 editor={ClassicEditor}
-                                data={privacy_cont || privacyVO.privacy_cont || ""}
+                                data={privacy_cont || privacyVO.privacy_cont || ""}                     
                                 disabled={true}          
                                 />
                             </td>
@@ -88,7 +101,7 @@ const ReadPrivacy = ({ menuItems }) => {
                 </table>
                 
                 <div className="button_layout">
-                    {/* <button className="deleteBtn" type="submit" onClick={deletePrivacyList}>삭제</button> */}
+                    <button className="deleteBtn" type="submit" onClick={() => deletePrivacyList(indx, bbs)}>삭제</button>
                     <button className="modifyBtn" type="submit" onClick={() => modifyPrivacyList(indx, bbs)}>수정</button>
                     <button className="listBtn" type="submit" onClick={() => navigate(`/List/${bbs}`)}>목록</button>
                 </div>

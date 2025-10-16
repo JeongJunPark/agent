@@ -88,18 +88,18 @@ const PrivacyList = ({ menuItems }) => {
         navigate(`/ModifyPrivacy/${indx}/${pageId}`);
     }
 
-    const deletePrivacyList = (indx, pageId) => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/deletePrivacyRowMng', { indx: indx, bbs: pageId })
-            .then(returnResponse => {
-                if (returnResponse.result === 'Y') {
-                    alert("삭제 되었습니다.")
-                    window.location.reload()
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+    const deletePrivacyList = (indx, bbs) => {
+        SendAPI('https://home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: pageId })
+        .then(returnResponse => {
+            if (returnResponse.result === 'Y') {
+            alert("삭제 되었습니다.")
+            navigate(`/List/${pageId}`);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+  }    
 
 
   return (
@@ -196,7 +196,7 @@ const PrivacyList = ({ menuItems }) => {
                     {pageGroupStart + 10 <= totalPages && <a onClick={handleNextGroup}><AiOutlineForward/></a>}
                     </div>      
                     <div className='right-button-container'>
-                        <button className="loginBtn" type="submit" onClick={() => navigate('/RegisterPrivacy')}>등록</button>          
+                        <button className="loginBtn" type="submit" onClick={() => navigate(`/RegisterPrivacy/${pageId}`)}>등록</button>          
                     </div>                         
             </div>
         </>
