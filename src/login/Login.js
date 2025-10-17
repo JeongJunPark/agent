@@ -9,7 +9,7 @@ const Login = () => {
     const [status, setStatus] = useState(false) // 유효한 ID 체크
 
     const [ID, setID] = useState("")
-    const [PW, setPW] = useState("1111")
+    const [PW, setPW] = useState("")
     const [IP, setIP] = useState("");
     const [Name, setName] = useState("");
 
