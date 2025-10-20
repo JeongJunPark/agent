@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useLocation, Routes, Route } from 'react-router-dom';
 
 import Borrower from './borrower/Borrower';
 import Agent from './agent/Agent'
@@ -44,7 +44,12 @@ import RegisterPrivacy from './admin/privacy/RegisterPrivacy';
 
 
 function App() {
-
+  let managerYN = "";
+  if(sessionStorage.getItem("managerYN")==="manager"){
+    managerYN = true; 
+  } else if(sessionStorage.getItem("managerYN")==="agent") {
+    managerYN = false;
+  }
 
   const adminPrivacyMenuItems = [
     { key: "1",  label: "개인정보처리방침" },
@@ -64,26 +69,29 @@ function App() {
 
   return (
     <Routes>
-      {/* 로그인 페이지 */}
+      {/* login */}
       <Route path="/" element={<Login />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Logout" element={<Logout />} />
       <Route path="/LogoutMng" element={<LogoutMng />} />
-      {/* 메인 레이아웃 안에서 페이지 렌더링 */}
+      
+      
+      {/* agent */}
+      {/* {managerYN===false ? */}
       <Route element={<MainLayout />}>
         <Route
           path="/MyPage"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <MyPage />
             </RouteGuard>
           }
-        />
+        />    
 
         <Route
           path="/PersonalInfoModify"
           element={
-            <RouteGuard>
+            <RouteGuard >
               <PersonalInfoModify />
             </RouteGuard>
           }
@@ -92,7 +100,7 @@ function App() {
         <Route
           path="/Borrower"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <Borrower />
             </RouteGuard>
           }
@@ -100,7 +108,7 @@ function App() {
         <Route
           path="/Agent"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <Agent />
             </RouteGuard>
           }
@@ -108,7 +116,7 @@ function App() {
         <Route
           path="/ManageCompany"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <ManageCompany />
             </RouteGuard>
           }
@@ -116,7 +124,7 @@ function App() {
         <Route
           path="/RegisterCompany"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <RegisterCompany />
             </RouteGuard>
           }
@@ -124,7 +132,7 @@ function App() {
         <Route
           path="/ModifyCompany"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <ModifyCompany />
             </RouteGuard>
           }
@@ -133,7 +141,7 @@ function App() {
         <Route
           path="/CompanyIP"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <CompanyIP />
             </RouteGuard>
           }
@@ -142,7 +150,7 @@ function App() {
         <Route
           path="/CompanyMoAccount"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <CompanyMoAccount />
             </RouteGuard>
           }
@@ -151,7 +159,7 @@ function App() {
         <Route
           path="/ManageUser"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <ManageUser />
             </RouteGuard>
           }
@@ -160,7 +168,7 @@ function App() {
         <Route
           path="/ModifyUser"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <ModifyUser />
             </RouteGuard>
           }
@@ -169,7 +177,7 @@ function App() {
         <Route
           path="/RegisterUser"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <RegisterUser />
             </RouteGuard>
           }
@@ -178,7 +186,7 @@ function App() {
         <Route
           path="/UseHistory"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="user">
               <UseHistory />
             </RouteGuard>
           }
@@ -187,7 +195,7 @@ function App() {
         <Route
           path="/List"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <List />
             </RouteGuard>
           }
@@ -196,7 +204,7 @@ function App() {
         <Route
           path="/ModifyList"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <ModifyList />
             </RouteGuard>
           }
@@ -205,7 +213,7 @@ function App() {
         <Route
           path="/RegisterList"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <RegisterList />
             </RouteGuard>
           }
@@ -214,7 +222,7 @@ function App() {
         <Route
           path="/MyPageMng"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <MyPageMng />
             </RouteGuard>
           }
@@ -222,7 +230,7 @@ function App() {
         <Route
           path="/PersonalInfoModifyMng"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <PersonalInfoModifyMng />
             </RouteGuard>
           }
@@ -231,7 +239,7 @@ function App() {
         <Route
           path="/ManagerList"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <ManagerList />
             </RouteGuard>
           }
@@ -240,7 +248,7 @@ function App() {
         <Route
           path="/ModifyManager"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <ModifyManager />
             </RouteGuard>
           }
@@ -249,7 +257,7 @@ function App() {
         <Route
           path="/RegisterManager"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <RegisterManager />
             </RouteGuard>
           }
@@ -258,7 +266,7 @@ function App() {
         <Route
           path="/List/:pageId"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <PrivacyList menuItems={adminPrivacyMenuItems} />
             </RouteGuard>
           }
@@ -267,7 +275,7 @@ function App() {
         <Route
           path="/ReadPrivacy/:indx/:bbs"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <ReadPrivacy menuItems={adminPrivacyMenuItems} />
             </RouteGuard>
           }
@@ -276,7 +284,7 @@ function App() {
        <Route
           path="/ModifyPrivacy/:indx/:bbs"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <ModifyPrivacy menuItems={adminPrivacyMenuItems} />
             </RouteGuard>
           }
@@ -285,12 +293,13 @@ function App() {
        <Route
           path="/RegisterPrivacy/:bbs"
           element={
-            <RouteGuard>
+            <RouteGuard allowedFor="manager">
               <RegisterPrivacy menuItems={adminPrivacyMenuItems} />
             </RouteGuard>
           }
-        />          
-      </Route>      
+        />     
+
+      </Route> 
 
     </Routes>
   );

@@ -75,6 +75,7 @@ const Login = () => {
                                     sessionStorage.setItem('ID', ID); // 사용자 ID session 저장
                                     sessionStorage.setItem('validToken', 'valid');
                                     sessionStorage.setItem('Name', Name);
+                                    sessionStorage.setItem('managerYN', coUse);
                                     console.log("sessionStorage ==== > : ", sessionStorage);
                                     window.location.href = "/MyPage"
                                 }   
