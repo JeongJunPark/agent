@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SendAPI from "../utils/SendAPI";
-import "../styles/common.css"
+import SendAPI from "../../utils/SendAPI";
+import "../../styles/common.css"
 import { AiOutlineForm } from "react-icons/ai";
-import "../styles/button.css"
-const PersonalInfoModify = () => {
+import "../../styles/button.css"
+const PersonalInfoModifyMng = () => {
 
     const [managerVO, setManagerVO] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfo", { ID: sessionStorage.getItem('ID'), menu: "개인정보 수정", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfoMng", { ID: sessionStorage.getItem('ID'), menu: "개인정보 수정", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -25,19 +25,19 @@ const PersonalInfoModify = () => {
 
     // modify action
     const modifyPersonalInfo = () => {
-        const payload = {            
-            agent_id: sessionStorage.getItem('ID'),
-            agent_co: managerVO.agent_co || "",
-            agent_dept: managerVO.agent_dept || "",
-            agent_phn: managerVO.agent_phn || "",
+        const payload = {
+            mgr_nm: managerVO.mgr_nm || "",           
+            mgr_id: sessionStorage.getItem('ID'),
+            mgr_dept: managerVO.mgr_dept || "",
+            mgr_phn: managerVO.mgr_phn || "",
             mgr_dt: new Date().toISOString().split("T")[0]
         };
 
-        SendAPI("https://home-api.leadcorp.co.kr:8080/updateManagerInfo", payload)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/updateManagerInfoMng", payload)
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     alert("수정이 완료 되었습니다.");
-                    navigate("/PersonalInfoModify");
+                    navigate("/PersonalInfoModifyMng");
                 }
             })
             .catch((error) => {
@@ -56,41 +56,35 @@ const PersonalInfoModify = () => {
                     </colgroup>
                         <tr>
                             <th>아이디</th>
-                            <td>{managerVO.agent_id }</td>
+                            <td>{managerVO.mgr_id }</td>
                         </tr>
                         <tr>
                             <th>이름</th>
-                            <td><input type="text" className="tdInputReadonly" value={managerVO.agent_nm } readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={managerVO.mgr_nm } readOnly></input></td>
                         </tr>
+
                         <tr>
-                        <th>소속</th>
-                            <td><input type="text" className="tdInputReadonly" value={managerVO.agent_co } readOnly></input></td>                        
+                            <th>부서</th>
+                            <td>
+                                <input
+                                type="text"
+                                className="tdInput"
+                                value={managerVO.mgr_dept || ""}
+                                onChange={(e) => setManagerVO({ ...managerVO, mgr_dept: e.target.value })}
+                                />
+                            </td>
                         </tr>
-                        <tr>
-                        <th>부서</th>
-                        <td>
-                            <input
-                            type="text"
-                            className="tdInput"
-                            value={managerVO.agent_dept || ""}
-                            onChange={(e) => setManagerVO({ ...managerVO, agent_dept: e.target.value })}
-                            />
-                        </td>
-                        </tr>
+
                         <tr>
                         <th>연락처</th>
                         <td>
                             <input
                             type="text"
                             className="tdInput"
-                            value={managerVO.agent_phn || ""}
-                            onChange={(e) => setManagerVO({ ...managerVO, agent_phn: e.target.value })}
+                            value={managerVO.mgr_phn || ""}
+                            onChange={(e) => setManagerVO({ ...managerVO, mgr_phn: e.target.value })}
                             />
                         </td>
-                        </tr>
-                        <tr style={{ display: "none" }}>
-                        <th>수정일</th>
-                            <td><input type="text" className="tdInput" value={managerVO.mgr_dt } readOnly></input></td>
                         </tr>
                 </table>
                 
@@ -104,4 +98,4 @@ const PersonalInfoModify = () => {
 
 }
 
-export default PersonalInfoModify;
+export default PersonalInfoModifyMng;

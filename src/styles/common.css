@@ -333,15 +333,27 @@
   font-weight: 500;
 }
 
-.content_body {
-  padding-left: 50px;
-  padding-right: 50px;
+.menu_title { font-weight : 900; font-size : 30px; }
+
+.menu_title_container {
+  display: flex;
+  justify-content: space-between; /* 좌측-우측 분리 */
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.menu_title {
-  font-weight : 900;
-  font-size : 30px;
+.menu_title_left {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 아이콘과 텍스트 간격 */
 }
+
+.menu_title_right {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 버튼 간격 */
+}
+
 
 .search_layout {
   float: right;
@@ -353,23 +365,19 @@
   border: 1px solid #d9d9d9;
   padding: 17px;
   border-radius: 8px;
+  color: black;
+  font-size: 14px;
+  width:200px;
+}
+
+.searchInputReadonly {
+  transition: 0.5s ease-in-out;
+  border: 1px solid #d9d9d9;
+  padding: 17px;
+  border-radius: 8px;
   color: #a4a4a4;
   font-size: 14px;
-  width:300px;
-}
-
-.manage_result_layout {
-  clear: both;
-}
-
-.table_td_title {
-  width : 100px;
-  text-align: center;
-  font-weight : 800;
-}
-
-.table_td_value {
-  padding: 10px;
+  width:200px;
 }
 
 .button_layout {
@@ -380,111 +388,17 @@
   gap: 5px;
 }
 
-.mainTable {
-  width: 100%;
-  border-collapse: collapse;
-  margin-left: 30px;
-  margin-right: 30px;
-  overflow-x: auto;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.mainTable td {
-  padding: 10px;
-}
-
-.borrower_result_layout {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
 select {
   padding: 17px;
   border-radius: 8px !important;
   font-size: 14px;
-  border: 1px solid #d9d9d9;
-}
-
-.agent_result_summary {
-  display: flex;
-  justify-content: center;
-  gap : 20px;
-  font-size: 20px;
-}
-
-.pagenation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-  margin-top: 60px;
-}
-
-.pagenation a {
-  color: #505054;
-  font-weight: 300;
-  padding: 16px;
-}
-
-.pagenation p.active a {
-  color: #333333;
-  font-weight: 700;
+  border: 1px solid #d9d9d9; 
+  width:250px;
 }
 
 .datepickerButton {
   border : 0px;
   background-color: inherit;
-}
-
-/* table 관련 */
-.result_table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-/* table 관련 */
-.result_table_sm {
-    width: 50%;
-    border-collapse: collapse;
-}
-
-.result_table th, .result_table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.result_table th {
-    background-color: #f2f2f2;
-}
-
-.result_table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.result_table tbody tr:hover {
-    background-color: #f2f2f2;
-}
-
-/* result_table_sm */
-.result_table_sm th, .result_table_sm td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.result_table_sm th {
-    background-color: #f2f2f2;
-}
-
-.result_table_sm tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.result_table_sm tbody tr:hover {
-    background-color: #f2f2f2;
 }
 
 .login_footer {
@@ -503,34 +417,6 @@ select {
     z-index: 1000; /* 다른 요소 위에 나오도록 */
 }
 
-.input_class {
-
-}
-
-.modifyBtn {
-  margin-left: 5px;
-  border: 0.5px solid #333 !important;
-  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
-  border-radius: 5px;
-  color: #333 !important;
-  width: 90px;
-  background-color: #f0f0f0 !important;
-  padding: 13px 0;
-  cursor: pointer;
-}
-
-.deleteBtn {
-  margin-left: 5px;
-  border: 0.5px solid #333 !important;
-  /* box-shadow: 0 6px 15px rgba(0,0,0,0.2); */
-  border-radius: 5px;
-  color: #333 !important;
-  width: 90px;
-  background-color: #f0f0f0 !important;
-  padding: 13px 0;
-  cursor: pointer;
-}
-
 .tdInput {
   transition: 0.5s ease-in-out;
   border: 1px solid #d9d9d9;
@@ -538,8 +424,21 @@ select {
   border-radius: 8px;
   color: #333;
   font-size: 14px;
-  width:300px;
+  width:200px;
 }
+
+.tdInputReadonly {
+  transition: 0.5s ease-in-out;
+  border: 1px solid #d9d9d9;
+  background-color: #d8d8d8;
+  padding: 17px;
+  border-radius: 8px;
+  color: #333;
+  font-size: 14px;
+  width:200px;
+}
+
+
 
 .button-container {
   display: flex;
@@ -547,7 +446,230 @@ select {
   margin-top: 10px; /* 버튼 위 여백 */
 }
 
+.content_body {
+  width: 100%;
+  min-height: 100vh;
+  padding: 30px 20px;
+  background-color: #FAF9F6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.content_body_nogrid {
+  width: 100%; /* 화면 가로 80% */
+  max-width: 60%; /* 최대 가로 제한 */
+  min-height: 70vh; /* 화면 높이의 60% */
+  padding: 30px 20px;
+  background-color: #FAF9F6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  box-sizing: border-box;
+
+  /* 화면 가운데 정렬 */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 8px;
+  z-index: 1000; /* 다른 요소 위로 */
+}
+
+@media (max-height: 700px) {
+  .content_body {
+    align-items: flex-start;  /* 위쪽 정렬 */
+    padding-top: 20px;        /* 상단 여백 최소화 */
+    padding-bottom: 20px;     
+  }
+}
+
 .table-wrapper {
-  position: relative; /* 테이블 기준으로 버튼 위치 잡기 */
-  display: inline-block; 
+  width: 100%;
+  max-width: 1500px;
+  overflow-x: auto; 
+  padding: 30px 20px;
+  border-radius: 8px;
+  background-color: #FAF9F6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pagenation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;               /* 페이지 번호 간격 */
+  margin-top: 40px;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+}
+
+.pagenation a {
+  display: inline-block;
+  min-width: 36px;
+  padding: 8px 12px;
+  text-align: center;
+  color: #505054;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagenation a:hover {
+  background-color: #f0f0f0;
+  color: #333333;
+  transform: scale(1.05);
+}
+
+.pagenation p.active a {
+  background-color: #333333;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.right-button-container {
+  display: flex;
+  justify-content: flex-end; /* 우측 정렬 */
+  margin-top: 16px; /* 위쪽 여백 (선택) */
+}
+
+/* 기본 라디오 버튼 숨기지 않고, 색상만 커스텀 */
+input[type="radio"] {
+  accent-color: #333333;
+  cursor: pointer;
+}
+
+/* hover 효과 */
+input[type="radio"]:hover {
+  accent-color: #505054;
+}
+
+/* 라벨 텍스트 스타일 */
+label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  margin-right: 16px;
+}
+
+.agent_result_summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summary-label {
+  min-width: 100px; /* 라벨 너비 고정 */
+  font-weight: bold;
+  font-size: 17px;
+  text-align: right; /* 오른쪽 끝에 맞춤 */
+}
+
+.summary-bar {
+  height: 10px;
+  border-radius: 5px;
+  /* transition: width 0.3s ease; */
+}
+
+.pagination-info-wrapper {
+  margin: 10px 0; /* 위아래 10px 여백 */
+}
+
+.pagination-info {
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #666;
+    display: flex;          /* 기존 스타일 안 건드려도 됨 */
+  align-items: center;
+}
+
+.pagination-info .left {
+  flex: 1;                /* 왼쪽 공간 차지 */
+}
+
+.pagination-info .right {
+  margin-left: auto;      /* 버튼을 맨 오른쪽으로 밀어냄 */
+}
+
+.result_table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    border-radius: 5px;
+}
+
+/* table 관련 */
+.result_table th, .result_table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.result_table th {
+    background-color: #f2f2f2;
+    text-align: center;
+      overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.result_table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.result_table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.grid-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ececec;
+}
+
+.grid {
+    width: max-content;
+    border-collapse: separate;
+    table-layout: fixed;
+    min-width: 100%;
+}
+
+.grid th, .grid td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    white-space: nowrap;
+    border-radius: 5px;
+}
+
+.grid th {
+    background-color: #f2f2f2;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.grid tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.grid tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.ck-editor__editable_inline {
+    min-height: 500px !important;
+    max-height: 800px;
 }

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
-// import "../styles/modify.css"
-
+import { AiOutlineShop } from "react-icons/ai";
+import "../styles/button.css"
 const RegisterCompany = () => {
 
     const location = useLocation()
@@ -22,6 +22,7 @@ const RegisterCompany = () => {
     const [coName, setCoName] = useState('')
     const [coDiv, setCoDiv] = useState()
     const [coManagerID, setCoManagerID] = useState()
+    const [coManagerIDError, setCoManagerIDError] = useState('');
     const [coPhone, setCoPhone] = useState()
     const [coUse, setCoUse] = useState('Y')
 
@@ -67,43 +68,57 @@ const RegisterCompany = () => {
         }
     }, [postData])
 
-
     return (
         <>
-            <div className="content_body">
-                <p className="menu_title">업체 등록</p>
-                <table className="result_table" border="1">
-                    <tr>
-                        <td className="table_td_title">업체명</td>
-                        <td className="table_td_value"><input className="searchInput" value={coName} onChange={(e) => setCoName(e.target.value)} /></td>
-                    </tr>
-                    <tr>
-                        <td className="table_td_title">업체 구분</td>
-                        <td className="table_td_value"><select className="searchInput" onChange={(e) => setCoDiv(e.target.value)} value={coDiv}>
-                            <option value="">구분</option>
-                            <option value="01">본사</option>
-                            <option value="02">에이전트</option>
-                            <option value="03">차입처</option>
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td className="table_td_title">대표 아이디</td>
-                        <td className="table_td_value"><input className="searchInput" value={coManagerID} onChange={(e) => setCoManagerID(e.target.value)} /></td>
-                    </tr>
-                    <tr>
-                        <td className="table_td_title">대표 연락처</td>
-                        <td className="table_td_value"><input className="searchInput" value={coPhone} onChange={(e) => setCoPhone(e.target.value)} /></td>
-                    </tr>
-                    <tr>
-                        <td className="table_td_title">사용 여부</td>
-                        <td className="table_td_value">Y <input type="radio" value="Y" checked={coUse === 'Y'} onChange={(e) => setCoUse(e.target.value)} />
-                            N <input type="radio" value="N" checked={coUse === 'N'} onChange={(e) => setCoUse(e.target.value)} />
-                        </td>
-                    </tr>
+            <div className="content_body_nogrid">
+                <p className="menu_title"><AiOutlineShop/> 업체 등록</p>
+                <table className="result_table">
+                    <colgroup>
+                        <col width="10%" />
+                        <col width="90%" />
+                    </colgroup>
+                    <tbody>                    
+                        <tr>
+                            <th>업체명</th>
+                            <td><input className="searchInput" value={coName} onChange={(e) => setCoName(e.target.value)} /></td>
+                        </tr>
+                        <tr>
+                            <th>업체 구분</th>
+                            <td><select className="searchInput" onChange={(e) => setCoDiv(e.target.value)} value={coDiv}>
+                                <option value="">구분</option>
+                                <option value="01">본사</option>
+                                <option value="02">에이전트</option>
+                                <option value="03">차입처</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <th>대표 아이디</th>
+                            <td><input className="searchInput" value={coManagerID} onChange={(e) => setCoManagerID(e.target.value)} /></td>
+                        </tr>
+                        <tr>
+                            <th>대표 연락처</th>
+                            <td><input className="searchInput" value={coPhone} onChange={(e) => setCoPhone(e.target.value)} /></td>
+                        </tr>
+                        <tr>
+                            <th>사용 여부</th>
+                            <td>
+                                <label>
+                                    <input type="radio" value="Y" checked={coUse === 'Y'} onChange={(e) => setCoUse(e.target.value)} />
+                                    <span>Y</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="N" checked={coUse === 'N'} onChange={(e) => setCoUse(e.target.value)} />
+                                    <span>N</span>
+                                </label>                        
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
+
                 <div className="button_layout">
-                    <button className="loginBtn" type="submit" onClick={RegisterAgentCompany}>등록</button>
-                    <button className="loginBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
+                    <button className="registBtn" type="submit" onClick={RegisterAgentCompany}>등록</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
                 </div>
             </div>
         </>

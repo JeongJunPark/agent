@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
+import { AiOutlineForm } from "react-icons/ai";
 
 const MyPage = () => {
 
@@ -8,7 +9,7 @@ const MyPage = () => {
 
     // alert(managerVO);
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfo", {
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfo", {
             ID: sessionStorage.getItem('ID'),
             menu: "My page",
             note: '',
@@ -18,6 +19,7 @@ const MyPage = () => {
                 if (returnResponse) {
                     console.log(returnResponse);
                     setManagerVO(returnResponse.result[0]);
+                    // alert(managerVO.agent_dlgt_id);
                 }
             })
             .catch((error) => {
@@ -27,12 +29,12 @@ const MyPage = () => {
 
     return (
         <>
-            <div className="content_body">
-                <p className="menu_title">My Page</p>
-                <table className="result_table_sm" border="1">
+            <div className="content_body_nogrid">
+                <p className="menu_title"><AiOutlineForm/> My Page</p>
+                <table className="result_table" border="1">
                     <colgroup>
-                        <col width="10%" />
-                        <col width="90%" />
+                        <col width="15%" />
+                        <col width="85%" />
                     </colgroup>
                         <tr>
                             <th>아이디</th>

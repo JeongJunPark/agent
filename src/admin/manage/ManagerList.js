@@ -1,16 +1,16 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import SendAPI from "../utils/SendAPI";
-import "../styles/common.css"
+import SendAPI from "./../../utils/SendAPI";
+import "./../../styles/common.css"
 
-import { AiOutlineShop, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
-import NoDataRow from "../utils/NoDataRow";
+import { AiFillSetting, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
+import NoDataRow from "./../../utils/NoDataRow";
 
-import "../styles/button.css";
-import Loading from '../utils/Loading';
+import "./../../styles/button.css";
+import Loading from './../../utils/Loading';
 
 
-const ManageCompany = () => {
+const ManagerList = () => {
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -43,12 +43,15 @@ const ManageCompany = () => {
   const [keyword, setKeyword] = useState("");
   const [condition, setCondition] = useState("");
 
+  const [mgr_indx, setMgrIndx] = useState("");
+
   // HIST 저장
   useEffect(() => {
-    SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+    SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerRowsMng", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
           console.log(returnResponse)
+          setData(returnResponse.result)
         }
       })
       .catch((error) => {
@@ -57,28 +60,11 @@ const ManageCompany = () => {
 
   }, [])
 
-  useEffect(() => {
-    if (data === '') {
-      setLoading(true);
-      SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
-        .then(returnResponse => {
-          setData(returnResponse.companyData)
-        })
-        .catch(error => {
-          console.error('API Error:', error);
-        })
-        .finally(() => {
-            setLoading(false);
-        });          
-    }
-  })
-
-
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword, condition: condition })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/getManagerRowsMng', { words: keyword, condition: condition })
       .then(returnResponse => {
-        setData(returnResponse.searchCompanyData)
+        setData(returnResponse.result)
       })
       .catch(error => {
         console.error('API Error:', error);
@@ -86,21 +72,20 @@ const ManageCompany = () => {
       .finally(() => {
            setLoading(false);
       });       
-
   }
 
-  const detailAgentCompany = (companyINDX) => {
-    navigate("/ModifyCompany", {
+  const modifyManager = (mgr_indx) => {
+    navigate("/ModifyManager", {
       state: {
-        companyINDX: companyINDX
+        mgr_indx: mgr_indx
       }
     })
-  }
+  }  
 
-  const deleteAgentCompancy = (companyINDX) => {
-    SendAPI('https://home-api.leadcorp.co.kr:8080/deleteAgentCompany', { companyINDX : companyINDX })
+  const deleteManager = (mgr_indx) => {
+    SendAPI('https://home-api.leadcorp.co.kr:8080/deleteManagerMng', { mgr_indx : mgr_indx })
       .then(returnResponse => {
-        if (returnResponse.result === 'Y') {
+        if (returnResponse.result) {
           alert("삭제 되었습니다.")
           window.location.reload()
         }
@@ -110,13 +95,8 @@ const ManageCompany = () => {
       });
   }
 
-  const section = (e) => {
-    if (e == '01') return "본사";
-    if (e == '02') return "에이전트";
-    if (e == '03') return "차입처";
-  }
 
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -125,7 +105,7 @@ const [loading, setLoading] = useState(false);
             )}         
       <div className="content_body">
         <div className="result_header">
-        <p className="menu_title"><AiOutlineShop/>  업체 관리
+        <p className="menu_title"><AiFillSetting/> 관리자계정 관리
 
         <div className="search_layout">     
           <select
@@ -135,8 +115,13 @@ const [loading, setLoading] = useState(false);
             onChange={(e) => setCondition(e.target.value)}
           >
             <option value="">전체</option>
-            <option value="agent_co">업체명</option>
-            <option value="agent_dlgt_id">대표아이디</option>
+            <option value="mgr_dept">부서</option>
+            <option value="mgr_id">아이디</option>
+            <option value="mgr_last">접속일</option>
+            <option value="mgr_ip">접속아이피</option>
+            <option value="mgr_dt">등록일</option>
+            <option value="mgr_nm">이름</option>
+            <option value="mgr_phn">연락처</option>
           </select>         
 
           <input
@@ -164,12 +149,14 @@ const [loading, setLoading] = useState(false);
             <thead>
               <tr>
                 <th>번호</th>
-                <th>업체명</th>
-                <th>업체구분</th>
-                <th>대표아이디</th>
-                <th>대표전화</th>
-                <th>사용여부</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>부서</th>
+                <th>연락처</th>
+                <th>승인</th>
                 <th>등록일</th>
+                <th>접속아이피</th>
+                <th>접속일</th>
                 <th>수정</th>
                 <th>삭제</th>
               </tr>
@@ -179,14 +166,17 @@ const [loading, setLoading] = useState(false);
                 currentPosts.map((item, index) => (
                   <tr key={item.co_indx}>
                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                    <td>{item.agent_co}</td>
-                    <td>{section(item.agent_co_div)}</td>
-                    <td>{item.agent_dlgt_id}</td>
-                    <td>{item.agent_phn}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
-                    <td>{item.mgr_dt}</td>
-                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => detailAgentCompany(item.co_indx)}>수정</button></td>
-                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteAgentCompancy(item.co_indx)}>삭제</button></td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_id}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_nm}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_dept}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_phn}</td>
+
+                    <td style={{ textAlign: "center" }}>{item.mgr_aprv}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_dt}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_ip}</td>
+                    <td style={{ textAlign: "center" }}>{item.mgr_last}</td>                    
+                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => modifyManager(item.mgr_indx)}>수정</button></td>
+                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteManager(item.mgr_indx)}>삭제</button></td>
                   </tr>
                 ))) : 
                    <NoDataRow colSpan={9} height="400px" />
@@ -210,7 +200,7 @@ const [loading, setLoading] = useState(false);
           </div>    
 
           <div className='right-button-container'>
-            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterCompany')}>등록</button>          
+            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterManager')}>등록</button>          
           </div>
 
       </div>
@@ -218,4 +208,4 @@ const [loading, setLoading] = useState(false);
   );
 };
 
-export default ManageCompany
+export default ManagerList

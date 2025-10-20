@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
-// import "../styles/modify.css"
+import "../styles/button.css"
 
 const CompanyIP = () => {
 
@@ -44,10 +44,11 @@ const CompanyIP = () => {
     }, [])
 
     // 업체 IP 사용 여부 변경
-    const changeUse = (IP, useValue) => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/changeUseIP", { ID: sessionStorage.getItem('ID'), IP : IP, useValue: useValue })
+    const changeUse = (IP, useValue, CO_INDX, isDelete) => {
+        SendAPI("https://home-api.leadcorp.co.kr:8080/changeUseIP", { ID: sessionStorage.getItem('ID'), IP : IP, useValue: useValue, CO_INDX : CO_INDX, isDelete : isDelete })
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
+                    alert("완료되었습니다.")
                     window.location.reload();
                 }
 
@@ -56,6 +57,24 @@ const CompanyIP = () => {
                 console.log(error)
             })
     }
+
+    // 업체 IP 삭제
+    // const changeDelete = (IP, CO_INDX) => {
+    //     SendAPI("https://home-api.leadcorp.co.kr:8080/deleteUseIP", { IP : IP, CO_INDX : CO_INDX })
+            
+    //         console.log("CO_INDX : " + CO_INDX)
+    //         console.log("IP : " + IP)
+
+    //         .then((returnResponse) => {
+    //             if (returnResponse.result === 'Y') {
+    //                 window.location.reload();
+    //             }
+
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // }    
 
     // 업체 IP 등록
     const submitIP = () => {
@@ -76,7 +95,7 @@ const CompanyIP = () => {
 
     return (
         <>
-            <div className="content_body">
+            <div className="content_body_nogrid">
                 <p className="menu_title">IP 관리</p>
                 <table className="result_table" border="1">
                     <tr>
@@ -92,7 +111,10 @@ const CompanyIP = () => {
                             <td>{item.ip_number}</td>
                             <td>{item.mgr_use_yn}</td>
                             <td>{item.mgr_id}</td>
-                            <td><button className="loginBtn" onClick={() => changeUse(item.ip_number, item.mgr_use_yn)}>변경</button></td>
+                            <td>
+                                <button className="loginBtn" onClick={() => changeUse(item.ip_number, item.mgr_use_yn)}>변경</button>
+                                <button className="loginBtn" onClick={() => changeUse(item.ip_number, item.mgr_use_yn, item.co_indx, "delete")}>삭제</button>
+                            </td>
                         </tr>
 
                     ))}
@@ -100,14 +122,14 @@ const CompanyIP = () => {
 
                 <table className="result_table" style={{ marginTop : "10px" }} border="1">
                     <tr>
-                        <td className="table_td_title">등록할 IP</td>
-                        <td className="table_td_value"><input className="searchInput" placeholder="IP 번호" onChange={(e) => setSubmittedIP(e.target.value)} /></td>
+                        <th>등록할 IP</th>
+                        <td><input className="searchInput" placeholder="IP 번호" onChange={(e) => setSubmittedIP(e.target.value)} /></td>
                     </tr>
                 </table>
 
                 <div className="button_layout">
-                    <button className="loginBtn" onClick={submitIP}>등록</button>
-                    <button className="loginBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
+                    <button className="registBtn" onClick={submitIP}>등록</button>
+                    <button className="listBtn" type="submit" onClick={() => navigate("/ManageCompany")}>목록</button>
                 </div>
             </div>
         </>
