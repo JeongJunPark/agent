@@ -44,7 +44,7 @@ const List = () => {
   const [condition, setCondition] = useState("");
 
   useEffect(() => {
-    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getHistoryRows", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+    SendAPI("https://home-api.leadcorp.co.kr:8080/getHistoryRows", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
           setData(returnResponse.result)
@@ -60,7 +60,7 @@ const List = () => {
   // search 버튼 조회 기능 구현 해야함
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getHistoryRows', { words: keyword, condition: condition })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/getHistoryRows', { words: keyword, condition: condition })
       .then(returnResponse => {
         setData(returnResponse.result)
       })
@@ -85,7 +85,7 @@ const List = () => {
   }
 
   const deleteHistory = (indx) => {
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteHistory', { indx : indx })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/deleteHistory', { indx : indx })
       .then(returnResponse => {
         if (returnResponse.result === 'Y') {
           alert("삭제 되었습니다.")

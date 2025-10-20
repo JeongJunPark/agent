@@ -20,7 +20,7 @@ const ModifyList = () => {
     const [historyVO, setHistoryVO] = useState({});
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getHistoryRow", { indx : coID })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getHistoryRow", { indx : coID })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log('dd ', returnResponse.result[0])
@@ -46,7 +46,7 @@ const ModifyList = () => {
             his_dt: new Date().toISOString().split("T")[0]
         };
     
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updateHistory", payload)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/updateHistory", payload)
             .then((returnResponse) => {
                 if (returnResponse.result === "Y") {
                     alert("수정이 완료 되었습니다.");

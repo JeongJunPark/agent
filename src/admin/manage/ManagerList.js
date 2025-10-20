@@ -47,7 +47,7 @@ const ManagerList = () => {
 
   // HIST 저장
   useEffect(() => {
-    SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRowsMng", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+    SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerRowsMng", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
           console.log(returnResponse)
@@ -62,7 +62,7 @@ const ManagerList = () => {
 
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getManagerRowsMng', { words: keyword, condition: condition })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/getManagerRowsMng', { words: keyword, condition: condition })
       .then(returnResponse => {
         setData(returnResponse.result)
       })
@@ -83,7 +83,7 @@ const ManagerList = () => {
   }  
 
   const deleteManager = (mgr_indx) => {
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteManagerMng', { mgr_indx : mgr_indx })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/deleteManagerMng', { mgr_indx : mgr_indx })
       .then(returnResponse => {
         if (returnResponse.result) {
           alert("삭제 되었습니다.")

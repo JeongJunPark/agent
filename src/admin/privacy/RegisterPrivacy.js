@@ -38,7 +38,7 @@ const RegisterPrivacy = ({ menuItems }) => {
             privacy_nm  : privacy_nm   || ""
         };
     
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/insertPrivacyMng", payload)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/insertPrivacyMng", payload)
                 .then((returnResponse) => {
                     console.log(returnResponse)
                     if (returnResponse.result) {

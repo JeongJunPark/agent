@@ -9,7 +9,7 @@ const MyPageMng = () => {
 
     // alert(managerVO);
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfoMng", {
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfoMng", {
             ID: sessionStorage.getItem('ID'),
             menu: "My page",
             note: '',

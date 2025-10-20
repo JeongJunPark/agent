@@ -38,7 +38,7 @@ const RegisterManager = () => {
             mgr_dt: mgr_dt
         };
     
-            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/insertManager", payload)
+            SendAPI("https://home-api.leadcorp.co.kr:8080/insertManager", payload)
                 .then((returnResponse) => {
                     console.log(returnResponse)
                     if (returnResponse.result) {

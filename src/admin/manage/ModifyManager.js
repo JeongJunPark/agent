@@ -23,7 +23,7 @@ const ModifyManager = () => {
     
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerRowMng", { indx : coID })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerRowMng", { indx : coID })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log('dd ', returnResponse.result[0])
@@ -54,7 +54,7 @@ const ModifyManager = () => {
             mgr_dt: new Date().toISOString().split("T")[0]
         };
     
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updateManagerMng", payload)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/updateManagerMng", payload)
             .then((returnResponse) => {
                 if (returnResponse.result === "Y") {
                     alert("수정이 완료 되었습니다.");

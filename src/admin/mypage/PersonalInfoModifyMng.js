@@ -10,7 +10,7 @@ const PersonalInfoModifyMng = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getManagerInfoMng", { ID: sessionStorage.getItem('ID'), menu: "개인정보 수정", note: '', IP : sessionStorage.getItem('IP') })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfoMng", { ID: sessionStorage.getItem('ID'), menu: "개인정보 수정", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log(returnResponse)
@@ -33,7 +33,7 @@ const PersonalInfoModifyMng = () => {
             mgr_dt: new Date().toISOString().split("T")[0]
         };
 
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updateManagerInfoMng", payload)
+        SendAPI("https://home-api.leadcorp.co.kr:8080/updateManagerInfoMng", payload)
             .then((returnResponse) => {
                 if (returnResponse.result === 'Y') {
                     alert("수정이 완료 되었습니다.");

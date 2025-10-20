@@ -34,7 +34,7 @@ const RegisterList = () => {
             his_dt: his_dt,
             his_nm: his_nm
         };
-            SendAPI("https://dev-home-api.leadcorp.co.kr:8080/insertHistory", payload)
+            SendAPI("https://home-api.leadcorp.co.kr:8080/insertHistory", payload)
                 .then((returnResponse) => {
                     console.log(returnResponse)
                     if (returnResponse.result) {

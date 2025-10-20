@@ -31,7 +31,7 @@ const ReadPrivacy = ({ menuItems }) => {
     }, []);
 
     useEffect(() => {
-        SendAPI("https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowMng", { indx : indx, bbs: bbs })
+        SendAPI("https://home-api.leadcorp.co.kr:8080/getPrivacyRowMng", { indx : indx, bbs: bbs })
             .then((returnResponse) => {
                 if (returnResponse) {
                     console.log('dd ', returnResponse.result[0])
@@ -49,7 +49,7 @@ const ReadPrivacy = ({ menuItems }) => {
     }
 
   const deletePrivacyList = (indx, bbs) => {
-    SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: bbs })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: bbs })
       .then(returnResponse => {
         if (returnResponse.result === 'Y') {
           alert("삭제 되었습니다.")
