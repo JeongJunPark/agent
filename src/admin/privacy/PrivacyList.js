@@ -55,7 +55,7 @@ const PrivacyList = ({ menuItems }) => {
     console.log("pageId --?", pageId)
     useEffect(() => {
             setLoading(true);
-            SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowsMng', { bbs : pageId })
+            SendAPI('https://home-api.leadcorp.co.kr:8080/getPrivacyRowsMng', { bbs : pageId })
                 .then(returnResponse => {
                     setData(returnResponse.result)
                 })
@@ -71,7 +71,7 @@ const PrivacyList = ({ menuItems }) => {
 
     const handleSearch = () => {
         setLoading(true);
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/getPrivacyRowsMng', { words: keyword, condition: condition, bbs : pageId })
+        SendAPI('https://home-api.leadcorp.co.kr:8080/getPrivacyRowsMng', { words: keyword, condition: condition, bbs : pageId })
             .then(returnResponse => {
                 setData(returnResponse.result)
             })
@@ -89,7 +89,7 @@ const PrivacyList = ({ menuItems }) => {
     }
 
     const deletePrivacyList = (indx, bbs) => {
-        SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: pageId })
+        SendAPI('https://home-api.leadcorp.co.kr:8080/deletePrivacyMng', { indx : indx, bbs: pageId })
         .then(returnResponse => {
             if (returnResponse.result === 'Y') {
             alert("삭제 되었습니다.")
