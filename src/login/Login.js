@@ -6,7 +6,7 @@ import Logo from "../images/leadcorp_img.svg"
 
 const Login = () => {
 
-    const [status, setStatus] = useState(false) // 유효한 ID 체크
+    const [status, setStatus] = useState("") // 유효한 ID 체크
 
     const [ID, setID] = useState("")
     const [PW, setPW] = useState("")
@@ -14,6 +14,12 @@ const Login = () => {
     const [Name, setName] = useState("");
 
     const [coUse, setCoUse] = useState('agent')
+
+    useEffect(() => {
+        setStatus(false);
+        setID("");
+        setPW("");
+    }, [coUse]);
 
     useEffect(() => {
         SendAPI('https://geolocation-db.com/json/')
