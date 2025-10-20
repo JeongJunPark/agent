@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
-import { AiOutlineShop } from "react-icons/ai";
+import { AiFillSetting } from "react-icons/ai";
 import SendAPI from "../../utils/SendAPI";
 import "../../styles/common.css"
 import "../../styles/button.css"
@@ -70,7 +70,7 @@ const ModifyManager = () => {
     return (
         <>
             <div className="content_body">
-                <p className="menu_title"><AiOutlineShop/> 관리자계정 관리 수정</p>
+                <p className="menu_title"><AiFillSetting/> 관리자계정 관리 수정</p>
                 
                 <table className="result_table">
                     <colgroup>
