@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../../utils/SendAPI";
 import "../../styles/common.css"
-import { AiOutlineShop } from "react-icons/ai";
+import { AiFillSetting } from "react-icons/ai";
 import "../../styles/button.css"
 const RegisterManager = () => {
 
@@ -56,7 +56,7 @@ const RegisterManager = () => {
    return (
         <>
             <div className="content_body">
-                <p className="menu_title"><AiOutlineShop/> 관리자계정 등록</p>
+                <p className="menu_title"><AiFillSetting/> 관리자계정 등록</p>
                 
                 <table className="result_table">
                     <colgroup>
