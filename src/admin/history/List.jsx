@@ -1,16 +1,16 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import SendAPI from "./../../utils/SendAPI";
+import SendAPI from "../../utils/SendAPI";
 import "./../../styles/common.css"
 
-import { AiFillSetting, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
-import NoDataRow from "./../../utils/NoDataRow";
+import { AiOutlineShop, AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
+import NoDataRow from "../../utils/NoDataRow";
 
 import "./../../styles/button.css";
-import Loading from './../../utils/Loading';
+import Loading from '../../utils/Loading';
 
 
-const ManagerList = () => {
+const List = () => {
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -43,14 +43,10 @@ const ManagerList = () => {
   const [keyword, setKeyword] = useState("");
   const [condition, setCondition] = useState("");
 
-  const [mgr_indx, setMgrIndx] = useState("");
-
-  // HIST 저장
   useEffect(() => {
-    SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerRowsMng", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
+    SendAPI("https://home-api.leadcorp.co.kr:8080/getHistoryRows", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
-          console.log(returnResponse)
           setData(returnResponse.result)
         }
       })
@@ -60,9 +56,11 @@ const ManagerList = () => {
 
   }, [])
 
+
+  // search 버튼 조회 기능 구현 해야함
   const handleSearch = () => {
     setLoading(true);
-    SendAPI('https://home-api.leadcorp.co.kr:8080/getManagerRowsMng', { words: keyword, condition: condition })
+    SendAPI('https://home-api.leadcorp.co.kr:8080/getHistoryRows', { words: keyword, condition: condition })
       .then(returnResponse => {
         setData(returnResponse.result)
       })
@@ -74,18 +72,22 @@ const ManagerList = () => {
       });       
   }
 
-  const modifyManager = (mgr_indx) => {
-    navigate("/ModifyManager", {
-      state: {
-        mgr_indx: mgr_indx
-      }
-    })
+  const insertHistory = () => {
+    navigate("/RegisterList");
   }  
 
-  const deleteManager = (mgr_indx) => {
-    SendAPI('https://home-api.leadcorp.co.kr:8080/deleteManagerMng', { mgr_indx : mgr_indx })
+  const updateHistory = (HIS_INDX) => {
+    navigate("/ModifyList", {
+      state: {
+        HIS_INDX: HIS_INDX
+      }
+    })
+  }
+
+  const deleteHistory = (indx) => {
+    SendAPI('https://home-api.leadcorp.co.kr:8080/deleteHistory', { indx : indx })
       .then(returnResponse => {
-        if (returnResponse.result) {
+        if (returnResponse.result === 'Y') {
           alert("삭제 되었습니다.")
           window.location.reload()
         }
@@ -94,7 +96,6 @@ const ManagerList = () => {
         console.log(error);
       });
   }
-
 
   const [loading, setLoading] = useState(false);
 
@@ -105,7 +106,7 @@ const ManagerList = () => {
             )}         
       <div className="content_body">
         <div className="result_header">
-        <p className="menu_title"><AiFillSetting/> 관리자계정 관리
+        <p className="menu_title"><AiOutlineShop/>  연혁 관리
 
         <div className="search_layout">     
           <select
@@ -115,13 +116,8 @@ const ManagerList = () => {
             onChange={(e) => setCondition(e.target.value)}
           >
             <option value="">전체</option>
-            <option value="mgr_dept">부서</option>
-            <option value="mgr_id">아이디</option>
-            <option value="mgr_last">접속일</option>
-            <option value="mgr_ip">접속아이피</option>
-            <option value="mgr_dt">등록일</option>
-            <option value="mgr_nm">이름</option>
-            <option value="mgr_phn">연락처</option>
+            <option value="his_titl">제목</option>
+            <option value="his_year">연도</option>
           </select>         
 
           <input
@@ -149,14 +145,11 @@ const ManagerList = () => {
             <thead>
               <tr>
                 <th>번호</th>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>부서</th>
-                <th>연락처</th>
-                <th>승인</th>
+                <th>연도</th>
+                <th>월</th>
+                <th>제목</th>
+                <th>작성자</th>
                 <th>등록일</th>
-                <th>접속아이피</th>
-                <th>접속일</th>
                 <th>수정</th>
                 <th>삭제</th>
               </tr>
@@ -166,17 +159,13 @@ const ManagerList = () => {
                 currentPosts.map((item, index) => (
                   <tr key={item.co_indx}>
                     <td style={{ textAlign: "center" }}>{index + 1 + (currentPage - 1) * postsPerPage}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_id}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_nm}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_dept}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_phn}</td>
-
-                    <td style={{ textAlign: "center" }}>{item.mgr_aprv}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_dt}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_ip}</td>
-                    <td style={{ textAlign: "center" }}>{item.mgr_last}</td>                    
-                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => modifyManager(item.mgr_indx)}>수정</button></td>
-                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteManager(item.mgr_indx)}>삭제</button></td>
+                    <td style={{ textAlign: "center" }}>{item.his_year}</td>
+                    <td style={{ textAlign: "center" }}>{item.his_mth}</td>
+                    <td style={{ textAlign: "left" }}>{item.his_titl}</td>
+                    <td style={{ textAlign: "center" }}>{item.his_nm}</td>
+                    <td style={{ textAlign: "center" }}>{item.his_dt}</td>
+                    <td style={{ textAlign: "center" }}><button className="modifyBtn" type="submit" onClick={() => updateHistory(item.his_indx)}>수정</button></td>
+                    <td style={{ textAlign: "center" }}><button className="deleteBtn" type="submit" onClick={() => deleteHistory(item.his_indx)}>삭제</button></td>
                   </tr>
                 ))) : 
                    <NoDataRow colSpan={9} height="400px" />
@@ -200,7 +189,7 @@ const ManagerList = () => {
           </div>    
 
           <div className='right-button-container'>
-            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterManager')}>등록</button>          
+            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterList')}>등록</button>          
           </div>
 
       </div>
@@ -208,4 +197,4 @@ const ManagerList = () => {
   );
 };
 
-export default ManagerList
+export default List

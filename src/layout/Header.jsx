@@ -116,7 +116,7 @@ const Header = () => {
   return (
     <header>
       <div className="header-container">
-        <div className="mypage_header" onClick={() => (window.location.href = "/MyPageMng")}>
+        <div className="mypage_header" onClick={() => (window.location.href = "/MyPage")}>
         <img src={Logo} alt="logo" width={100} height={40}/>
         </div>
             <div className="desktop-menu">
