@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 import "../styles/button.css"
-
+import { AiOutlineShop } from "react-icons/ai";
 const ModifyCompany = () => {
 
     const location = useLocation()
@@ -147,7 +147,7 @@ const ModifyCompany = () => {
     return (
         <>
             <div className="content_body">
-                <p className="menu_title">업체 변경</p>
+                <p className="menu_title"><AiOutlineShop/> 업체 변경</p>
                 
                 <table className="result_table">
                     <colgroup>

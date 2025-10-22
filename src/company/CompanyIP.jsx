@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 import "../styles/button.css"
-
+import { AiOutlineShop } from "react-icons/ai";
 const CompanyIP = () => {
 
     // HIST 저장
@@ -96,7 +96,7 @@ const CompanyIP = () => {
     return (
         <>
             <div className="content_body_nogrid">
-                <p className="menu_title">IP 관리</p>
+                <p className="menu_title"><AiOutlineShop/> IP 관리</p>
                 <table className="result_table" border="1">
                     <tr>
                         <th>번호</th>
@@ -107,13 +107,13 @@ const CompanyIP = () => {
                     </tr>
                     {response && response.map((item, index) => (
                         <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{item.ip_number}</td>
-                            <td>{item.mgr_use_yn}</td>
-                            <td>{item.mgr_id}</td>
-                            <td>
+                            <td style={{ textAlign: "center" }}>{index + 1}</td>
+                            <td style={{ textAlign: "center" }}>{item.ip_number}</td>
+                            <td style={{ textAlign: "center" }}>{item.mgr_use_yn}</td>
+                            <td style={{ textAlign: "center" }}>{item.mgr_id}</td>
+                            <td style={{ textAlign: "center" }}>
                                 <button className="loginBtn" onClick={() => changeUse(item.ip_number, item.mgr_use_yn)}>변경</button>
-                                <button className="loginBtn" onClick={() => changeUse(item.ip_number, item.mgr_use_yn, item.co_indx, "delete")}>삭제</button>
+                                {/* <button className="loginBtn" onClick={() => changeUse(item.ip_number, item.mgr_use_yn, item.co_indx, "delete")}>삭제</button> */}
                             </td>
                         </tr>
 
