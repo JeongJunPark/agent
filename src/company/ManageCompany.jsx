@@ -60,7 +60,7 @@ const ManageCompany = () => {
   useEffect(() => {
     if (data === '') {
       setLoading(true);
-      SendAPI('https://home-api.leadcorp.co.kr:8080/agentUserCompany')
+      SendAPI("https://home-api.leadcorp.co.kr:8080/agentUserCompany", { ID: sessionStorage.getItem('ID'), dlgt_id: sessionStorage.getItem('agent_dlgt_id') })
         .then(returnResponse => {
           setData(returnResponse.companyData)
         })
