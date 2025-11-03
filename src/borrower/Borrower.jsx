@@ -219,14 +219,19 @@ const Borrower = () => {
                 setResponse(rowsResponse?.result1 || []);
                 setData(rowsResponse?.result1 || []);
                 setSummaryData(sumResponse?.result2 || []);
+                
+                if(matchMoAccount.length > 0){
+                    if (!rowsResponse?.result1 || rowsResponse.result1.length === 0) {
+                        alert("조회 결과가 없습니다.");
+                    }
 
-                if (!rowsResponse?.result1 || rowsResponse.result1.length === 0) {
-                    alert("조회 결과가 없습니다.");
+                    if (!sumResponse?.result2 || sumResponse.result2.length === 0) {
+                        alert("합산 결과가 없습니다.");
+                    }
+                } else {
+                    alert("모계좌 선택 후에 조회하시기 바랍니다.");
                 }
-
-                if (!sumResponse?.result2 || sumResponse.result2.length === 0) {
-                    alert("합산 결과가 없습니다.");
-                }
+               
             })
             .catch((error) => {
                 console.log(error);
@@ -274,7 +279,7 @@ const Borrower = () => {
             <div className="content_body">
                 <p className="menu_title_container">                      
                 <span className="menu_title">
-                    <AiOutlineDollarCircle/> 차입처
+                    <AiOutlineDollarCircle/> 가상계좌 현황조회
                 </span>                
                 <span className="menu_title_right">
                         <button className="searchBtn" onClick={searchBorrower}>검색</button>
