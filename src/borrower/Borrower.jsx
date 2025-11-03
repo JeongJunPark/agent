@@ -447,7 +447,7 @@ const Borrower = () => {
                         </tr>
                         <tr>
                             <th>정상채권개수</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].nrml_bond_cn)} readOnly></input></td>
                             <th>정상채권금액</th>
                             <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].nrml_bond_am)} readOnly></input></td>
                             <th>연체채권개수</th>
@@ -455,7 +455,7 @@ const Borrower = () => {
                         </tr>
                         <tr>
                             <th>연체채권금액</th>
-                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].act_vir_act_cn)} readOnly></input></td>
+                            <td><input type="text" className="tdInputReadonly" value={summaryData && NumberFormatter(summaryData[0].arr_bond_am)} readOnly></input></td>
                             <th>채권양수인</th>
                             <td><input type="text" className="tdInput"></input></td>
                             <th>채권양도일자</th>
