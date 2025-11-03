@@ -215,12 +215,12 @@ const Borrower = () => {
             SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', payload),
             SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', payload)
             ])
-            .then(([rowsResponse, sumResponse]) => {
-                setResponse(rowsResponse?.result1 || []);
-                setData(rowsResponse?.result1 || []);
-                setSummaryData(sumResponse?.result2 || []);
-                
+            .then(([rowsResponse, sumResponse]) => {                
                 if(matchMoAccount.length > 0){
+                    setResponse(rowsResponse?.result1 || []);
+                    setData(rowsResponse?.result1 || []);
+                    setSummaryData(sumResponse?.result2 || []);
+
                     if (!rowsResponse?.result1 || rowsResponse.result1.length === 0) {
                         alert("조회 결과가 없습니다.");
                     }
