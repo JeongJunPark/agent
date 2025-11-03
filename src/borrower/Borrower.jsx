@@ -209,29 +209,24 @@ const Borrower = () => {
         };
 
         setPostData(payload); // 상태도 업데이트
+        if(matchMoAccount.length > 0){
+            Promise.all([
+                SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', payload),
+                SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', payload)
+                ])
+                .then(([rowsResponse, sumResponse]) => {                
+                        setResponse(rowsResponse?.result1 || []);
+                        setData(rowsResponse?.result1 || []);
+                        setSummaryData(sumResponse?.result2 || []);
 
-        // 바로 API 호출
-       Promise.all([
-            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRows', payload),
-            SendAPI('https://home-api.leadcorp.co.kr:8080/getAccountRowsSum', payload)
-            ])
-            .then(([rowsResponse, sumResponse]) => {                
-                if(matchMoAccount.length > 0){
-                    setResponse(rowsResponse?.result1 || []);
-                    setData(rowsResponse?.result1 || []);
-                    setSummaryData(sumResponse?.result2 || []);
+                        if (!rowsResponse?.result1 || rowsResponse.result1.length === 0) {
+                            alert("조회 결과가 없습니다.");
+                        }
 
-                    if (!rowsResponse?.result1 || rowsResponse.result1.length === 0) {
-                        alert("조회 결과가 없습니다.");
-                    }
-
-                    if (!sumResponse?.result2 || sumResponse.result2.length === 0) {
-                        alert("합산 결과가 없습니다.");
-                    }
-                } else {
-                    alert("모계좌 선택 후에 조회하시기 바랍니다.");
-                }
-               
+                        if (!sumResponse?.result2 || sumResponse.result2.length === 0) {
+                            alert("합산 결과가 없습니다.");
+                        }
+                
             })
             .catch((error) => {
                 console.log(error);
@@ -239,6 +234,10 @@ const Borrower = () => {
             .finally(() => {
                 setLoading(false);
             });
+        } else {
+            alert("모계좌 선택 후에 조회하시기 바랍니다.");
+            setLoading(false);
+        }
         };
 
 
