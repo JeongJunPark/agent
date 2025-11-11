@@ -4,7 +4,7 @@ import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 import { AiOutlineTeam } from "react-icons/ai";
 import "../styles/button.css"
-
+import Loading from '../utils/Loading';
 const RegisterUser = () => {
 
     const location = useLocation()
@@ -20,6 +20,8 @@ const RegisterUser = () => {
     const [auth, setAuth] = useState("1");
     const [use, setUse] = useState("Y")
     const [dlgtId, setDlgtID] = useState()
+
+    const [loading, setLoading] = useState(false);
     // HIST 저장
     useEffect(() => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "사용자등록", note: '', IP : sessionStorage.getItem('IP') })
@@ -48,6 +50,7 @@ const RegisterUser = () => {
 
     const registerAgentUser = async () => {
         try {
+            setLoading(true);            
             const returnResponse = await SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: "" });
             const data = returnResponse.searchUserData;
 
@@ -81,7 +84,9 @@ const RegisterUser = () => {
         } catch (error) {
             console.error("API Error:", error);
             alert("서버 오류가 발생했습니다.");
-        }
+        } finally{
+           setLoading(false);
+        };     
     };
 
 
@@ -100,6 +105,9 @@ const RegisterUser = () => {
 
     return (
         <>
+            {loading && (
+                <Loading />
+            )}              
             <div className="content_body_nogrid">               
                 <p className="menu_title"><AiOutlineTeam/> 사용자 등록</p>
                 <table className="result_table" border="1">
