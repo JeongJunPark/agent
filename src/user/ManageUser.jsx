@@ -83,6 +83,8 @@ const ManageUser = () => {
         SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
             .then(returnResponse => {
                 setData(returnResponse.searchUserData)
+                console.log(returnResponse.searchUserData)
+                console.log(data);
             })
             .catch(error => {
                 console.error('API Error:', error);

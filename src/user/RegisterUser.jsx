@@ -4,12 +4,28 @@ import SendAPI from "../utils/SendAPI";
 import "../styles/common.css"
 import { AiOutlineTeam } from "react-icons/ai";
 import "../styles/button.css"
+
 const RegisterUser = () => {
 
     const location = useLocation()
     const navigate = useNavigate();
     const locationState = location.state
 
+    const [userID, setUserID] = useState("");
+    const [userName, setUserName] = useState("")
+    const [agentList, setAgentList] = useState()
+    const [co, setCo] = useState()
+    const [mgr, setMgr] = useState("")
+    const [phone, setPhone] = useState("");
+    const [auth, setAuth] = useState("1");
+    const [use, setUse] = useState("Y")
+    const [dlgtId, setDlgtID] = useState()
+
+    const [data, setData] = useState("");
+
+
+
+    
     const [postData, setPostData] = useState({
         name: '',
         ID: '',
@@ -36,18 +52,29 @@ const RegisterUser = () => {
 
     }, [])
 
-    const [userID, setUserID] = useState("");
-    const [userName, setUserName] = useState("")
-    const [agentList, setAgentList] = useState()
-    const [co, setCo] = useState()
-    const [mgr, setMgr] = useState("")
-    const [phone, setPhone] = useState("");
-    const [auth, setAuth] = useState("1");
-    const [use, setUse] = useState("Y")
-    const [dlgtId, setDlgtID] = useState()
-    
+    useEffect(() => {
+        SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: "" })
+            .then(returnResponse => {
+                setData(returnResponse.searchUserData)
+            })
+            .catch(error => {
+                console.error('API Error:', error);
+            })
+            .finally(() => {
+
+            });                      
+
+    }, []);
 
     const registerAgentUser = () => {
+        
+
+    const isDuplicate = Array.isArray(data) && data.some((user) => user.agent_id === userID);
+
+        if (isDuplicate) {
+            alert("이미 존재하는 ID입니다. 다른 ID를 입력하세요.");
+            return;
+        }        
         setPostData({         
             userID: userID,
             // ID: sessionStorage.getItem("ID"),
@@ -60,6 +87,21 @@ const RegisterUser = () => {
             chg_id: sessionStorage.getItem("ID"),         
             use: use,                           
         });
+
+        SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentUser", postData)
+                .then((returnResponse) => {
+                    console.log(returnResponse);
+                    if (returnResponse.result === "Y") {
+                        alert("등록이 완료되었습니다.");
+                        navigate("/ManageUser");
+                    } else {
+                        alert("등록에 실패했습니다. 다시 시도해주세요.");
+                    }
+                })
+            .catch((error) => {
+                console.log(error)
+            })
+        
     }
 
 
@@ -74,21 +116,6 @@ const RegisterUser = () => {
             })
 
     }, [])
-
-    useEffect(() => {
-        SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentUser", postData)
-            .then((returnResponse) => {
-                console.log(returnResponse)
-                if (returnResponse.result === 'Y') {
-                    alert("등록이 완료 되었습니다.");
-                    navigate("/ManageUser")
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        
-    }, [postData])
 
 
     return (
