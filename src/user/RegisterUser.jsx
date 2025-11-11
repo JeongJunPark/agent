@@ -20,24 +20,6 @@ const RegisterUser = () => {
     const [auth, setAuth] = useState("1");
     const [use, setUse] = useState("Y")
     const [dlgtId, setDlgtID] = useState()
-
-    const [data, setData] = useState("");
-
-
-
-    
-    const [postData, setPostData] = useState({
-        name: '',
-        ID: '',
-        userName: '',
-        co: '',
-        mgr: '',
-        phone: '',
-        auth: '',
-        chg_id: '',
-        use: '',
-    })
-
     // HIST 저장
     useEffect(() => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "사용자등록", note: '', IP : sessionStorage.getItem('IP') })
@@ -52,57 +34,55 @@ const RegisterUser = () => {
 
     }, [])
 
-    useEffect(() => {
-        SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: "" })
-            .then(returnResponse => {
-                setData(returnResponse.searchUserData)
-            })
-            .catch(error => {
-                console.error('API Error:', error);
-            })
-            .finally(() => {
+    const [postData, setPostData] = useState({
+        name: '',
+        ID: '',
+        userName: '',
+        co: '',
+        mgr: '',
+        phone: '',
+        auth: '',
+        chg_id: '',
+        use: '',
+    })
 
-            });                      
+    const registerAgentUser = async () => {
+        try {
+            const returnResponse = await SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: "" });
+            const data = returnResponse.searchUserData;
 
-    }, []);
+            const isDuplicate = Array.isArray(data) && data.some((user) => user.agent_id === userID);
+            if (isDuplicate) {
+                alert("이미 존재하는 ID입니다. 다른 ID를 입력하세요.");
+                return;
+            }
 
-    const registerAgentUser = () => {
-        
+            const payload = {         
+                userID: userID,
+                ID: dlgtId,
+                userName: userName,                       
+                co: co,                                   
+                mgr: mgr,                                 
+                phone: phone,       
+                auth: auth,                         
+                chg_id: sessionStorage.getItem("ID"),         
+                use: use,                           
+            };
 
-    const isDuplicate = Array.isArray(data) && data.some((user) => user.agent_id === userID);
+            const submitResponse = await SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentUser", payload);
+            console.log(submitResponse);
 
-        if (isDuplicate) {
-            alert("이미 존재하는 ID입니다. 다른 ID를 입력하세요.");
-            return;
-        }        
-        setPostData({         
-            userID: userID,
-            // ID: sessionStorage.getItem("ID"),
-            ID: dlgtId,
-            userName: userName,                       
-            co: co,                                   
-            mgr: mgr,                                 
-            phone: phone,       
-            auth: auth,                         
-            chg_id: sessionStorage.getItem("ID"),         
-            use: use,                           
-        });
-
-        SendAPI("https://home-api.leadcorp.co.kr:8080/submitAgentUser", postData)
-                .then((returnResponse) => {
-                    console.log(returnResponse);
-                    if (returnResponse.result === "Y") {
-                        alert("등록이 완료되었습니다.");
-                        navigate("/ManageUser");
-                    } else {
-                        alert("등록에 실패했습니다. 다시 시도해주세요.");
-                    }
-                })
-            .catch((error) => {
-                console.log(error)
-            })
-        
-    }
+            if (submitResponse.result === "Y") {
+                alert("등록이 완료되었습니다.");
+                navigate("/ManageUser");
+            } else {
+                alert("등록에 실패했습니다. 다시 시도해주세요.");
+            }
+        } catch (error) {
+            console.error("API Error:", error);
+            alert("서버 오류가 발생했습니다.");
+        }
+    };
 
 
     useEffect(() => {
