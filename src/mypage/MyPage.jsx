@@ -17,7 +17,7 @@ const MyPage = () => {
         })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse);
+                    // console.log(returnResponse);
                     setManagerVO(returnResponse.result[0]);
                     // alert(managerVO.agent_dlgt_id);
                 }

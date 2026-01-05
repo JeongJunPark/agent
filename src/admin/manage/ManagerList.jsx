@@ -50,7 +50,7 @@ const ManagerList = () => {
     SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerRowsMng", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
       .then((returnResponse) => {
         if (returnResponse) {
-          console.log(returnResponse)
+          // console.log(returnResponse)
           setData(returnResponse.result)
         }
       })

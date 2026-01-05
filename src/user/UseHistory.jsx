@@ -126,7 +126,7 @@ const UseHistory = () => {
             })
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log("returnResponse: " + returnResponse);
+                        // console.log("returnResponse: " + returnResponse);
                         setUserHist(returnResponse.result[0]);
                         setData(Array.isArray(returnResponse.result) ? returnResponse.result : []);
                     }

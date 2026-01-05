@@ -146,8 +146,8 @@ const Agent = () => {
             SendAPI("https://home-api.leadcorp.co.kr:8080/checkAgentList", status)
                 .then((returnResponse) => {
                     if (returnResponse) {
-                        console.log(returnResponse);
-                        console.log("adsad",status.auth);
+                        // console.log(returnResponse);
+                        // console.log("adsad",status.auth);
                         setAgentList(returnResponse.agentList);
                         sessionStorage.setItem("ad_medi", returnResponse.agentList[0].ad_medi);
                         selectedAgent = '';

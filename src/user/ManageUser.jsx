@@ -51,7 +51,7 @@ const ManageUser = () => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "업체관리", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse)
+                    // console.log(returnResponse)
                 }
             })
             .catch((error) => {
@@ -83,8 +83,8 @@ const ManageUser = () => {
         SendAPI('https://home-api.leadcorp.co.kr:8080/searchAgent', { search: keyword })
             .then(returnResponse => {
                 setData(returnResponse.searchUserData)
-                console.log(returnResponse.searchUserData)
-                console.log(data);
+                // console.log(returnResponse.searchUserData)
+                // console.log(data);
             })
             .catch(error => {
                 console.error('API Error:', error);

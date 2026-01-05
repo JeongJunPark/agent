@@ -27,7 +27,7 @@ const RegisterUser = () => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "사용자등록", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse)
+                    // console.log(returnResponse)
                 }
             })
             .catch((error) => {

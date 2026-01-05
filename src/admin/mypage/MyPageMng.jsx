@@ -17,7 +17,7 @@ const MyPageMng = () => {
         })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse);
+                    // console.log(returnResponse);
                     setManagerVO(returnResponse.result[0]);
                 }
             })

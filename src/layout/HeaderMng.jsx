@@ -33,12 +33,12 @@ const HeaderMng = () => {
                   .then((returnResponse) => {
                       if (returnResponse) {
                         console.log('222');
-                          console.log(returnResponse);
+                          // console.log(returnResponse);
                           const manager = returnResponse.result[0]; 
                           setManagerVO(manager);
                           sessionStorage.setItem('userName', returnResponse.result[0].mgr_nm)
                           setName(manager.mgr_nm);
-                          console.log('name: ', name)
+                          // console.log('name: ', name)
                         }
                       
                   })

@@ -26,7 +26,7 @@ const ModifyManager = () => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerRowMng", { indx : coID })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log('dd ', returnResponse.result[0])
+                    // console.log('dd ', returnResponse.result[0])
                     setmanagerVO(returnResponse.result[0]);
                     // setHisYear(returnResponse.result[0].his_year)
                     // setHisMth(returnResponse.result[0].his_mth)

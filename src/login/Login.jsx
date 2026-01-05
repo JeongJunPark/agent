@@ -47,7 +47,7 @@ const Login = () => {
                         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN(F)", note : returnResponse.message, IP : sessionStorage.getItem('IP')})
                             .then((returnResponse) => {
                                 if (returnResponse) {
-                                    console.log("returnResponse ----> ", returnResponse);
+                                    // console.log("returnResponse ----> ", returnResponse);
                                     // alert(returnResponse.agent_nm);
                                     setName(returnResponse.agent_nm);
                                 }

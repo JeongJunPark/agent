@@ -34,7 +34,7 @@ const ReadPrivacy = ({ menuItems }) => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/getPrivacyRowMng", { indx : indx, bbs: bbs })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log('dd ', returnResponse.result[0])
+                    // console.log('dd ', returnResponse.result[0])
                     setPrivacyVO(returnResponse.result[0]);
                 }
             })

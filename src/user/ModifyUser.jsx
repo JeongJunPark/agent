@@ -73,9 +73,9 @@ const ModifyUser = () => {
         // 사용자 권한에 따른 업체 리스트
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentUserCoList", { ID: sessionStorage.getItem("ID") })
             .then((returnResponse) => {
-                console.log(returnResponse)
+                // console.log(returnResponse)
                 setAgentList(returnResponse.result);
-                console.log("dd: ", returnResponse.result);
+                // console.log("dd: ", returnResponse.result);
             })
             .catch((error) => {
                 console.log(error)

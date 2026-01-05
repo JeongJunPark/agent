@@ -12,7 +12,7 @@ const CompanyMoAccount = () => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", { ID: sessionStorage.getItem('ID'), menu: "모계좌관리", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse)
+                    // console.log(returnResponse)
                 }
             })
             .catch((error) => {
@@ -45,7 +45,7 @@ const CompanyMoAccount = () => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/moAccountCompany", { companyINDX : locationState.companyINDX } )
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse)
+                    // console.log(returnResponse)
                     setResponse(returnResponse.moAcccountList);
                 }
             })

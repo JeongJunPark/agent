@@ -48,8 +48,8 @@ const Header = () => {
         useEffect(() => {   
               if (auth !== '' && auth !== undefined) {
                   setAuthList(auth.split(','));
-                  console.log(auth.split(','));
-                  console.log("auth: ", auth)
+                  // console.log(auth.split(','));
+                  // console.log("auth: ", auth)
               }
       }, [auth])
 
@@ -64,7 +64,7 @@ const Header = () => {
               })
                   .then((returnResponse) => {
                       if (returnResponse) {
-                          console.log(returnResponse);
+                          // console.log(returnResponse);
                           const manager = returnResponse.result[0]; 
                           setManagerVO(manager);
                           sessionStorage.setItem('userName', returnResponse.result[0].agent_nm)

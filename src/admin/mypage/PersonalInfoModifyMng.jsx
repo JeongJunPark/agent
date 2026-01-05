@@ -13,7 +13,7 @@ const PersonalInfoModifyMng = () => {
         SendAPI("https://home-api.leadcorp.co.kr:8080/getManagerInfoMng", { ID: sessionStorage.getItem('ID'), menu: "개인정보 수정", note: '', IP : sessionStorage.getItem('IP') })
             .then((returnResponse) => {
                 if (returnResponse) {
-                    console.log(returnResponse)
+                    // console.log(returnResponse)
                     setManagerVO(returnResponse.result[0]);
                 }
             })
