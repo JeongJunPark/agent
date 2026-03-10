@@ -4,7 +4,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import SendAPI from "../utils/SendAPI";
 import { useLocation, Link } from "react-router-dom";
 
-import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution, AiTwotoneContainer, AiFillSetting } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineShop, AiOutlineTeam, AiOutlineForm, AiOutlineDollarCircle, AiOutlineSolution, AiTwotoneContainer, AiFillSetting, AiOutlineCustomerService } from "react-icons/ai";
 
 import "../styles/common.css"
 import "../styles/header.css"
@@ -48,6 +48,11 @@ const HeaderMng = () => {
         }, []);
 
   const [open, setOpen] = useState(false);
+
+  const adminCustomerCenterItems = [
+    { key: "1", label: <Link to="/Board">고객센터</Link> }
+  ];    
+
   const adminSettingMenuItems = [
     { key: "1", label: <Link to="/ManagerList">관리자계정 관리</Link> }
   ];    
@@ -78,7 +83,6 @@ const HeaderMng = () => {
     { key: '3', label: <Link to="/LogoutMng">로그아웃</Link> },    
   ];
 
-
   return (
     <header>
       <div className="header-container">
@@ -87,6 +91,17 @@ const HeaderMng = () => {
         </div>
             <div className="desktop-menu">
               <div className="menu-left">
+                <Dropdown
+                  menu={{ items: adminCustomerCenterItems }}
+                  trigger={["click"]}
+                  placement="bottomLeft"
+                  overlayClassName="custom-dropdown"
+                >
+                  <div className={`mypage_header ${isActive(["/Board"]) ? "active" : ""}`}>
+                    <AiOutlineCustomerService /> 고객센터
+                  </div>
+                </Dropdown>
+
                 <Dropdown
                   menu={{ items: adminSettingMenuItems }}
                   trigger={["click"]}
@@ -149,10 +164,15 @@ const HeaderMng = () => {
                 mode="inline"
                 items={[
                 {
+                    key: 'board',
+                    label: '고객센터',
+                    children: adminCustomerCenterItems,
+                },
+                {
                     key: 'manage',
                     label: '관리자계정 관리',
                     children: adminSettingMenuItems,
-                },
+                },                
                 {
                     key: 'privacy',
                     label: '약관 / 정책',
