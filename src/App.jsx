@@ -42,6 +42,8 @@ import ReadPrivacy from './admin/privacy/ReadPrivacy';
 import ModifyPrivacy from './admin/privacy/ModifyPrivacy';
 import RegisterPrivacy from './admin/privacy/RegisterPrivacy';
 import Board from './admin/customer/Board';
+import BoardWrite from './admin/customer/BoardWrite';
+import BoardModify from './admin/customer/BoardModify';
 
 
 function App() {
@@ -245,6 +247,24 @@ function App() {
             </RouteGuard>
           }
         />		  
+
+        <Route
+          path="/BoardWrite"
+          element={
+            <RouteGuard allowedFor="manager">
+              <BoardWrite />
+            </RouteGuard>
+          }
+        />  
+
+        <Route
+          path="/BoardModify"
+          element={
+            <RouteGuard allowedFor="manager">
+              <BoardModify />
+            </RouteGuard>
+          }
+        /> 
 
         <Route
           path="/ManagerList"

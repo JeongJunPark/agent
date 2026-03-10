@@ -75,7 +75,7 @@ const Board = () => {
   }
 
   const modifyManager = (mgr_indx) => {
-    navigate("/ModifyManager", {
+    navigate("/BoardModify", {
       state: {
         mgr_indx: mgr_indx
       }
@@ -144,14 +144,12 @@ const Board = () => {
             <thead>
               <tr>
                 <th>번호</th>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>부서</th>
-                <th>연락처</th>
-                <th>승인</th>
+                <th>제목</th>
+                <th>공지</th>
+                <th>작성자</th>
+                <th>조회수</th>
                 <th>등록일</th>
-                <th>접속아이피</th>
-                <th>접속일</th>
+                <th>등록일</th>
                 <th>수정</th>
                 <th>삭제</th>
               </tr>
@@ -195,7 +193,7 @@ const Board = () => {
           </div>    
 
           <div className='right-button-container'>
-            <button className="registBtn" type="submit" onClick={() => navigate('/RegisterManager')}>등록</button>          
+            <button className="registBtn" type="submit" onClick={() => navigate('/BoardWrite')}>등록</button>          
           </div>
 
       </div>
