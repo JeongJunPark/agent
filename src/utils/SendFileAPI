@@ -1,0 +1,20 @@
+const SendFileAPI = (url, formData) => {
+    console.log(url, formData)    
+    return fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then((response) => {
+        if (!response.ok) {
+            console.log("response.status: ", response.status);
+            throw new Error("HTTP 오류 " + response.status);
+        }
+        return response.json();
+    })
+    .catch((error) => {
+        console.error('파일 업로드 오류:', error);
+        throw error;
+    });
+};
+
+export default SendFileAPI;

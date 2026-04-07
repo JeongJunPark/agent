@@ -41,8 +41,9 @@ import PrivacyList from './admin/privacy/PrivacyList';
 import ReadPrivacy from './admin/privacy/ReadPrivacy';
 import ModifyPrivacy from './admin/privacy/ModifyPrivacy';
 import RegisterPrivacy from './admin/privacy/RegisterPrivacy';
-import Board from './admin/customer/Board';
+import BoardList from './admin/customer/BoardList';
 import BoardWrite from './admin/customer/BoardWrite';
+import BoardRead from './admin/customer/BoardRead';
 import BoardModify from './admin/customer/BoardModify';
 
 
@@ -240,16 +241,16 @@ function App() {
         />		     
 
         <Route
-          path="/Board"
+          path="/BoardList/:art_no"
           element={
             <RouteGuard allowedFor="manager">
-              <Board />
+              <BoardList />
             </RouteGuard>
           }
         />		  
 
         <Route
-          path="/BoardWrite"
+          path="/BoardWrite/:art_no"
           element={
             <RouteGuard allowedFor="manager">
               <BoardWrite />
@@ -258,13 +259,22 @@ function App() {
         />  
 
         <Route
-          path="/BoardModify"
+          path="/BoardModify/:art_no"
           element={
             <RouteGuard allowedFor="manager">
               <BoardModify />
             </RouteGuard>
           }
-        /> 
+        />
+
+        <Route
+          path="/BoardRead/:art_indx/:art_no"
+          element={
+            <RouteGuard allowedFor="manager">
+              <BoardRead />
+            </RouteGuard>
+          }
+        />        
 
         <Route
           path="/ManagerList"

@@ -50,7 +50,7 @@ const HeaderMng = () => {
   const [open, setOpen] = useState(false);
 
   const adminCustomerCenterItems = [
-    { key: "1", label: <Link to="/Board">고객센터</Link> }
+    { key: "1", label: <Link to="/BoardList/1">고객센터</Link> }
   ];    
 
   const adminSettingMenuItems = [
@@ -97,7 +97,7 @@ const HeaderMng = () => {
                   placement="bottomLeft"
                   overlayClassName="custom-dropdown"
                 >
-                  <div className={`mypage_header ${isActive(["/Board"]) ? "active" : ""}`}>
+                  <div className={`mypage_header ${isActive(["/BoardList"]) ? "active" : ""}`}>
                     <AiOutlineCustomerService /> 고객센터
                   </div>
                 </Dropdown>
