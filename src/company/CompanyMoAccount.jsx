@@ -158,6 +158,7 @@ const CompanyMoAccount = () => {
                                 <option value="20">우리</option>
                                 <option value="23">제일</option>
                                 <option value="279">DB금융투자</option>
+                                <option value="243">한국투자증권</option>
                             </select>
                         </td>
 
