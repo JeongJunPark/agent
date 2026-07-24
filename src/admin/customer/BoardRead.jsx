@@ -9,7 +9,7 @@ import "../../styles/common.css"
 import "../../styles/button.css"
 
 const BoardRead = ({ menuItems }) => {
-    const API_URL = "https://dev-home-api.leadcorp.co.kr:8080/";
+    const API_URL = "https://home-api.leadcorp.co.kr:8080/";
     
     const navigate = useNavigate();
 

@@ -12,7 +12,7 @@ import Loading from '../../utils/Loading';
 
 const BoardList = () => {
 
-  const API_URL = "https://dev-home-api.leadcorp.co.kr:8080/";
+  const API_URL = "https://home-api.leadcorp.co.kr:8080/";
 
   const getBoardRows = `${API_URL}getBoardRows`;
   const [loading, setLoading] = useState(false);
@@ -97,7 +97,7 @@ const fetchBoardRows = async (API_URL, params) => {
 
   if(!window.confirm("삭제하시겠습니까?")) return;
 
-  SendAPI('https://dev-home-api.leadcorp.co.kr:8080/deleteBoardRow', { 
+  SendAPI('https://home-api.leadcorp.co.kr:8080/deleteBoardRow', { 
     bbs: art_no, 
     indx: art_indx 
   })

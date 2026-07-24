@@ -12,7 +12,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const BoardWrite = () => {
 
-    const API_URL = "https://dev-home-api.leadcorp.co.kr:8080/";
+    const API_URL = "https://home-api.leadcorp.co.kr:8080/";
 
     const navigate = useNavigate();
     const location = useLocation();

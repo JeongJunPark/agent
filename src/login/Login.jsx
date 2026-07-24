@@ -73,6 +73,9 @@ const Login = () => {
             if (returnResponse) {
                 console.log(returnResponse)
                 if (returnResponse.result) {
+                    if (returnResponse.value) {
+                        sessionStorage.setItem('token', returnResponse.value);
+                    }
                     SendAPI("https://home-api.leadcorp.co.kr:8080/agentHistManage", {ID : ID, menu : "LOG-IN", note : '', IP : sessionStorage.getItem('IP')})
                         .then((returnResponse) => {
                             if (returnResponse) {
@@ -84,7 +87,7 @@ const Login = () => {
                                     sessionStorage.setItem('managerYN', coUse);
                                     console.log("sessionStorage ==== > : ", sessionStorage);
                                     window.location.href = "/MyPage"
-                                }   
+                                }
                             }
                         })
                         .catch((error) => {
@@ -149,10 +152,13 @@ const Login = () => {
                                     sessionStorage.setItem('validToken', 'valid');
                                     sessionStorage.setItem('Name', Name);
                                     sessionStorage.setItem('managerYN', coUse);
+                                    if (returnResponse.value) {
+                                        sessionStorage.setItem('token', returnResponse.value);
+                                    }
                                     console.log("fff   ---> ", sessionStorage.getItem("managerYN"));
                                     console.log("sessionStorage ==== > : ", sessionStorage);
                                     window.location.href = "/myPageMng"
-                                }   
+                                }
                             }
                         // })
                 //         .catch((error) => {
@@ -172,6 +178,9 @@ const Login = () => {
             <div className="login_box">
                 <div className="login_icon">
                     <img src={Logo} alt="logo" width={400} height={40}  />
+                </div>
+                <div style={{ fontSize: '12px', color: '#888', textAlign: 'center', margin: '8px 0' }}>
+                    보안을 위해 30분마다 로그인을 수행해주세요.
                 </div>
                 <div className="login_radio">
                 <label>

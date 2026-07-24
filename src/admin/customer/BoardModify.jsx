@@ -10,7 +10,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Loading from '../../utils/Loading';
 const BoardModify = () => {
-    const API_URL = "https://dev-home-api.leadcorp.co.kr:8080/";
+    const API_URL = "https://home-api.leadcorp.co.kr:8080/";
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -88,7 +88,7 @@ const BoardModify = () => {
     //   if(file2) formData.append("file2", file2);
     //   if(file3) formData.append("file3", file3);
   
-      SendAPI("https://dev-home-api.leadcorp.co.kr:8080/updateBoard", payload)
+      SendAPI("https://home-api.leadcorp.co.kr:8080/updateBoard", payload)
          .then((returnResponse) => {
           console.log(returnResponse)
   
